@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,20 +29,16 @@ namespace API
         {
             services.AddControllers();
 
-            services.AddMvc(x => x.Conventions.Add(new ApiExplorerVersionConvention()));
+            services.AddMvc(c =>
+            {
+                c.Filters.Add(new ConsumesAttribute("application/json"));
+                c.Filters.Add(new ProducesAttribute("application/json"));
+            });
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {
-                    Version = "v1",
-                    Title = "LEGGO News API",
-                    Description = "Query and update the news database.  Made for website, CMS, and external processes.",
-                });
-                c.SwaggerDoc("v2", new OpenApiInfo {
-                    Version = "v2",
-                    Title = "LEGGO News API",
-                    Description = "Query and update the news database.  Made for website, CMS, and external processes.",
-                });
+                c.DocumentFilter<JsonPatchDocumentFilter>();
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Api.xml"));
             });
         }
 
@@ -64,11 +61,7 @@ namespace API
             });
 
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Version 1");
-                c.SwaggerEndpoint("/swagger/v2/swagger.json", "Version 2");
-            });
+            app.UseSwaggerUI();
         }
     }
 }
