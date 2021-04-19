@@ -1,0 +1,78 @@
+﻿@model CharacterEditViewModel
+
+@{
+    ViewData["Title"] = "Create Character";
+}
+
+<div class="container">
+
+    <header>
+        <h2>Create Character</h2>
+    </header>
+
+    <form method="post">
+
+        <div class="row mb-3">
+            <label class="col-2 col-form-label" for="englishName">English name</label>
+            <div class="col-10">
+                <input class="form-control" id="englishName" name="englishName" maxlength="50" required>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-2 col-form-label" for="koreanName">Korean name</label>
+            <div class="col-10">
+                <input class="form-control" id="koreanName" name="koreanName" maxlength="50">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-2 col-form-label" for="emoji">Emoji</label>
+            <div class="col-1">
+                <input class="form-control" id="emoji" name="emoji" maxlength="1">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-2 col-form-label" for="birthDate">Birthdate</label>
+            <div class="col-2">
+                <input class="form-control" id="birthDate" name="birthDate" type="date">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-2 col-form-label" for="websiteUrl">Instagram</label>
+            <div class="col-4">
+                <div class="input-group">
+                    <span class="input-group-text">@@</span>
+                    <input class="form-control" id="instagram" name="instagram" maxlength="255">
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-2 col-form-label" for="websiteUrl">Website URL</label>
+            <div class="col-10">
+                <input class="form-control" id="websiteUrl" name="websiteUrl" type="url" maxlength="255">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-2 col-form-label" for="description">Description</label>
+            <div class="col-10">
+                <textarea class="form-control" id="description" name="description" maxlength="512"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+            </div>
+            <div class="col text-end">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+
+    </form>
+
+</div>

@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Articles";
+}
+
+<header>
+    <div class="d-flex align-items-start">
+        <h2>Articles</h2>
+        <a class="btn btn-primary btn-sm ms-2 pull-end" asp-action="Edit">Write New</a>
+    </div>
+</header>
+
+<ul class="nav nav-pills border p-1">
+    <li class="nav-item">
+        <a class="nav-link active" href="#">Draft</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Published</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-danger" href="#">Trash</a>
+    </li>
+</ul>
+
+<table id="index" class="table table-hover">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td colspan="2">There are no articles yet.</td></tr>
+    </tbody>
+</table>
