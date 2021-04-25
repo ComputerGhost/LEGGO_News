@@ -3,46 +3,88 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>@ViewData["Title"] - Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css">
+    @RenderSection("Styles", required: false)
+
 </head>
 <body>
+
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Web</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="#">News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="#">Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="#">Numbers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="#">About EXID</a>
+                    </li>
+                </ul>
+                <div class="">
+                    <a href="#" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
-        <main role="main" class="pb-3">
+        <main class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer id="main-footer" class="bg-dark">
+        <div class="container pt-3 pb-1 text-muted">
+            <p>All times in content are in KST unless otherwise stated.</p>
+            <p>This is an unofficial website that is run by fans.  We report the latest news about EXID and LEGGO, the amazing kpop girl group and their fandom.</p>
+            <p>Some third party work is used under Fair Use clauses specifically for the purpose of covering news.  Contact us if you would like for your work to be removed.  For more information, read our full <a href="##">Fair Use Notice</a>.</p>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h6>About LEGGO News</h6>
+                    <ul>
+                        <li><a href="#">Our Pledge</a></li>
+                        <li><a href="#">Staff List</a></li>
+                        <li><a href="#">Contact Information</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h6>Policies and Notices</h6>
+                    <ul>
+                        <li><a href="##">Content Policy</a></li>
+                        <li><a href="##">Cookie Policy</a></li>
+                        <li><a href="##">Fair Use Notice</a></li>
+                        <li><a href="##">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="d-inline-block">
+                        <h6>Social Media</h6>
+                        <a href="https://www.instagram.com/leggo_news/" target="_blank"><i class="fab fa-instagram fa-fw"></i> leggo_news</a><br>
+                        <a href="https://twitter.com/leggo_news" target="_blank"><i class="fab fa-twitter fa-fw"></i> leggo_news</a><br>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center">&copy; 2021 LEGGO News</p>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/472e018371.js" crossorigin="anonymous"></script><!-- NOTE: Add the integrity check here after out of dev -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>
