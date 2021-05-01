@@ -39,7 +39,7 @@
     </header>
 
     <div class="container">
-        <main class="pb-3">
+        <main class="py-3">
             @RenderBody()
         </main>
     </div>
@@ -48,7 +48,7 @@
         <div class="container pt-3 pb-1 text-muted">
             <p>All times in content are in KST unless otherwise stated.</p>
             <p>This is an unofficial website that is run by fans.  We report the latest news about EXID and LEGGO, the amazing kpop girl group and their fandom.</p>
-            <p>Some third party work is used under Fair Use clauses specifically for the purpose of covering news.  Contact us if you would like for your work to be removed.  For more information, read our full <a href="##">Fair Use Notice</a>.</p>
+            <p>This website contains copyrighted material that may not have been explicitely authorized for use by the copyright owner.  Such content is used under Fair Use clauses specifically for the purpose of covering news.  For more information, read our full <a href="##">Fair Use Notice</a>.</p>
             <div class="d-flex justify-content-between">
                 <div>
                     <h6>About LEGGO News</h6>
@@ -61,10 +61,10 @@
                 <div>
                     <h6>Policies and Notices</h6>
                     <ul>
-                        <li><a href="##">Content Policy</a></li>
-                        <li><a href="##">Cookie Policy</a></li>
-                        <li><a href="##">Fair Use Notice</a></li>
-                        <li><a href="##">Privacy Policy</a></li>
+                        <li><a asp-controller="Policy" asp-action="ContentPolicy">Content Policy</a></li>
+                        <li><a asp-controller="Policy" asp-action="CookiePolicy">Cookie Policy</a></li>
+                        <li><a asp-controller="Policy" asp-action="FairUseNotice">Fair Use Notice</a></li>
+                        <li><a asp-controller="Policy" asp-action="PrivacyPolicy">Privacy Policy</a></li>
                     </ul>
                 </div>
                 <div>

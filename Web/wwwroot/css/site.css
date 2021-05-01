@@ -23,3 +23,20 @@ body {
     .text-muted a:hover {
         color: #0056b3; /* same as non-muted links */
     }
+
+
+/* Basic content formatting */
+
+blockquote {
+    margin-left: 1rem;
+    padding: 0.25rem 0 0.25rem 0.75rem;
+    border-left: 0.75rem solid #e2e3e5;
+    font-size: inherit;
+}
+    blockquote > footer {
+        font-style: italic;
+        color: #6c757d;
+    }
+        blockquote > footer::before {
+            content: '\2014\00a0';
+        }
