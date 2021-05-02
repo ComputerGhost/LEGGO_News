@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Schedule";
+}
+
+<section>
+    <h2>Filter</h2>
+    <form>
+        <ul>
+            <li>
+                <input type="checkbox" class="form-check-input" id="show-birthdays">
+                <label class="form-check-label" for="show-birthdays">Birthdays</label>
+            </li>
+            <li>
+                <input type="checkbox" class="form-check-input" id="show-official-events">
+                <label class="form-check-label" for="show-birthdays">EXID Official</label>
+            </li>
+            <li>
+                <input type="checkbox" class="form-check-input" id="show-sponsors">
+                <label class="form-check-label" for="show-birthdays">EXID Sponsors</label>
+            </li>
+            <li>
+                <input type="checkbox" class="form-check-input" id="show-leggo-events">
+                <label class="form-check-label" for="show-birthdays">LEGGO Events</label>
+            </li>
+            <li>
+                <input type="checkbox" class="form-check-input" id="show-scheduled-news">
+                <label class="form-check-label" for="show-birthdays">Scheduled News</label>
+            </li>
+        </ul>
+    </form>
+</section>
+
+<section>
+    @{ 
+        var today = DateTime.Today;
+
+        var startOfMonth = new DateTime(today.Year, today.Month, 1);
+        var startDate = startOfMonth;
+        while (startDate.DayOfWeek != DayOfWeek.Monday)
+            startDate = startDate.AddDays(-1);
+
+        var endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
+        var endDate = endOfMonth;
+        while (endDate.DayOfWeek != DayOfWeek.Monday)
+            endDate = endDate.AddDays(1);
+
+        var date = startDate;
+    }
+
+    <table class="table">
+        <tr>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+        </tr>
+        @while (date <= endDate) {
+            <tr>
+                @do {
+                    var className = date.Month == today.Month ? "" : "text-muted";
+                    <td>
+                        <h6 class="@className">
+                            @date.Day
+                        </h6>
+                    </td>
+                    date = date.AddDays(1);
+                } while (date.DayOfWeek != DayOfWeek.Monday);
+            </tr>
+        }
+    </table>
+
+</section>
