@@ -1,9 +1,56 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Latest News";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <p>This is a test of some content to see how stuff works with wrapping and stuff like that.  I'll just type a bunch of text that should be enough to wrap several times.  Then I can kind of see how that sort of stuff behaves in different screen sizes by altering the size of the rendered part of the browser.</p>
+<section>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Stories</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">SNS</a>
+        </li>
+    </ul>
+</section>
+
+<section>
+    <h2>Top Stories</h2>
+    <div class="row">
+        @for (int i = 0; i != 3; ++i) { @:
+            <div class="col">
+                <div class="border rounded p-2">
+                    <img src="~/images/logo_64.png" class="float-right">
+                    <h6>Some news story here</h6>
+                    <p>Lorem ipsum dolor sit amet.  I don't remember the rest.  This will basically just be a snippet of the story.</p>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<div class="row">
+    <div class="col-9">
+        <section>
+            <h2>Latest News</h2>
+            @for (int i = 0; i != 10; ++i) { @:
+                <div class="border rounded p-2 mb-3">
+                    <img src="~/images/logo_64.png" class="float-right">
+                    <h6>Some news story here</h6>
+                    <p>Lorem ipsum dolor sit amet.  I don't remember the rest.  This will basically just be a snippet of the story.</p>
+                </div>
+            }
+        </section>
+    </div>
+    <div class="col-3">
+        <section>
+            <h3>Trending</h3>
+            @for (int i = 0; i != 3; ++i) {@:
+                <div class="border rounded p-2 mb-3">
+                    <img src="~/images/logo_64.png" class="float-left">
+                    <h6>Some news story here</h6>
+                    <p>Lorem ipsum dolor sit amet.  I don't remember the rest.  This will basically just be a snippet of the story.</p>
+                </div>
+            }
+        </section>
+    </div>
 </div>
