@@ -23,12 +23,12 @@ namespace Web.Controllers
             return View();
         }
 
-        public IActionResult Schedule()
+        public IActionResult Numbers()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Schedule()
         {
             return View();
         }
