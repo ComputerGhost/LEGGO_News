@@ -18,6 +18,11 @@ namespace Web.Controllers
             _logger = logger;
         }
 
+        public IActionResult AboutExid()
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
             return View();

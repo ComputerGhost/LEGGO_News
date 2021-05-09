@@ -16,22 +16,22 @@
     <header>
         <nav class="navbar navbar-expand navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                     <img src="~/images/logo_32.png">
                 </a>
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="home" asp-action="index">News</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">News</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="home" asp-action="schedule">Schedule</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Schedule">Schedule</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="home" asp-action="numbers">Numbers</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Numbers">Numbers</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="#">About EXID</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="AboutExid">About EXID</a>
                         </li>
                     </ul>
                 </div>
