@@ -39,29 +39,29 @@ export default function NavDrawer({ width }: { width: number }) {
             <div className={classes.toolbar} />
 
             <List>
-                <DrawerItem text='Dashboard' icon={faHome} to='/' />
+                <DrawerItem text='Dashboard' icon={faHome} href='/' />
             </List>
 
             <Typography variant='h6' className={classes.header}>Content</Typography>
             <List>
-                <DrawerItem text='Articles' icon={faPenNib} to='/' />
-                <DrawerItem text='Leads' icon={faLightbulb} to='/' />
-                <DrawerItem text='Comments' icon={faComments} to='/' />
-                <DrawerItem text='Media' icon={faPhotoVideo} to='/' />
+                <DrawerItem text='Articles' icon={faPenNib} href='/' />
+                <DrawerItem text='Leads' icon={faLightbulb} href='/' />
+                <DrawerItem text='Comments' icon={faComments} href='/' />
+                <DrawerItem text='Media' icon={faPhotoVideo} href='/media' />
             </List>
 
             <Typography variant='h6' className={classes.header}>Setup</Typography>
             <List>
-                <DrawerItem text='Tags' icon={faTags} to='/' />
-                <DrawerItem text='Characters' icon={faTheaterMasks} to='/' />
-                <DrawerItem text='Templates' icon={faShapes} to='/' />
-                <DrawerItem text='Users' icon={faUsers} to='/' />
+                <DrawerItem text='Tags' icon={faTags} href='/' />
+                <DrawerItem text='Characters' icon={faTheaterMasks} href='/' />
+                <DrawerItem text='Templates' icon={faShapes} href='/' />
+                <DrawerItem text='Users' icon={faUsers} href='/' />
             </List>
 
             <Typography variant='h6' className={classes.header}>Information</Typography>
             <List>
-                <DrawerItem text='Licenses' icon={faHandshake} to='/' />
-                <DrawerItem text='Help and Tips' icon={faQuestionCircle} to='/' />
+                <DrawerItem text='Licenses' icon={faHandshake} href='/' />
+                <DrawerItem text='Help and Tips' icon={faQuestionCircle} href='/' />
             </List>
 
         </Drawer>

@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TopBar from './components/TopBar';
 import NavDrawer from './components/NavDrawer';
-import Home from './pages/Home';
+import { Home } from './pages';
 
 const drawerWidth = 240;
 
