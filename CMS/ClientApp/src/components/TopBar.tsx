@@ -1,28 +1,65 @@
-﻿import * as React from 'react';
+﻿import React, { ReactElement, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
-const useStyles = (leftMargin: number) => makeStyles((theme) => ({
-    bar: {
-        paddingLeft: leftMargin,
+
+const useStyles = (drawerWidth: number) => makeStyles((theme) => ({
+    topBar: {
+        paddingLeft: drawerWidth,
     },
-    title: {
-        flexGrow: 1,
+
+    [theme.breakpoints.down('sm')]: {
+        topBar: {
+            paddingLeft: 0,
+        }
     }
 }))();
 
-export default function TopBar({ leftMargin }: { leftMargin: number }) {
-    const classes = useStyles(leftMargin);
+interface IProps {
+    drawerWidth: number,
+    isMobile: boolean,
+    onDrawerOpen: () => void,
+    toolbar: ReactElement | null,
+}
+
+export default function TopBar({ drawerWidth, onDrawerOpen, isMobile, toolbar }: IProps) {
+    const classes = useStyles(drawerWidth);
+
+    const [title, setTitle] = useState('');
+
+    function handleHelmetChanged({ title }: { title: string }) {
+        // Somehow this can be an array, but we can't treat it like one, so...
+        title = title.toString().split(',').join('');
+        setTitle(title.split(' - ')[0]);
+    }
 
     return (
-        <AppBar position='static' className={classes.bar}>
-            <Toolbar>
-                <Typography variant='h6' className={classes.title}>
-                    LEGGO News
-                </Typography>
-                <Button color='inherit'>Login</Button>
-            </Toolbar>
-        </AppBar>
+        <>
+            <Helmet onChangeClientState={handleHelmetChanged} />
+            
+            <AppBar position='fixed' className={classes.topBar}>
+                <Toolbar>
+
+                    {isMobile &&
+                        <IconButton onClick={onDrawerOpen}>
+                            <FontAwesomeIcon icon={faBars} fixedWidth />
+                        </IconButton>
+                    }
+
+                    <Typography variant='h6'>
+                        {title}
+                    </Typography>
+
+                    {toolbar}
+
+                </Toolbar>
+            </AppBar>
+
+            {/* Padding for the main content */}
+            <Toolbar />
+        </>
     );
 }

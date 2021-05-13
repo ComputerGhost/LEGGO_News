@@ -1,7 +1,9 @@
-﻿import * as React from "react";
+﻿import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Drawer, List, Typography } from '@material-ui/core';
+import { Drawer, IconButton, List, Toolbar, Typography } from '@material-ui/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+    faArrowLeft,
     faComments,
     faHandshake,
     faHome,
@@ -20,23 +22,39 @@ const useStyles = (width: number) => makeStyles(theme => ({
     drawer: {
         width: width,
     },
+    grow: {
+        flexGrow: 1,
+    },
     header: {
         fontSize: '1rem',
         paddingLeft: theme.spacing(2),
     },
-    toolbar: theme.mixins.toolbar
 }))();
 
-export default function NavDrawer({ width }: { width: number }) {
+interface IProps {
+    width: number,
+    open: boolean,
+    allowClose: boolean,
+    onDrawerClosed: () => void,
+}
+
+export default function NavDrawer({ width, open, allowClose, onDrawerClosed }: IProps) {
     const classes = useStyles(width);
 
     return (
         <Drawer
             classes={{ paper: classes.drawer }}
-            open={true}
+            open={open}
             variant='persistent'
         >
-            <div className={classes.toolbar} />
+            <Toolbar>
+                <div className={classes.grow} />
+                {allowClose && 
+                    <IconButton onClick={onDrawerClosed}>
+                        <FontAwesomeIcon icon={faArrowLeft} fixedWidth />
+                    </IconButton>
+                }
+            </Toolbar>
 
             <List>
                 <DrawerItem text='Dashboard' icon={faHome} href='/' />
