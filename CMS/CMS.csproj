@@ -21,6 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ClientApp\src\components\InfiniteScroll.tsx">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\components\SearchToolbar.tsx">
+      <SubType>Code</SubType>
+    </None>
     <None Update="ClientApp\src\components\ImageGrid\ImageGridItem.tsx">
       <SubType>Code</SubType>
     </None>
@@ -28,6 +34,9 @@
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\index.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\components\Page.tsx">
       <SubType>Code</SubType>
     </None>
   </ItemGroup>

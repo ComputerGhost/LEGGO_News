@@ -16,7 +16,7 @@ namespace API.DTOs
         /// <summary>
         /// The Key value to include in the search response.
         /// </summary>
-        public string Key { get; set; }
+        public int Key { get; set; }
 
         /// <summary>
         /// Query string for searching the data.

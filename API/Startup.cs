@@ -17,28 +17,31 @@ namespace API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
+        readonly string AllowAllOriginsCors = "AllOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
 
-            services.AddMvc(c =>
+            services.AddCors(cfg =>
             {
-                c.Filters.Add(new ConsumesAttribute("application/json"));
-                c.Filters.Add(new ProducesAttribute("application/json"));
+                cfg.AddPolicy(AllowAllOriginsCors, builder =>
+                {
+                    builder.AllowAnyOrigin();
+                });
             });
 
-            services.AddSwaggerGen(c =>
+            services.AddMvc(cfg =>
             {
-                c.DocumentFilter<JsonPatchDocumentFilter>();
-                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Api.xml"));
+                cfg.Filters.Add(new ConsumesAttribute("application/json"));
+                cfg.Filters.Add(new ProducesAttribute("application/json"));
+            });
+
+            services.AddSwaggerGen(cfg =>
+            {
+                cfg.DocumentFilter<JsonPatchDocumentFilter>();
+                cfg.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Api.xml"));
             });
         }
 
@@ -52,6 +55,8 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(AllowAllOriginsCors);
 
             app.UseAuthorization();
 

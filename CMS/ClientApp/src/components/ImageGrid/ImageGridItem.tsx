@@ -1,6 +1,7 @@
 ﻿import * as React from 'react';
 import { Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import IImageProps from '../../interfaces/IImageProps';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -9,12 +10,17 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ImageGridItem({ }) {
+interface IProps {
+    image: IImageProps
+}
+
+export default function ImageGridItem({ image }: IProps) {
     const classes = useStyles();
+    const thumbnailUrl = `${image.baseUrl}?thumbnailSize=192`;
     return (
         <Grid item xl={2}>
             <Paper className={classes.paper}>
-                test
+                <img alt={image.caption} src={thumbnailUrl} />
             </Paper>
         </Grid>
     );
