@@ -10,7 +10,7 @@ namespace API.DTOs
         /// <summary>
         /// Unique identifier for the image.
         /// </summary>
-        public long ImageId { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Short description or title of the image.
@@ -31,15 +31,13 @@ namespace API.DTOs
         /// URL to the unsized, uncropped original image.
         /// </summary>
         public string OriginalUrl { get; set; }
+
+        public string ThumbnailUrl { get; set; }
+
+        public string SmallSizeUrl { get; set; }
+
+        public string MediumSizeUrl { get; set; }
+
+        public string LargeSizeUrl { get; set; }
     }
 }
-
-/*
- * 
- * media.example.com/image.jpg
- * media.example.com/small/image.jpg
- * media.example.com/medium/image.jpg
- * media.example.com/large/image.jpg
- * media.example.com/thumbnail/image.jpg
- * 
- */

@@ -9,10 +9,12 @@ namespace Data
     public class DatabaseContext : DbContext
     {
         public DbSet<Character> Character { get; set; }
+        public DbSet<Media> Media { get; set; }
         public DbSet<Tag> Tag { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,6 +30,10 @@ namespace Data
                 .UseIdentityColumn();
 
             modelBuilder.Entity<Lead>()
+                .Property("Id")
+                .UseIdentityColumn();
+
+            modelBuilder.Entity<Media>()
                 .Property("Id")
                 .UseIdentityColumn();
 

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, { ChangeEvent } from 'react';
 import { InputBase } from '@material-ui/core';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2),
         width: '100%',
     },
-    searchIcon: {
+    icon: {
         padding: theme.spacing(0, 2),
         height: '100%',
         position: 'absolute',
@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     input: {
+        // !important is bad, but MUI puts the classes in the wrong order in the current version
         color: 'inherit !important',
         width: '100%',
         '& .MuiInputBase-input': {
@@ -39,20 +40,28 @@ const useStyles = makeStyles((theme) => ({
 
 interface IProps {
     placeholder: string,
+    onChange: (search: string) => void,
 }
 
-export default function SearchToolbar({ placeholder }: IProps) {
+export default function SearchToolbar({
+    placeholder,
+    onChange,
+}: IProps) {
     const classes = useStyles();
+
+    function handleSearchChanged(event: ChangeEvent<HTMLInputElement>) {
+        onChange(event.target.value);
+    }
 
     return (
         <div className={classes.search}>
-            <div className={classes.searchIcon}>
+            <div className={classes.icon}>
                 <FontAwesomeIcon icon={faSearch} fixedWidth />
             </div>
             <InputBase
-                placeholder={placeholder}
                 className={classes.input}
-                inputProps={{ 'aria-label': 'search' }}
+                placeholder={placeholder}
+                onChange={handleSearchChanged}
             />
         </div>
     );

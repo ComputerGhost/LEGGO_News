@@ -8,4 +8,8 @@
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Lib\Data\Data.csproj" />
+  </ItemGroup>
+
 </Project>
