@@ -3,27 +3,20 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:56935",
-      "sslPort": 44300
+      "applicationUrl": "http://localhost:65092",
+      "sslPort": 44364
     }
   },
-  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "swagger/index.html",
       "environmentVariables": {
-        "CONNECTION_STRING": "Server=.\\SQLEXPRESS; Initial Catalog=leggo_news; User Id=leggo_news; Password=password",
-        "STATIC_BASE_PATH": "../Static/wwwroot",
-        "STATIC_BASE_URL": "https://localhost:44364/",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "API": {
+    "Static": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swagger/index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using Data;
+using Data.Constants;
 using Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,28 +28,41 @@ namespace API.Controllers
         [ProducesResponseType(200, Type = typeof(SearchResults<MediaSummary>))]
         public IActionResult List([FromQuery] SearchParameters parameters)
         {
-            var imageSource = new List<MediaSummary>();
-            for (int i = 0; i != 200; ++i) {
-                imageSource.Add(new MediaSummary {
-                    Id = i,
-                    Caption = "Image number " + i,
-                    Credit = "Nathan",
-                    CreditUrl = "https://leggonews.com",
-                    OriginalUrl = "https://leggonews.com/wp-content/uploads/2021/05/channels4_profile.jpg",
-                });
-            }
+            var foundMedia = _context.Media;
 
-            var returnedImages = imageSource.AsQueryable()
+            var mediaPage = foundMedia
                 .Skip(parameters.Offset)
                 .Take(parameters.Count);
 
             return Json(new SearchResults<MediaSummary> {
                 Key = parameters.Key,
                 Offset = parameters.Offset,
-                Count = returnedImages.Count(),
-                TotalCount = imageSource.Count(),
-                Data = returnedImages
+                Count = mediaPage.Count(),
+                TotalCount = foundMedia.Count(),
+                Data = mediaPage.Select(media => new MediaSummary {
+                    Id = media.Id,
+                    Credit = media.Credit,
+                    CreditUrl = media.CreditUrl,
+                    OriginalUrl = getImageUrl(media, MediaSize.Original),
+                    ThumbnailUrl = getImageUrl(media, MediaSize.Thumbnail),
+                    SmallSizeUrl = getImageUrl(media, MediaSize.Small),
+                    MediumSizeUrl = getImageUrl(media, MediaSize.Medium),
+                    LargeSizeUrl = getImageUrl(media, MediaSize.Large),
+                }),
             });
+        }
+
+        private static string getImageUrl(Data.Models.Media media, string type)
+        {
+            var baseUrl = Path.Combine(Environment.GetEnvironmentVariable("STATIC_BASE_URL"), "Images");
+
+            if (type == MediaSize.Original)
+                return Path.Combine(baseUrl, media.LocalFilename);
+
+            if (MediaSize.Compare(media.LargestResize, type) >= 0)
+                return Path.Combine(baseUrl, type, media.LocalFilename);
+
+            return null;
         }
 
         [HttpPost]
@@ -56,21 +70,25 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(MediaSummary))]
         public async Task<IActionResult> Create([FromForm] IFormFile file)
         {
-            var basePath = Environment.GetEnvironmentVariable("DOWNLOADS_FOLDER");
+            var baseUrl = Path.Combine(Environment.GetEnvironmentVariable("STATIC_BASE_URL"), "Images");
+            var basePath = Path.Combine(Environment.GetEnvironmentVariable("STATIC_BASE_PATH"), "Images");
+
+            var newMedia = new Data.Models.Media {
+                OriginalFilename = file.FileName,
+                Caption = file.FileName,
+            };
 
             using (var memoryStream = new MemoryStream()) {
                 file.CopyTo(memoryStream);
                 memoryStream.Position = 0;
                 using (var image = await Media.ImageOperations.Load(memoryStream)) {
                     image.FileName = $"{Guid.NewGuid()}.{image.Extension}";
-                    await Media.ImageOperations.SaveVariants(image, basePath);
+                    newMedia.MimeType = image.MimeType;
+                    newMedia.LocalFilename = image.FileName;
+                    newMedia.LargestResize = await Media.ImageOperations.SaveVariants(image, basePath);
                 }
             }
 
-            var newMedia = new Data.Models.Media {
-                FileName = file.FileName,
-                MimeType = file.ContentType,
-            };
             _context.Media.Add(newMedia);
             _context.SaveChanges();
 
@@ -79,11 +97,11 @@ namespace API.Controllers
                 Caption = "Image number " + 0,
                 Credit = "Nathan",
                 CreditUrl = "https://leggonews.com",
-                OriginalUrl = Path.Combine(basePath, newMedia.FileName),
-                ThumbnailUrl = Path.Combine(basePath, "thumbnail", newMedia.FileName),
-                SmallSizeUrl = Path.Combine(basePath, "small", newMedia.FileName),
-                MediumSizeUrl = Path.Combine(basePath, "medium", newMedia.FileName),
-                LargeSizeUrl = Path.Combine(basePath, "large", newMedia.FileName),
+                OriginalUrl = Path.Combine(baseUrl, newMedia.LocalFilename),
+                ThumbnailUrl = Path.Combine(baseUrl, "thumbnail", newMedia.LocalFilename),
+                SmallSizeUrl = Path.Combine(baseUrl, "small", newMedia.LocalFilename),
+                MediumSizeUrl = Path.Combine(baseUrl, "medium", newMedia.LocalFilename),
+                LargeSizeUrl = Path.Combine(baseUrl, "large", newMedia.LocalFilename),
             });
         }
     }

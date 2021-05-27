@@ -24,6 +24,9 @@
     <None Update="ClientApp\src\components\InfiniteScroll.tsx">
       <SubType>Code</SubType>
     </None>
+    <None Update="ClientApp\src\components\DropFile.tsx">
+      <SubType>Code</SubType>
+    </None>
     <None Update="ClientApp\src\components\SearchToolbar.tsx">
       <SubType>Code</SubType>
     </None>

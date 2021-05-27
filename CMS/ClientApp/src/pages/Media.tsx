@@ -23,8 +23,14 @@ function Media({
     }
 
     function handleFilesSelected(event: ChangeEvent<HTMLInputElement>) {
-        const fileList = event.target.files!;
+        const fileList = Array.from(event.target.files!);
         [...fileList].map(file => {
+            postMedia(file);
+        });
+    }
+
+    function handleFilesDropped(files: File[]) {
+        [...files].map(file => {
             postMedia(file);
         });
     }
@@ -46,13 +52,13 @@ function Media({
             <IconButton color='inherit' onClick={handleAddClicked }>
                 <FontAwesomeIcon icon={faPlus} fixedWidth />
             </IconButton>
-            <input ref={fileInput} hidden type='file' onChange={handleFilesSelected} />
+            <input ref={fileInput} hidden type='file' multiple onChange={handleFilesSelected} />
         </>;
 
     return (
         <Page title='Media' toolbar={toolbar}>
             <Container>
-                <ImageGrid />
+                <ImageGrid onFilesDropped={handleFilesDropped} />
             </Container>
         </Page>
     );

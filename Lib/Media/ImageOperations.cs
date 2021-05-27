@@ -1,4 +1,5 @@
-﻿using SixLabors.ImageSharp;
+﻿using Data.Constants;
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Processing;
 using System;
@@ -33,55 +34,55 @@ namespace Media
         /// Saves a file multiple times, once for each size.
         /// </summary>
         /// <returns>The largest size saved</returns>
-        public static async Task<SizeName> SaveVariants(ImageData imageData, string basePath)
+        public static async Task<string> SaveVariants(ImageData imageData, string basePath)
         {
             var biggest = BiggestVariant(imageData);
 
             await Save(imageData, Path.Combine(basePath, imageData.FileName));
-            if (biggest == SizeName.Original)
+            if (biggest == MediaSize.Original)
                 return biggest;
 
-            using (var resized = Resize(imageData, SizeName.Thumbnail))
+            using (var resized = Resize(imageData, MediaSize.Thumbnail))
                 await Save(resized, Path.Combine(basePath, "thumbnail", imageData.FileName));
-            if (biggest == SizeName.Thumbnail)
+            if (biggest == MediaSize.Thumbnail)
                 return biggest;
 
-            using (var resized = Resize(imageData, SizeName.Small))
+            using (var resized = Resize(imageData, MediaSize.Small))
                 await Save(resized, Path.Combine(basePath, "small", imageData.FileName));
-            if (biggest == SizeName.Small)
+            if (biggest == MediaSize.Small)
                 return biggest;
 
-            using (var resized = Resize(imageData, SizeName.Medium))
+            using (var resized = Resize(imageData, MediaSize.Medium))
                 await Save(resized, Path.Combine(basePath, "medium", imageData.FileName));
-            if (biggest == SizeName.Medium)
+            if (biggest == MediaSize.Medium)
                 return biggest;
 
-            using (var resized = Resize(imageData, SizeName.Large))
+            using (var resized = Resize(imageData, MediaSize.Large))
                 await Save(resized, Path.Combine(basePath, "large", imageData.FileName));
-            if (biggest == SizeName.Large)
+            if (biggest == MediaSize.Large)
                 return biggest;
 
             // This line isn't needed logically, but the compiler warns without it.
             return biggest;
         }
 
-        public static ImageData Resize(ImageData imageData, SizeName sizeName)
+        public static ImageData Resize(ImageData imageData, string sizeName)
         {
             var oldSize = imageData.Size;
 
             Rectangle crop = new Rectangle(0, 0, oldSize.Width, oldSize.Height);
             Size newSize;
             switch (sizeName) {
-                case SizeName.Large:
+                case MediaSize.Large:
                     newSize = new Size(1080, 0);
                     break;
-                case SizeName.Medium:
+                case MediaSize.Medium:
                     newSize = new Size(720, 0);
                     break;
-                case SizeName.Small:
+                case MediaSize.Small:
                     newSize = new Size(540, 0);
                     break;
-                case SizeName.Thumbnail:
+                case MediaSize.Thumbnail:
                     if (oldSize.Width > oldSize.Height)
                         crop = new Rectangle((oldSize.Width - oldSize.Height) / 2, 0, oldSize.Height, oldSize.Height);
                     if (oldSize.Height > oldSize.Width)
@@ -107,23 +108,23 @@ namespace Media
             };
         }
 
-        public static SizeName BiggestVariant(ImageData imageData)
+        public static string BiggestVariant(ImageData imageData)
         {
             // Minimum height is 152
             if (imageData.Size.Height < 152)
-                return SizeName.Original;
+                return MediaSize.Original;
 
             // Otherwise, size is based on width
             if (imageData.Size.Width > 1080)
-                return SizeName.Large;
+                return MediaSize.Large;
             if (imageData.Size.Width > 720)
-                return SizeName.Medium;
+                return MediaSize.Medium;
             if (imageData.Size.Width > 540)
-                return SizeName.Small;
+                return MediaSize.Small;
             if (imageData.Size.Width > 152)
-                return SizeName.Thumbnail;
+                return MediaSize.Thumbnail;
 
-            return SizeName.Original;
+            return MediaSize.Original;
         }
     }
 }

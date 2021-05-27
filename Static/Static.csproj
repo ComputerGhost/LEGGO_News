@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Images\.gitignore" />
+    <None Include="wwwroot\Images\c4966205-7604-4cb0-88f9-87d72a4a6216.jpg" />
+    <None Include="wwwroot\Images\ff1d45e8-6ad7-4698-a53d-93ac4c871266.jpg" />
+    <None Include="wwwroot\Images\Large\.gitkeep" />
+    <None Include="wwwroot\Images\Medium\.gitkeep" />
+    <None Include="wwwroot\Images\Small\.gitkeep" />
+    <None Include="wwwroot\Images\Small\c4966205-7604-4cb0-88f9-87d72a4a6216.jpg" />
+    <None Include="wwwroot\Images\Small\ff1d45e8-6ad7-4698-a53d-93ac4c871266.jpg" />
+    <None Include="wwwroot\Images\Thumbnail\.gitkeep" />
+    <None Include="wwwroot\Images\Thumbnail\c4966205-7604-4cb0-88f9-87d72a4a6216.jpg" />
+    <None Include="wwwroot\Images\Thumbnail\ff1d45e8-6ad7-4698-a53d-93ac4c871266.jpg" />
+  </ItemGroup>
+
+</Project>

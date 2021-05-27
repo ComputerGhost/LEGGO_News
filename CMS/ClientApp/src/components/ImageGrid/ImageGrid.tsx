@@ -3,34 +3,40 @@ import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk'
 import { ImageList, ImageListItem } from '@material-ui/core';
 import InfiniteScroll from '../InfiniteScroll';
+import DropFile from '../DropFile';
 import { ApplicationState } from '../../store';
 import { getMoreMedia, MediaItem } from '../../store/Media';
 
 interface IProps {
-    images: MediaItem[],
-    hasMore: boolean,
-    getMoreMedia: () => void,
+    onFilesDropped: (files: File[]) => void,
+    // Filled in from redux
+    images?: MediaItem[],
+    hasMore?: boolean,
+    getMoreMedia?: () => void,
 }
 
 function ImageGrid({
+    onFilesDropped,
     images,
     hasMore,
     getMoreMedia,
 }: IProps) {
     return (
-        <InfiniteScroll
-            data={images}
-            hasMore={hasMore}
-            next={getMoreMedia}
-        >
-            <ImageList cols={6}>
-                {images.map((image) => 
-                    <ImageListItem key={image.id} >
-                        <img alt={image.caption} src={image.originalUrl} />
-                    </ImageListItem>
-                )}
-            </ImageList>
-        </InfiniteScroll>
+        <DropFile onDrop={onFilesDropped}>
+            <InfiniteScroll
+                data={images!}
+                hasMore={hasMore!}
+                next={getMoreMedia!}
+            >
+                <ImageList cols={6}>
+                    {images!.map((image) => 
+                        <ImageListItem key={image.id} >
+                            <img alt={image.caption} src={image.originalUrl} />
+                        </ImageListItem>
+                    )}
+                </ImageList>
+            </InfiniteScroll>
+        </DropFile>
     );
 }
 
