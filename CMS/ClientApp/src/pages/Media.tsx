@@ -8,8 +8,8 @@ import { ThunkDispatch } from 'redux-thunk';
 import { getMedia, postMedia } from '../store/Media';
 
 interface IProps {
-    getMedia: (search: string) => void,
-    postMedia: (file: File) => void,
+    getMedia?: (search: string) => void,
+    postMedia?: (file: File) => void,
 }
 
 function Media({
@@ -25,18 +25,18 @@ function Media({
     function handleFilesSelected(event: ChangeEvent<HTMLInputElement>) {
         const fileList = Array.from(event.target.files!);
         [...fileList].map(file => {
-            postMedia(file);
+            postMedia!(file);
         });
     }
 
     function handleFilesDropped(files: File[]) {
         [...files].map(file => {
-            postMedia(file);
+            postMedia!(file);
         });
     }
 
     function handleSearchChanged(newSearch: string) {
-        getMedia(newSearch);
+        getMedia!(newSearch);
     }
 
     useEffect(() => {

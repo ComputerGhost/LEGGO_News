@@ -32,7 +32,11 @@ interface IProps {
     children: ReactElement,
 }
 
-export default function Page({ title, toolbar, children }: IProps) {
+export default function Page({
+    title,
+    toolbar,
+    children
+}: IProps) {
     const classes = useStyles();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));

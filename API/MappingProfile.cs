@@ -15,6 +15,11 @@ namespace API
             CreateMap<Character, CharacterSummary>();
             CreateMap<Character, CharacterDetails>()
                 .ReverseMap();
+
+            CreateMap<Tag, TagSummary>()
+                .ReverseMap();
+            CreateMap<Tag, TagDetails>()
+                .ReverseMap();
         }
     }
 }

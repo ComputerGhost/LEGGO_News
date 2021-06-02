@@ -24,7 +24,13 @@ interface IProps {
     children: ReactElement | null,
 }
 
-export default function TopBar({ drawerWidth, onDrawerOpen, isMobile, title, children }: IProps) {
+export default function TopBar({
+    drawerWidth,
+    onDrawerOpen,
+    isMobile,
+    title,
+    children
+}: IProps) {
     const classes = useStyles(drawerWidth);
 
     return (

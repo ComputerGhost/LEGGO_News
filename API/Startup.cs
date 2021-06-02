@@ -53,6 +53,8 @@ namespace API
                 cfg.DocumentFilter<JsonPatchDocumentFilter>();
                 cfg.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Api.xml"));
             });
+
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

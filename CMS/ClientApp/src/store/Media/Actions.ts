@@ -44,7 +44,7 @@ export const getMedia = (search: string): AppThunkAction<KnownAction> => async (
 export const getMoreMedia = (): AppThunkAction<KnownAction> => async (dispatch, getState) => {
     const state = getState().media!;
 
-    // Same key when getting more media, because we still want the responses even if out of order.
+    // Same key when getting more, because we still want the responses even if out of order.
     let key = state.key;
 
     if (state.isLoading || state.data.length === state.totalCount) {

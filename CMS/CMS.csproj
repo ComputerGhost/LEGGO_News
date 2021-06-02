@@ -21,6 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ClientApp\src\api\Actions.ts">
+      <SubType>Code</SubType>
+    </None>
     <None Update="ClientApp\src\components\InfiniteScroll.tsx">
       <SubType>Code</SubType>
     </None>
