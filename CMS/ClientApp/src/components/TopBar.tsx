@@ -4,6 +4,7 @@ import { AppBar, IconButton, Toolbar, Typography, Theme } from '@material-ui/cor
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 
+
 interface IProps {
     drawerWidth: number,
     isMobile: boolean,
@@ -19,9 +20,11 @@ export default function TopBar({
     title,
     children
 }: IProps) {
+    console.log(isMobile);
+    console.log(drawerWidth);
     return (
         <>
-            <AppBar position='fixed' sx={{ paddingLeft: isMobile ? 0 : drawerWidth }}>
+            <AppBar position='fixed' sx={{ paddingLeft: isMobile ? 0 : drawerWidth + 'px' }}>
                 <Toolbar>
 
                     {isMobile &&
