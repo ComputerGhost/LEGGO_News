@@ -14,7 +14,7 @@
     "@material-ui/core": "^5.0.0-alpha.33",
     "@types/react-helmet": "^6.1.1",
     "@typescript-eslint/parser": "^4.23.0",
-    "eslint": "^7.26.0",
+    "eslint": "^7.28.0",
     "eslint-plugin-flowtype": "^5.7.2",
     "eslint-plugin-import": "^2.23.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
@@ -26,8 +26,7 @@
     "react-dom": "^17.0.0",
     "react-helmet": "^6.1.0",
     "react-infinite-scroll-component": "^6.1.0",
-    "react-query": "^3.16.0",
-    "react-redux": "^7.2.4",
+    "react-query": "^3.16.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
     "redux": "4.0.4",
@@ -46,7 +45,7 @@
     "@types/reactstrap": "8.0.6",
     "cross-env": "6.0.3",
     "nan": "^2.14.2",
-    "typescript": "3.6.4"
+    "typescript": "^4.3.2"
   },
   "scripts": {
     "start": "react-scripts start",

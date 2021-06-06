@@ -1,6 +1,6 @@
 ﻿import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Drawer, IconButton, List, Toolbar, Typography } from '@material-ui/core';
+import { createStyles, makeStyles } from '@material-ui/styles';
+import { Drawer, IconButton, List, Theme, Toolbar, Typography, useTheme } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faArrowLeft,
@@ -18,7 +18,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import DrawerItem from './DrawerItem';
 
-const useStyles = (width: number) => makeStyles(theme => ({
+const useStyles = (theme: Theme, width: number) => makeStyles(() => ({
     drawer: {
         width: width,
     },
@@ -27,7 +27,7 @@ const useStyles = (width: number) => makeStyles(theme => ({
     },
     header: {
         fontSize: '1rem',
-        paddingLeft: theme.spacing(2),
+        paddingLeft: '1rem',
     },
 }))();
 
@@ -39,7 +39,8 @@ interface IProps {
 }
 
 export default function NavDrawer({ width, open, allowClose, onDrawerClosed }: IProps) {
-    const classes = useStyles(width);
+    const theme = useTheme();
+    const classes = useStyles(theme, width);
 
     return (
         <Drawer

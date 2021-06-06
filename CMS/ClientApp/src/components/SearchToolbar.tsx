@@ -1,10 +1,11 @@
 ﻿import React, { ChangeEvent } from 'react';
-import { InputBase } from '@material-ui/core';
-import { alpha, makeStyles } from '@material-ui/core/styles';
+import { InputBase, Theme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import { alpha, useTheme } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = (theme: Theme) => makeStyles(() => ({
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -26,8 +27,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     input: {
-        // !important is bad, but MUI puts the classes in the wrong order in the current version
-        color: 'inherit !important',
+        color: 'inherit',
         width: '100%',
         '& .MuiInputBase-input': {
             padding: theme.spacing(1, 1, 1, 0),
@@ -47,7 +47,8 @@ export default function SearchToolbar({
     placeholder,
     onChange,
 }: IProps) {
-    const classes = useStyles();
+    const theme = useTheme();
+    const classes = useStyles(theme)();
 
     function handleSearchChanged(event: ChangeEvent<HTMLInputElement>) {
         onChange(event.target.value);

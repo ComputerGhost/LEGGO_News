@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { Container, IconButton, makeStyles, TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import { Container, IconButton, TextField } from '@material-ui/core';
 import { Page } from '../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
-import { TagDetails, TagSaveData } from '../store/Tags';
 import { useHistory } from 'react-router-dom';
-import { KnownAction } from '../store/Tags/Reducer';
-import { createTag } from '../store/Tags';
+import { useCreateTag } from '../api/tags';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -15,21 +13,21 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-interface IProps {
-    createTag?: (data: TagSaveData) => Promise<TagDetails>,
-}
-
-function TagCreate({
-    createTag,
-}: IProps) {
+export default function TagCreate() {
     const classes = useStyles();
     const history = useHistory();
     const [name, setName] = useState<string>('');
     const [description, setDescription] = useState<string>('');
+    const mutator = useCreateTag();
 
     async function handleSaveClicked() {
-        const { id } = await createTag!({ name, description });
-        history.replace('./' + id);
+        await mutator.mutate({ name, description });
+        if (mutator.isSuccess)
+            history.replace('./' + mutator.data!.id);
+        else {
+            console.error('Creation failed.');
+            console.log(mutator);
+        }
     }
 
     const toolbar =
@@ -63,15 +61,3 @@ function TagCreate({
     );
 }
 
-
-// Redux
-
-interface DispatchProps {
-    createTag: (data: TagSaveData) => (dispatch: (action: KnownAction) => void) => Promise<TagDetails>,
-}
-
-const mapDispatchToProps: DispatchProps = {
-    createTag,
-}
-
-export default connect(null, mapDispatchToProps)(TagCreate);

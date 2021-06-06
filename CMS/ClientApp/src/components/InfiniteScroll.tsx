@@ -1,9 +1,9 @@
-﻿import React, { useEffect } from 'react';
+﻿import React, { ReactElement, useEffect } from 'react';
 import { default as WrappedComponent } from 'react-infinite-scroll-component';
 
 interface IProps {
-    children: any,
-    data: Array<any>,
+    children: ReactElement,
+    dataLength: number,
     hasMore: boolean,
     next: () => void,
 }
@@ -11,7 +11,7 @@ interface IProps {
 // This can be replaced with the third-party one after they fix the bugs.
 export default function InfiniteScroll({
     children,
-    data,
+    dataLength,
     hasMore,
     next,
 }: IProps) {
@@ -21,11 +21,11 @@ export default function InfiniteScroll({
     useEffect(() => {
         if (typeof window !== 'undefined')
             window.dispatchEvent(new CustomEvent('scroll'));
-    }, [data]);
+    }, [dataLength]);
 
     return (
         <WrappedComponent
-            dataLength={data.length}
+            dataLength={dataLength}
             hasMore={hasMore}
             next={next}
             loader={<h4>Loading</h4>}

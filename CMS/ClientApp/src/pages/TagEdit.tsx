@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { Container, IconButton, makeStyles, TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import { Container, IconButton, TextField } from '@material-ui/core';
 import { Page } from '../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
-import { ThunkDispatch } from 'redux-thunk';
-import { ApplicationState } from '../store';
-import { getTag, createTag } from '../store/Tags/Actions';
-import { TagDetails } from '../store/Tags';
-import { KnownAction } from '../store/Media/Reducer';
+import { useTag, useUpdateTag } from '../api/tags';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -18,33 +14,28 @@ const useStyles = makeStyles((theme) => ({
 
 interface IProps {
     tagId?: number,
-    getTag?: (tagId: number) => Promise<TagDetails>,
-    updateTag?: (name: string, description: string) => void,
 }
 
-function TagEdit({
+export default function TagEdit({
     tagId,
-    getTag,
-    updateTag,
 }: IProps) {
     const classes = useStyles();
     const [name, setName] = useState<string>('');
     const [description, setDescription] = useState<string>('');
+    const { data } = useTag(tagId);
+    const mutator = useUpdateTag(tagId);
 
     useEffect(() => {
-        if (tagId !== undefined)
-            getTag!(tagId);
-    }, []);
+        setName(data?.name ?? '');
+        setDescription(data?.description ?? '');
+    }, [data]);
 
-    useEffect(() => {
-        if (tagItem !== undefined) {
-            setName(tagItem.name);
-            setDescription(tagItem.description);
+    async function handleSaveClicked() {
+        await mutator.mutate({ name, description });
+        if (!mutator.isSuccess) {
+            console.error('Updating failed.');
+            console.log(mutator);
         }
-    }, [tagItem]);
-
-    function handleSaveClicked() {
-        postTag!(name, description);
     }
 
     const toolbar =
@@ -78,17 +69,3 @@ function TagEdit({
     );
 }
 
-
-// Redux
-
-interface DispatchProps {
-    getTag: (tagId: number) => (dispatch: (action: KnownAction) => void, getState: () => ApplicationState) => Promise<TagDetails>,
-    postTag: (name: string, description: string) => (dispatch: (action: KnownAction) => void) => Promise<TagDetails>,
-}
-
-const mapDispatchToProps: DispatchProps = {
-    getTag,
-    postTag,
-}
-
-export default connect(null, mapDispatchToProps)(TagEdit);

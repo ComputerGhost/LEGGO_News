@@ -1,10 +1,9 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import { Home, Media, TagEdit, TagList } from './pages';
+import { Home, Media, TagCreate, TagEdit, TagList } from './pages';
 
 export default function App() {
     const match = useRouteMatch();
-    console.log(match);
 
     return (
         <>

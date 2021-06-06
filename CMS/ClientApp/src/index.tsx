@@ -1,19 +1,21 @@
+import { StyledEngineProvider } from '@material-ui/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux'
 import App from './App';
-import configureStore from './store/configureStore'
 import registerServiceWorker from './registerServiceWorker';
 
-const store = configureStore();
+const queryClient = new QueryClient();
 
 ReactDOM.render(
-    <Provider store={store}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </Provider>,
+    <StyledEngineProvider injectFirst>
+        <QueryClientProvider client={queryClient}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </QueryClientProvider>
+    </StyledEngineProvider>,
     document.getElementById('root'));
 
 registerServiceWorker();
