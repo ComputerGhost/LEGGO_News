@@ -20,8 +20,6 @@ export default function TopBar({
     title,
     children
 }: IProps) {
-    console.log(isMobile);
-    console.log(drawerWidth);
     return (
         <>
             <AppBar position='fixed' sx={{ paddingLeft: isMobile ? 0 : drawerWidth + 'px' }}>

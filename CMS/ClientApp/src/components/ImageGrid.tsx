@@ -27,7 +27,7 @@ export default function ImageGrid({
                 hasMore={hasNextPage || false}
                 next={fetchNextPage}
             >
-                <ImageList cols={6}>
+                <ImageList cols={8}>
                     {data?.pages.map((page) =>
                         page.data.map((image) => (
                             <ImageListItem key={image.id} >

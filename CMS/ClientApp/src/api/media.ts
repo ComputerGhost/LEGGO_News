@@ -19,7 +19,7 @@ export function useMedia(search: string) {
     const getTags = async ({ pageParam }: QueryFunctionContext) => {
         const parameters = new URLSearchParams({
             query: search,
-            offset: pageParam.toString(),
+            offset: pageParam?.toString() ?? 0,
         });
         const endpoint = `${process.env.REACT_APP_API_URL}/media?`;
         const response = await fetch(endpoint + '?' + parameters);
