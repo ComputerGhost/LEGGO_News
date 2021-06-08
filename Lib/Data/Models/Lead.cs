@@ -16,8 +16,5 @@ namespace Data.Models
         public DateTime? PrimaryDate { get; set; }
 
         public string PrimaryUrl { get; set; }
-
-
-        public ICollection<Character> Character { get; set; }
     }
 }

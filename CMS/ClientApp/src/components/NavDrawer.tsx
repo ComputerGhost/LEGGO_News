@@ -72,7 +72,7 @@ export default function NavDrawer({ width, open, allowClose, onDrawerClosed }: I
             <Typography variant='h6' className={classes.header}>Setup</Typography>
             <List>
                 <DrawerItem text='Tags' icon={faTags} href='/tags' />
-                <DrawerItem text='Characters' icon={faTheaterMasks} href='/' />
+                <DrawerItem text='Characters' icon={faTheaterMasks} href='/characters' />
                 <DrawerItem text='Templates' icon={faShapes} href='/' />
                 <DrawerItem text='Users' icon={faUsers} href='/' />
             </List>

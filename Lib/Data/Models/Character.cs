@@ -19,9 +19,5 @@ namespace Data.Models
         public string Emoji { get; set; }
 
         public string Description { get; set; }
-
-        public string Instagram { get; set; }
-
-        public string WebsiteUrl { get; set; }
     }
 }

@@ -63,6 +63,7 @@ export default function TagEdit({
                     multiline
                     onChange={(e) => setDescription(e.target.value)}
                     rows={4}
+                    value={description}
                 />
             </Container>
         </Page>

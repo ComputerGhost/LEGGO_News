@@ -1,4 +1,8 @@
 ﻿using API.DTOs;
+using AutoMapper;
+using Data;
+using Data.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,40 +15,73 @@ namespace API.Controllers
     [Route("[controller]")]
     public class CharactersController : Controller
     {
+        public readonly DatabaseContext _context;
+        public readonly IMapper _mapper;
+
+        public CharactersController(DatabaseContext databaseContext, IMapper mapper)
+        {
+            _context = databaseContext;
+            _mapper = mapper;
+        }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(SearchResults<CharacterSummary>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResults<CharacterSummary>))]
         public IActionResult List([FromQuery] SearchParameters parameters)
         {
-            return Json(new SearchResults<CharacterSummary>());
+            var foundCharacters = _context.Character;
+
+            var charactersPage = foundCharacters
+                .Skip(parameters.Offset)
+                .Take(parameters.Count);
+
+            return Json(new SearchResults<CharacterSummary> {
+                Key = parameters.Key,
+                Offset = parameters.Offset,
+                Count = charactersPage.Count(),
+                TotalCount = foundCharacters.Count(),
+                Data = charactersPage.Select(character => _mapper.Map<CharacterSummary>(character)),
+            });
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(200, Type = typeof(CharacterDetails))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CharacterDetails))]
         public IActionResult Get(int id)
         {
-            return Json(new CharacterDetails());
+            var character = _context.Tag.Find(id);
+            var characterDetails = _mapper.Map<CharacterDetails>(character);
+            return Ok(characterDetails);
         }
 
         [HttpPost]
-        [ProducesResponseType(201)]
-        public IActionResult Create([FromBody] CharacterSaveData character)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CharacterDetails))]
+        public IActionResult Create([FromBody] CharacterSaveData characterSaveData)
         {
-            return Ok();
+            var character = _mapper.Map<Character>(characterSaveData);
+            _context.Character.Add(character);
+            _context.SaveChanges();
+
+            var characterDetails = _mapper.Map<CharacterDetails>(character);
+            return CreatedAtAction(nameof(Get), new { id = 0 }, characterDetails);
         }
 
         [HttpPut("{id}")]
-        [ProducesResponseType(204)]
-        public IActionResult Edit(int id, [FromBody] CharacterSaveData character)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult Edit(int id, [FromBody] CharacterSaveData characterSaveData)
         {
-            return Ok();
+            var character = _context.Character.Find(id);
+            _mapper.Map(characterSaveData, character);
+            _context.SaveChanges();
+
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(204)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult Delete(int id)
         {
-            return Ok();
+            var character = _context.Character.Find(id);
+            _context.Character.Remove(character);
+            return NoContent();
         }
 
     }

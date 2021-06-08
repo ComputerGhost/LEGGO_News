@@ -58,9 +58,9 @@ namespace API.Controllers
         [HttpPost]
         [Consumes("multipart/form-data")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(TagDetails))]
-        public IActionResult Create([FromBody] TagSaveData tagSummary)
+        public IActionResult Create([FromBody] TagSaveData tagSaveData)
         {
-            var tag = _mapper.Map<Tag>(tagSummary);
+            var tag = _mapper.Map<Tag>(tagSaveData);
             _context.Tag.Add(tag);
             _context.SaveChanges();
 
@@ -71,11 +71,10 @@ namespace API.Controllers
         [HttpPut]
         [Consumes("multipart/form-data")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult Edit(long id, [FromBody] TagSaveData tagSummary)
+        public IActionResult Edit(long id, [FromBody] TagSaveData tagSaveData)
         {
             var tag = _context.Tag.Find(id);
-            tag.Name = tagSummary.Name;
-            tag.Description = tagSummary.Description;
+            _mapper.Map(tagSaveData, tag);
             _context.SaveChanges();
 
             return NoContent();

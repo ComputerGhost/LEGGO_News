@@ -13,7 +13,7 @@ interface IProps {
 export default function ({ text, icon, href } : IProps) {
     return (
         <li>
-            <ListItem button component={NavLink} exact to={href} activeClassName='Mui-selected'>
+            <ListItem button component={NavLink} to={href} activeClassName='Mui-selected'>
                 <ListItemIcon>
                     <FontAwesomeIcon icon={icon} fixedWidth />
                 </ListItemIcon>
