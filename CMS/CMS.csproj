@@ -30,6 +30,9 @@
     <None Update="ClientApp\src\api\characters.ts">
       <SubType>Code</SubType>
     </None>
+    <None Update="ClientApp\src\api\users.ts">
+      <SubType>Code</SubType>
+    </None>
     <None Update="ClientApp\src\api\tags.ts">
       <SubType>Code</SubType>
     </None>
@@ -37,6 +40,9 @@
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\DropFile.tsx">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\components\PasswordField.tsx">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\SearchToolbar.tsx">
@@ -52,6 +58,9 @@
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\pages\TagList\index.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\pages\UserList\index.ts">
       <SubType>Code</SubType>
     </None>
   </ItemGroup>

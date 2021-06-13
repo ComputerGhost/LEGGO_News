@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import { CharacterCreate, CharacterEdit, CharacterList, Home, Media, TagCreate, TagEdit, TagList } from './pages';
+import { CharacterCreate, CharacterEdit, CharacterList, Home, Media, TagCreate, TagEdit, TagList, UserCreate, UserEdit, UserList } from './pages';
 
 export default function App() {
     const match = useRouteMatch();
@@ -27,6 +27,17 @@ export default function App() {
                 <Route exact path='/media'>
                     <Media />
                 </Route>
+
+                <Route exact path='/users'>
+                    <UserList />
+                </Route>
+                <Route exact path='/users/new'>
+                    <UserCreate />
+                </Route>
+                <Route
+                    exact path='/users/:userId(\d+)'
+                    render={({ match }) => <UserEdit userId={match.params['userId']} />}
+                />
 
                 <Route exact path='/tags'>
                     <TagList />

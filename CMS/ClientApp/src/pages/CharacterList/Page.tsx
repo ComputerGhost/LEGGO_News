@@ -17,7 +17,7 @@ export default function CharacterList() {
 
     const toolbar =
         <>
-            <SearchToolbar placeholder='Search Characters...' onChange={setSearch} />
+            <SearchToolbar placeholder='Search characters...' onChange={setSearch} />
             <IconButton color='inherit' onClick={handleAddClicked}>
                 <FontAwesomeIcon icon={faPlus} fixedWidth />
             </IconButton>

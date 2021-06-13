@@ -1,25 +1,31 @@
 ﻿using API.DTOs;
 using AutoMapper;
 using Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace API
 {
+    using BCrypt = BCrypt.Net.BCrypt;
+
     class MappingProfile : Profile
     {
         public MappingProfile()
         {
             CreateMap<Character, CharacterSummary>();
-            CreateMap<Character, CharacterDetails>()
-                .ReverseMap();
+            CreateMap<Character, CharacterDetails>();
+            CreateMap<CharacterSaveData, Character>();
 
-            CreateMap<Tag, TagSummary>()
-                .ReverseMap();
-            CreateMap<Tag, TagDetails>()
-                .ReverseMap();
+            CreateMap<Tag, TagSummary>();
+            CreateMap<Tag, TagDetails>();
+            CreateMap<TagSaveData, Tag>();
+
+            CreateMap<User, UserSummary>();
+            CreateMap<User, UserDetails>();
+            CreateMap<UserSaveData, User>()
+                .ForMember(d => d.HashedPassword, o =>
+                {
+                    o.MapFrom(s => BCrypt.HashPassword(s.Password));
+                    o.Condition(s => !string.IsNullOrEmpty(s.Password));
+                });
         }
     }
 }

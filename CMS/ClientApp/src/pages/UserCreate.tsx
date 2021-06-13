@@ -5,7 +5,8 @@ import { Page } from '../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
-import { useCreateTag } from '../api/tags';
+import { useCreateUser } from '../api/users';
+import PasswordField from '../components/PasswordField';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -13,15 +14,21 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function TagCreate() {
+export default function UserCreate() {
     const classes = useStyles();
     const history = useHistory();
-    const [name, setName] = useState<string>('');
-    const [description, setDescription] = useState<string>('');
-    const mutator = useCreateTag();
+    const mutator = useCreateUser();
+
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [displayName, setDisplayName] = useState<string>('');
 
     async function handleSaveClicked() {
-        await mutator.mutate({ name, description });
+        await mutator.mutate({
+            username,
+            password,
+            displayName,
+        });
         if (mutator.isSuccess)
             history.replace('./' + mutator.data!.id);
         else {
@@ -39,23 +46,31 @@ export default function TagCreate() {
         </>;
 
     return (
-        <Page title='Create Tag' toolbar={toolbar}>
+        <Page title='Create User' toolbar={toolbar}>
             <Container>
                 <TextField
                     fullWidth
-                    label='Name'
+                    label='Username'
                     margin='normal'
-                    onChange={(e) => setName(e.target.value)}
-                    value={name}
+                    onChange={(e) => setUsername(e.target.value)}
+                    value={username}
+                    required
+                />
+                <PasswordField
+                    fullWidth
+                    label='Password'
+                    margin='normal'
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    required
                 />
                 <TextField
-                    label='Description'
                     fullWidth
+                    label='Display name'
                     margin='normal'
-                    multiline
-                    onChange={(e) => setDescription(e.target.value)}
-                    rows={4}
-                    value={description}
+                    onChange={(e) => setDisplayName(e.target.value)}
+                    value={displayName}
+                    required
                 />
             </Container>
         </Page>
