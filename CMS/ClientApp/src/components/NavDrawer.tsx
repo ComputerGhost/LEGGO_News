@@ -63,7 +63,7 @@ export default function NavDrawer({ width, open, allowClose, onDrawerClosed }: I
 
             <Typography variant='h6' className={classes.header}>Content</Typography>
             <List>
-                <DrawerItem text='Articles' icon={faPenNib} href='/' />
+                <DrawerItem text='Articles' icon={faPenNib} href='/articles' />
                 <DrawerItem text='Leads' icon={faLightbulb} href='/' />
                 <DrawerItem text='Comments' icon={faComments} href='/' />
                 <DrawerItem text='Media' icon={faPhotoVideo} href='/media' />

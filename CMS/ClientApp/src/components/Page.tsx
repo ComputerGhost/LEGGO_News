@@ -9,7 +9,7 @@ const drawerWidth = 240;
 interface IProps {
     title: string,
     toolbar?: ReactElement,
-    children: ReactElement,
+    children: ReactElement | ReactElement[],
 }
 
 export default function Page({

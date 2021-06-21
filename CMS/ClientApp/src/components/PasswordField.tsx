@@ -8,9 +8,9 @@ interface IProps {
     value: string,
     onChange: (event: ChangeEvent<HTMLInputElement>) => void,
     // Forwarded props
-    fullWidth: boolean,
+    fullWidth?: boolean,
     margin?: 'dense' | 'normal' | 'none',
-    required?: boolean
+    required?: boolean,
 }
 
 export default function PasswordField({

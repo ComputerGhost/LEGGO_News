@@ -1,4 +1,7 @@
 ﻿using API.DTOs;
+using AutoMapper;
+using Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,45 +15,65 @@ namespace API.Controllers
     [Route("[controller]")]
     public class ArticlesController : Controller
     {
+        public readonly DatabaseContext _context;
+        public readonly IMapper _mapper;
+
+        public ArticlesController(DatabaseContext databaseContext, IMapper mapper)
+        {
+            _context = databaseContext;
+            _mapper = mapper;
+        }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(SearchResults<ArticleSummary>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResults<ArticleSummary>))]
         public IActionResult List([FromQuery] SearchParameters parameters)
         {
-            return Json(new SearchResults<ArticleSummary>());
+            var foundArticles = _context.Article;
+
+            var articlesPage = foundArticles
+                .Skip(parameters.Offset)
+                .Take(parameters.Count);
+
+            return Json(new SearchResults<ArticleSummary> {
+                Key = parameters.Key,
+                Offset = parameters.Offset,
+                Count = articlesPage.Count(),
+                TotalCount = foundArticles.Count(),
+                Data = articlesPage.Select(article => _mapper.Map<ArticleSummary>(article))
+            });
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(200, Type = typeof(ArticleDetails))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ArticleDetails))]
         public IActionResult Get(int id)
         {
             return Json(new ArticleDetails());
         }
 
         [HttpPost]
-        [ProducesResponseType(201)]
-        public IActionResult Post([FromBody] ArticleSaveData character)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public IActionResult Create([FromBody] ArticleSaveData article)
         {
             return Ok();
         }
 
         [HttpPut("{id}")]
-        [ProducesResponseType(204)]
-        public IActionResult Put(int id, [FromBody] ArticleSaveData character)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult Edit(int id, [FromBody] ArticleSaveData article)
         {
             return Ok();
         }
 
         [HttpPatch]
         [Consumes("application/json-patch+json")]
-        [ProducesResponseType(204)]
-        public IActionResult Patch(int id, [FromBody] JsonPatchDocument<ArticleSaveData> values)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult Edit(int id, [FromBody] JsonPatchDocument<ArticleSaveData> values)
         {
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(204)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult Delete(int id)
         {
             return Ok();

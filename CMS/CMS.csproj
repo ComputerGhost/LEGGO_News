@@ -21,6 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ClientApp\src\api\articles.ts">
+      <SubType>Code</SubType>
+    </None>
     <None Update="ClientApp\src\api\search.ts">
       <SubType>Code</SubType>
     </None>
@@ -34,6 +37,15 @@
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\api\tags.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\components\Editor\Editor.tsx">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\components\Editor\Widget.tsx">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\components\Editor\index.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\InfiniteScroll.tsx">
@@ -52,6 +64,9 @@
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\Page.tsx">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\pages\ArticleList\index.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\pages\CharacterList\index.ts">

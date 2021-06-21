@@ -74,9 +74,9 @@ export function useUpdateCharacter(characterId: number | undefined) {
     });
 }
 
-export function useDeleteCharacter(tagId: number) {
+export function useDeleteCharacter(characterId: number) {
     return useMutation(async () => {
-        const endpoint = `${process.env.REACT_APP_API_URL}/characters/${tagId}`;
+        const endpoint = `${process.env.REACT_APP_API_URL}/characters/${characterId}`;
         const response = await fetch(endpoint, {
             method: 'DELETE',
         });
