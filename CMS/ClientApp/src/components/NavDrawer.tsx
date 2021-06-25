@@ -73,7 +73,7 @@ export default function NavDrawer({ width, open, allowClose, onDrawerClosed }: I
             <List>
                 <DrawerItem text='Tags' icon={faTags} href='/tags' />
                 <DrawerItem text='Characters' icon={faTheaterMasks} href='/characters' />
-                <DrawerItem text='Templates' icon={faShapes} href='/' />
+                <DrawerItem text='Templates' icon={faShapes} href='/templates' />
                 <DrawerItem text='Users' icon={faUsers} href='/users' />
             </List>
 

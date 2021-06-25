@@ -12,3 +12,6 @@ export { default as UserList } from './UserList';
 export { default as TagCreate } from './TagCreate';
 export { default as TagEdit } from './TagEdit';
 export { default as TagList } from './TagList';
+export { default as TemplateCreate } from './TemplateCreate';
+export { default as TemplateEdit } from './TemplateEdit';
+export { default as TemplateList } from './TemplateList';
