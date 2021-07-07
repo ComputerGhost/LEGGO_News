@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import { ArticleCreate, ArticleEdit, ArticleList, CharacterCreate, CharacterEdit, CharacterList, Home, Media, TagCreate, TagEdit, TagList, TemplateCreate, TemplateEdit, TemplateList, UserCreate, UserEdit, UserList } from './pages';
+import { ArticleCreate, ArticleEdit, ArticleList, CharacterCreate, CharacterEdit, CharacterList, CommentList, Home, Media, TagCreate, TagEdit, TagList, TemplateCreate, TemplateEdit, TemplateList, UserCreate, UserEdit, UserList } from './pages';
 
 export default function App() {
     const match = useRouteMatch();
@@ -34,6 +34,10 @@ export default function App() {
                     exact path='/characters/:characterId(\d+)'
                     render={({ match }) => <CharacterEdit characterId={match.params['characterId']} />}
                 />
+
+                <Route exact path='/comments'>
+                    <CommentList />
+                </Route>
 
                 <Route exact path='/media'>
                     <Media />

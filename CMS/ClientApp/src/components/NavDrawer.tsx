@@ -65,7 +65,7 @@ export default function NavDrawer({ width, open, allowClose, onDrawerClosed }: I
             <List>
                 <DrawerItem text='Articles' icon={faPenNib} href='/articles' />
                 <DrawerItem text='Leads' icon={faLightbulb} href='/' />
-                <DrawerItem text='Comments' icon={faComments} href='/' />
+                <DrawerItem text='Comments' icon={faComments} href='/comments' />
                 <DrawerItem text='Media' icon={faPhotoVideo} href='/media' />
             </List>
 

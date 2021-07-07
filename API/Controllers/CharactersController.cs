@@ -47,7 +47,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CharacterDetails))]
         public IActionResult Get(int id)
         {
-            var character = _context.Tag.Find(id);
+            var character = _context.Character.Find(id);
             var characterDetails = _mapper.Map<CharacterDetails>(character);
             return Ok(characterDetails);
         }
