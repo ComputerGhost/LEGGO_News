@@ -6,6 +6,7 @@ export { default as ArticleCreate } from './ArticleCreate';
 export { default as ArticleEdit } from './ArticleEdit';
 export { default as ArticleList } from './ArticleList';
 export { default as Home } from './Home';
+export { default as Help } from './Help';
 export { default as Media } from './MediaList';
 export { default as UserCreate } from './UserCreate';
 export { default as UserEdit } from './UserEdit';

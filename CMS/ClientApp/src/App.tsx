@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import { ArticleCreate, ArticleEdit, ArticleList, CharacterCreate, CharacterEdit, CharacterList, CommentList, Home, Media, TagCreate, TagEdit, TagList, TemplateCreate, TemplateEdit, TemplateList, UserCreate, UserEdit, UserList } from './pages';
+import { ArticleCreate, ArticleEdit, ArticleList, CharacterCreate, CharacterEdit, CharacterList, CommentList, Help, Home, Media, TagCreate, TagEdit, TagList, TemplateCreate, TemplateEdit, TemplateList, UserCreate, UserEdit, UserList } from './pages';
 
 export default function App() {
     const match = useRouteMatch();
@@ -37,6 +37,10 @@ export default function App() {
 
                 <Route exact path='/comments'>
                     <CommentList />
+                </Route>
+
+                <Route exact path='/help'>
+                    <Help />
                 </Route>
 
                 <Route exact path='/media'>

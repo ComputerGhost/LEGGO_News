@@ -78,7 +78,7 @@ export default function NavDrawer({ width, open, allowClose, onDrawerClosed }: I
 
             <Typography variant='h6' className={classes.header}>Information</Typography>
             <List>
-                <DrawerItem text='Help and Tips' icon={faQuestionCircle} href='/' />
+                <DrawerItem text='Help and Tips' icon={faQuestionCircle} href='/help' />
             </List>
 
         </Drawer>
