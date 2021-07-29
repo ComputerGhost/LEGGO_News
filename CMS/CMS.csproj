@@ -48,10 +48,13 @@
     <None Update="ClientApp\src\components\Editor\Editor.tsx">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\components\Editor\Widget.tsx">
+    <None Update="ClientApp\src\components\Editor\Container.tsx">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\Editor\index.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\components\TabPanel.tsx">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\InfiniteScroll.tsx">

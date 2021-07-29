@@ -1,13 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Box, Container, IconButton, Tab, TextField } from '@material-ui/core';
-import { Editor, Page } from '../components';
+import { Editor, Page, TabPanel } from '../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
 import { useCreateArticle } from '../api/articles';
-import { TabContext, TabList, TabPanel } from '@material-ui/lab';
-import EditorJS, { API } from '@editorjs/editorjs';
+import { TabContext, TabList } from '@material-ui/lab';
+import EditorJS from '@editorjs/editorjs';
 
 const useStyles = makeStyles((theme) => ({
     grow: {

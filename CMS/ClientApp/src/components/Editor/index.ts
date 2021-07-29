@@ -1,3 +1,3 @@
-﻿import Widget from './Widget';
-const Editor = Widget;
+﻿import Container from './Container';
+const Editor = Container;
 export default Editor;
