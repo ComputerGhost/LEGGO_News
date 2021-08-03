@@ -7,5 +7,9 @@ namespace API.DTOs
 {
     public class ArticleDetails
     {
+        public long Id { get; set; }
+        public string Title { get; set; }
+        public string EditorVersion { get; set; }
+        public string Content { get; set; }
     }
 }

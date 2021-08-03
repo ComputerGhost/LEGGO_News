@@ -1,6 +1,7 @@
 ﻿using API.DTOs;
 using AutoMapper;
 using Data;
+using Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -47,14 +48,24 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ArticleDetails))]
         public IActionResult Get(int id)
         {
-            return Json(new ArticleDetails());
+            var article = _context.Article.Find((long)id);
+            var details = _mapper.Map<ArticleDetails>(article);
+            return Json(details);
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        public IActionResult Create([FromBody] ArticleSaveData article)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ArticleSummary))]
+        public IActionResult Create([FromBody] ArticleSaveData articleSaveData)
         {
-            return Ok();
+            var article = _context.Article.Find(1);
+            return new CreatedResult($"./1", _mapper.Map<ArticleSummary>(article));
+
+            var newArticle = _mapper.Map<Article>(articleSaveData);
+            _context.Article.Add(newArticle);
+            _context.SaveChanges();
+
+            var summary = _mapper.Map<ArticleSummary>(newArticle);
+            return new CreatedResult($"./{newArticle.Id}", summary);
         }
 
         [HttpPut("{id}")]

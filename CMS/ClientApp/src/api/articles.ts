@@ -1,14 +1,19 @@
-﻿import { QueryFunctionContext, useInfiniteQuery, useMutation, useQuery } from "react-query";
+﻿import { OutputBlockData } from "@editorjs/editorjs";
+import { QueryFunctionContext, useInfiniteQuery, useMutation, useQuery } from "react-query";
 import { SearchResults, getNextPageParam } from "./search";
 
 
 export interface ArticleDetails {
     id: number,
     title: string,
+    editorVersion: string,
+    content: string,
 }
 
 export interface ArticleSaveData {
     title: string,
+    editorVersion: string,
+    content: string,
 }
 
 export interface ArticleSummary {
@@ -46,9 +51,10 @@ export function useCreateArticle() {
         const endpoint = `${process.env.REACT_APP_API_URL}/articles`;
         const response = await fetch(endpoint, {
             method: 'POST',
-            body: JSON.stringify(data)
+            headers: [['Content-Type', 'application/json']],
+            body: JSON.stringify(data),
         });
-        return await response.json() as ArticleDetails;
+        return await response.json() as ArticleSummary;
     });
 }
 
@@ -59,9 +65,10 @@ export function useUpdateArticle(articleId: number | undefined) {
         const endpoint = `${process.env.REACT_APP_API_URL}/articles/${articleId}`;
         const response = await fetch(endpoint, {
             method: 'PUT',
+            headers: [['Content-Type', 'application/json']],
             body: JSON.stringify(data)
         });
-        return await response.json() as ArticleDetails;
+        return await response.json() as ArticleSummary;
     });
 }
 

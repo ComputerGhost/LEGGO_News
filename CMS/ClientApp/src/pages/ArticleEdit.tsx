@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Container, IconButton, TextField } from '@material-ui/core';
-import { Page } from '../components';
+import { Box, Container, IconButton, Tab, TextField } from '@material-ui/core';
+import { Editor, Page } from '../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
-import { useArticle, useUpdateArticle } from '../api/articles';
+import { ArticleDetails, useArticle, useUpdateArticle } from '../api/articles';
+import { TabContext, TabList, TabPanel } from '@material-ui/lab';
+import EditorJS, { OutputBlockData, OutputData } from '@editorjs/editorjs';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -19,24 +21,34 @@ interface IProps {
 export default function CharacterEdit({
     articleId,
 }: IProps) {
+    const [tabIndex, setTabIndex] = useState('0');
+    const [title, setTitle] = useState<string>('');
+    const [editorApi, setEditorApi] = useState<EditorJS>();
+
     const classes = useStyles();
     const { data } = useArticle(articleId);
     const mutator = useUpdateArticle(articleId);
-
-    const [title, setTitle] = useState<string>('');
 
     useEffect(() => {
         setTitle(data?.title ?? '');
     }, [data]);
 
-    async function handleSaveClicked() {
-        await mutator.mutate({
-            title
-        });
-        if (!mutator.isSuccess) {
-            console.error('Updating failed.');
-            console.log(mutator);
+    useEffect(() => {
+        if (editorApi?.render) {
+            editorApi.render({
+                version: data?.editorVersion,
+                blocks: JSON.parse(data?.content ?? "[]")
+            });
         }
+    }, [data, editorApi]);
+
+    async function handleSaveClicked() {
+        const content = await editorApi!.save();
+        await mutator.mutate({
+            title,
+            editorVersion: content.version!,
+            content: JSON.stringify(content.blocks),
+        });
     }
 
     const toolbar =
@@ -50,13 +62,32 @@ export default function CharacterEdit({
     return (
         <Page title='Edit Article' toolbar={toolbar}>
             <Container>
-                <TextField
-                    fullWidth
-                    label='Title'
-                    margin='normal'
-                    onChange={(e) => setTitle(e.target.value)}
-                    value={title}
-                />
+                <TabContext value={tabIndex}>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                        <TabList onChange={(event, newValue) => setTabIndex(newValue)}>
+                            <Tab label='Article' value='0' />
+                            <Tab label='Metadata' value='1' />
+                        </TabList>
+                    </Box>
+                    <TabPanel value='0'>
+                        <TextField
+                            fullWidth
+                            label='Title'
+                            margin='normal'
+                            onChange={(e) => setTitle(e.target.value)}
+                            value={title}
+                        />
+                        <Editor
+                            onApiSet={setEditorApi}
+                            fullWidth
+                            label='Content'
+                            margin='normal'
+                        />
+                    </TabPanel>
+                    <TabPanel value='1'>
+                        <div> stuff here </div>
+                    </TabPanel>
+                </TabContext>
             </Container>
         </Page>
     );

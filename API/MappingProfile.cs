@@ -10,6 +10,10 @@ namespace API
     {
         public MappingProfile()
         {
+            CreateMap<Article, ArticleSummary>();
+            CreateMap<Article, ArticleDetails>();
+            CreateMap<ArticleSaveData, Article>();
+
             CreateMap<Character, CharacterSummary>();
             CreateMap<Character, CharacterDetails>();
             CreateMap<CharacterSaveData, Character>();

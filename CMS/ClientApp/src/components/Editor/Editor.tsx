@@ -26,7 +26,7 @@ export default function Editor({
 }: IEditorProps) {
     var classes = useStyles();
 
-    function handleApiSet(apiInstance: EditorJS) {
+    function handleReady(apiInstance?: EditorJS) {
         if (apiInstance && onApiSet) {
             onApiSet(apiInstance);
         }
@@ -40,7 +40,7 @@ export default function Editor({
             ref={forwardedRef}
         >
             <EditorJs
-                instanceRef={handleApiSet}
+                onReady={handleReady}
             />
         </div>
     );

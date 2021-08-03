@@ -25,18 +25,13 @@ export default function ArticleCreate() {
     const mutator = useCreateArticle();
 
     async function handleSaveClicked() {
-        const article = await editorApi!.save();
-        console.log(article);
-        return;
+        const content = await editorApi!.save();
         await mutator.mutate({
             title,
+            editorVersion: content.version!,
+            content: JSON.stringify(content.blocks),
         });
-        if (mutator.isSuccess)
-            history.replace('./' + mutator.data!.id);
-        else {
-            console.error('Creation failed.');
-            console.log(mutator);
-        }
+        history.replace('./' + mutator.data!.id);
     }
 
     const toolbar =
