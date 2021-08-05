@@ -10,7 +10,6 @@ namespace Data
     {
         public DbSet<Article> Article { get; set; }
         public DbSet<Character> Character { get; set; }
-        public DbSet<Comment> Comment { get; set; }
         public DbSet<Media> Media { get; set; }
         public DbSet<Tag> Tag { get; set; }
         public DbSet<Template> Template { get; set; }
@@ -34,10 +33,6 @@ namespace Data
                 .UseIdentityColumn();
 
             modelBuilder.Entity<Character>()
-                .Property("Id")
-                .UseIdentityColumn();
-
-            modelBuilder.Entity<Comment>()
                 .Property("Id")
                 .UseIdentityColumn();
 

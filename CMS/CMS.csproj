@@ -21,9 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ClientApp\src\api\comments.ts">
-      <SubType>Code</SubType>
-    </None>
     <None Update="ClientApp\src\api\articles.ts">
       <SubType>Code</SubType>
     </None>
@@ -73,9 +70,6 @@
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\Page.tsx">
-      <SubType>Code</SubType>
-    </None>
-    <None Update="ClientApp\src\pages\CommentList\index.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\pages\ArticleList\index.ts">

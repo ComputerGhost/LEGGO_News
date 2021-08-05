@@ -1,7 +1,6 @@
 ﻿export { default as CharacterCreate } from './CharacterCreate';
 export { default as CharacterEdit } from './CharacterEdit';
 export { default as CharacterList } from './CharacterList';
-export { default as CommentList } from './CommentList';
 export { default as ArticleCreate } from './ArticleCreate';
 export { default as ArticleEdit } from './ArticleEdit';
 export { default as ArticleList } from './ArticleList';
