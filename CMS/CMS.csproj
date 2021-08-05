@@ -39,9 +39,6 @@
     <None Update="ClientApp\src\api\users.ts">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\api\tags.ts">
-      <SubType>Code</SubType>
-    </None>
     <None Update="ClientApp\src\components\Editor\Editor.tsx">
       <SubType>Code</SubType>
     </None>
@@ -76,9 +73,6 @@
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\pages\CharacterList\index.ts">
-      <SubType>Code</SubType>
-    </None>
-    <None Update="ClientApp\src\pages\TagList\index.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\pages\TemplateList\index.ts">
