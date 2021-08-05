@@ -57,9 +57,6 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ArticleSummary))]
         public IActionResult Create([FromBody] ArticleSaveData articleSaveData)
         {
-            var article = _context.Article.Find(1);
-            return new CreatedResult($"./1", _mapper.Map<ArticleSummary>(article));
-
             var newArticle = _mapper.Map<Article>(articleSaveData);
             _context.Article.Add(newArticle);
             _context.SaveChanges();
