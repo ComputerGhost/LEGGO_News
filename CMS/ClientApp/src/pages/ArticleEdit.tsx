@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Box, Container, IconButton, Tab, TextField } from '@material-ui/core';
-import { Editor, Page } from '../components';
+import { Box, Checkbox, Container, FormControlLabel, IconButton, Tab, TextField } from '@material-ui/core';
+import { Editor, Page, TabPanel } from '../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { ArticleDetails, useArticle, useUpdateArticle } from '../api/articles';
-import { TabContext, TabList, TabPanel } from '@material-ui/lab';
+import { TabContext, TabList } from '@material-ui/lab';
 import EditorJS, { OutputBlockData, OutputData } from '@editorjs/editorjs';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,6 +23,7 @@ export default function CharacterEdit({
 }: IProps) {
     const [tabIndex, setTabIndex] = useState('0');
     const [title, setTitle] = useState<string>('');
+    const [topStory, setTopStory] = useState<boolean>(false);
     const [editorApi, setEditorApi] = useState<EditorJS>();
 
     const classes = useStyles();
@@ -85,7 +86,10 @@ export default function CharacterEdit({
                         />
                     </TabPanel>
                     <TabPanel value='1'>
-                        <div> stuff here </div>
+                        <FormControlLabel
+                            control={<Checkbox checked={topStory} onChange={(e) => setTopStory(e.target.checked)} />}
+                            label="Top story"
+                        />
                     </TabPanel>
                 </TabContext>
             </Container>
