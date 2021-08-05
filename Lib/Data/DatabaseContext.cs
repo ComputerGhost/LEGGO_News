@@ -11,7 +11,6 @@ namespace Data
         public DbSet<Article> Article { get; set; }
         public DbSet<Character> Character { get; set; }
         public DbSet<Media> Media { get; set; }
-        public DbSet<Template> Template { get; set; }
         public DbSet<User> User { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
@@ -40,10 +39,6 @@ namespace Data
                 .UseIdentityColumn();
 
             modelBuilder.Entity<Media>()
-                .Property("Id")
-                .UseIdentityColumn();
-
-            modelBuilder.Entity<Template>()
                 .Property("Id")
                 .UseIdentityColumn();
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import { ArticleCreate, ArticleEdit, ArticleList, CharacterCreate, CharacterEdit, CharacterList, Help, Home, Media, TemplateCreate, TemplateEdit, TemplateList, UserCreate, UserEdit, UserList } from './pages';
+import { ArticleCreate, ArticleEdit, ArticleList, CharacterCreate, CharacterEdit, CharacterList, Help, Home, Media, UserCreate, UserEdit, UserList } from './pages';
 
 export default function App() {
     const match = useRouteMatch();
@@ -52,17 +52,6 @@ export default function App() {
                 <Route
                     exact path='/users/:userId(\d+)'
                     render={({ match }) => <UserEdit userId={match.params['userId']} />}
-                />
-
-                <Route exact path='/templates'>
-                    <TemplateList />
-                </Route>
-                <Route exact path='/templates/new'>
-                    <TemplateCreate />
-                </Route>
-                <Route
-                    exact path='/templates/:templateId(\d+)'
-                    render={({ match }) => <TemplateEdit templateId={match.params['templateId']} />}
                 />
 
             </Switch>

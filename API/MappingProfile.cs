@@ -18,10 +18,6 @@ namespace API
             CreateMap<Character, CharacterDetails>();
             CreateMap<CharacterSaveData, Character>();
 
-            CreateMap<Template, TemplateSummary>();
-            CreateMap<Template, TemplateDetails>();
-            CreateMap<TemplateSaveData, Template>();
-
             CreateMap<User, UserSummary>();
             CreateMap<User, UserDetails>();
             CreateMap<UserSaveData, User>()
