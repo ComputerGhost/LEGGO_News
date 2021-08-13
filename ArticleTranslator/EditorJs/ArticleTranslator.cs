@@ -10,6 +10,11 @@ namespace ArticleTranslator.EditorJs
 {
     class ArticleTranslator : IArticleTranslator
     {
+        public string GetTranslatorType()
+        {
+            return "EditorJs";
+        }
+
         public string TranslateToHtml(string savedData)
         {
             var blocks = JsonConvert.DeserializeObject<IEnumerable<Block>>(
