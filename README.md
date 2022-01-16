@@ -16,7 +16,8 @@ After cloning the repo, follow these steps to start the project:
 
  1. Create a leggo_news database.
  2. Create a leggo_news user for the database table.  The password should be "password".
- 3. Run the software for the first time.
+ 3. Set up an OAuth server.  FusionAuth is recommended.  Configure with environment variables.
+ 4. Run the software for the first time.
 
 Happy coding!
 
