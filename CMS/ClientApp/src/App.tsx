@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { AuthRoute } from './components';
 import { ArticleCreate, ArticleEdit, ArticleList, CharacterCreate, CharacterEdit, CharacterList, Help, Home, Media, UserCreate, UserEdit, UserList } from './pages';
 
 export default function App() {
@@ -9,47 +10,47 @@ export default function App() {
         <>
             <Switch>
 
-                <Route exact path='/'>
+                <AuthRoute exact path='/'>
                     <Home />
-                </Route>
+                </AuthRoute>
 
-                <Route exact path='/articles'>
+                <AuthRoute exact path='/articles'>
                     <ArticleList />
-                </Route>
-                <Route exact path='/articles/new'>
+                </AuthRoute>
+                <AuthRoute exact path='/articles/new'>
                     <ArticleCreate />
-                </Route>
-                <Route
+                </AuthRoute>
+                <AuthRoute
                     exact path='/articles/:articleId(\d+)'
                     render={({ match }) => <ArticleEdit articleId={match.params['articleId']} />}
                 />
 
-                <Route exact path='/characters'>
+                <AuthRoute exact path='/characters'>
                     <CharacterList />
-                </Route>
-                <Route exact path='/characters/new'>
+                </AuthRoute>
+                <AuthRoute exact path='/characters/new'>
                     <CharacterCreate />
-                </Route>
-                <Route
+                </AuthRoute>
+                <AuthRoute
                     exact path='/characters/:characterId(\d+)'
                     render={({ match }) => <CharacterEdit characterId={match.params['characterId']} />}
                 />
 
-                <Route exact path='/help'>
+                <AuthRoute exact path='/help'>
                     <Help />
-                </Route>
+                </AuthRoute>
 
-                <Route exact path='/media'>
+                <AuthRoute exact path='/media'>
                     <Media />
-                </Route>
+                </AuthRoute>
 
-                <Route exact path='/users'>
+                <AuthRoute exact path='/users'>
                     <UserList />
-                </Route>
-                <Route exact path='/users/new'>
+                </AuthRoute>
+                <AuthRoute exact path='/users/new'>
                     <UserCreate />
-                </Route>
-                <Route
+                </AuthRoute>
+                <AuthRoute
                     exact path='/users/:userId(\d+)'
                     render={({ match }) => <UserEdit userId={match.params['userId']} />}
                 />

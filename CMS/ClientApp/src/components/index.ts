@@ -1,4 +1,5 @@
-﻿export { default as DrawerItem } from './DrawerItem';
+﻿export { default as AuthRoute } from './AuthRoute';
+export { default as DrawerItem } from './DrawerItem';
 export { default as Editor } from './Editor';
 export { default as ImageGrid } from './ImageGrid';
 export { default as NavDrawer } from './NavDrawer';

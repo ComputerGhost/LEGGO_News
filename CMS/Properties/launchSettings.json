@@ -13,7 +13,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "REACT_APP_API_URL": "https://localhost:44300"
+        "REACT_APP_API_URL": "https://localhost:44381/api"
       }
     },
     "CMS": {

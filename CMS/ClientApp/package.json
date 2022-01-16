@@ -27,6 +27,7 @@
     "merge": "^2.1.1",
     "popper.js": "^1.16.0",
     "react": "^17.0.0",
+    "react-cookie": "^4.1.1",
     "react-dom": "^17.0.0",
     "react-helmet": "^6.1.0",
     "react-infinite-scroll-component": "^6.1.0",

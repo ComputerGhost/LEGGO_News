@@ -10,7 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.14" />
+    <PackageReference Include="ProxyKit" Version="2.3.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +24,9 @@
 
   <ItemGroup>
     <None Update="ClientApp\src\api\articles.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\hooks\useAuth.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\api\search.ts">
@@ -64,6 +69,9 @@
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\Page.tsx">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\components\AuthRoute.tsx">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\pages\ArticleList\index.ts">
