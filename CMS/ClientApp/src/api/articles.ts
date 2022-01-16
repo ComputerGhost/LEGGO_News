@@ -28,7 +28,7 @@ export function useArticles(search: string) {
             query: search,
             offset: pageParam?.toString() ?? 0,
         });
-        const endpoint = `${process.env.REACT_APP_API_URL}/articles?`;
+        const endpoint = `${process.env.REACT_APP_API_URL}/articles`;
         const response = await fetch(endpoint + '?' + parameters);
         return await response.json() as SearchResults<ArticleSummary>;
     }

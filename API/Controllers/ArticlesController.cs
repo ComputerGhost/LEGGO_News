@@ -2,6 +2,7 @@
 using AutoMapper;
 using Data;
 using Data.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 namespace API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class ArticlesController : Controller
     {

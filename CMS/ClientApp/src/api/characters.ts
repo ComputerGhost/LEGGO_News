@@ -32,7 +32,7 @@ export function useCharacters(search: string) {
             query: search,
             offset: pageParam?.toString() ?? 0,
         });
-        const endpoint = `${process.env.REACT_APP_API_URL}/characters?`;
+        const endpoint = `${process.env.REACT_APP_API_URL}/characters`;
         const response = await fetch(endpoint + '?' + parameters);
         return await response.json() as SearchResults<CharacterSummary>;
     }
