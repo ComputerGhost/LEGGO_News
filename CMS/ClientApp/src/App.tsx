@@ -1,7 +1,7 @@
 import React from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Switch, useRouteMatch } from 'react-router-dom';
 import { AuthRoute } from './components';
-import { ArticleCreate, ArticleEdit, ArticleList, CharacterCreate, CharacterEdit, CharacterList, Help, Home, Media, UserCreate, UserEdit, UserList } from './pages';
+import { ArticleCreate, ArticleEdit, ArticleList, CharacterCreate, CharacterEdit, CharacterList, Help, Home, Media } from './pages';
 
 export default function App() {
     const match = useRouteMatch();
@@ -43,17 +43,6 @@ export default function App() {
                 <AuthRoute exact path='/media'>
                     <Media />
                 </AuthRoute>
-
-                <AuthRoute exact path='/users'>
-                    <UserList />
-                </AuthRoute>
-                <AuthRoute exact path='/users/new'>
-                    <UserCreate />
-                </AuthRoute>
-                <AuthRoute
-                    exact path='/users/:userId(\d+)'
-                    render={({ match }) => <UserEdit userId={match.params['userId']} />}
-                />
 
             </Switch>
         </>
