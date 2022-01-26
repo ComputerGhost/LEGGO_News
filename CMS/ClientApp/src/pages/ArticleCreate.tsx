@@ -25,7 +25,8 @@ export default function ArticleCreate() {
     const mutator = useCreateArticle();
 
     async function handleSaveClicked() {
-        const content = await editorApi!.save();
+        const content = await editorApi!.saver.save();
+        console.log(content);
         await mutator.mutate({
             title,
             editorVersion: content.version!,
@@ -61,7 +62,7 @@ export default function ArticleCreate() {
                             value={title}
                         />
                         <Editor
-                            onApiSet={api => setEditorApi(api)}
+                            onApiSet={setEditorApi}
                             fullWidth
                             label='Content'
                             margin='normal'

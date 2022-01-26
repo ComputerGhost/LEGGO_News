@@ -1,5 +1,5 @@
 ﻿import React, { ChangeEventHandler, FocusEventHandler, Ref } from 'react';
-import EditorJs from 'react-editor-js';
+import { createReactEditorJS } from 'react-editor-js';
 import { makeStyles } from '@material-ui/styles';
 import EditorJS from '@editorjs/editorjs';
 
@@ -10,7 +10,11 @@ const useStyles = makeStyles({
 });
 
 export interface IEditorProps {
+
+    // In current version, not called until a change is made.
     onApiSet?: (api: EditorJS) => void,
+
+    // MaterialUI InputBaseComponent
     onFocus?: FocusEventHandler<HTMLInputElement>,
     onBlur?: FocusEventHandler<HTMLInputElement>,
     onChange?: ChangeEventHandler<HTMLInputElement>,
@@ -26,7 +30,9 @@ export default function Editor({
 }: IEditorProps) {
     var classes = useStyles();
 
-    function handleReady(apiInstance?: EditorJS) {
+    const ReactEditorJS = createReactEditorJS();
+
+    function handleChange(apiInstance?: EditorJS) {
         if (apiInstance && onApiSet) {
             onApiSet(apiInstance);
         }
@@ -39,8 +45,8 @@ export default function Editor({
             onBlur={onBlur}
             ref={forwardedRef}
         >
-            <EditorJs
-                onReady={handleReady}
+            <ReactEditorJS
+                onChange={handleChange}
             />
         </div>
     );
