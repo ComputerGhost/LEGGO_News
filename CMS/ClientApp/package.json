@@ -42,6 +42,8 @@
     "svgo": "1.3.0"
   },
   "devDependencies": {
+    "@editorjs/header": "^2.6.2",
+    "@types/editorjs__header": "^2.6.0",
     "@types/history": "4.7.3",
     "@types/jest": "24.0.19",
     "@types/node": "12.11.6",

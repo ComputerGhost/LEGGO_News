@@ -2,6 +2,7 @@
 import { createReactEditorJS } from 'react-editor-js';
 import { makeStyles } from '@material-ui/styles';
 import EditorJS from '@editorjs/editorjs';
+import { EDITOR_JS_TOOLS } from './Tools';
 
 const useStyles = makeStyles({
     container: {
@@ -47,6 +48,7 @@ export default function Editor({
         >
             <ReactEditorJS
                 onChange={handleChange}
+                tools={EDITOR_JS_TOOLS}
             />
         </div>
     );
