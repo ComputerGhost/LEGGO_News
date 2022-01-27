@@ -44,7 +44,7 @@ export default function CharacterEdit({
     }, [data, editorApi]);
 
     async function handleSaveClicked() {
-        const content = await editorApi!.save();
+        const content = await editorApi!.saver.save();
         await mutator.mutate({
             title,
             editorVersion: content.version!,
