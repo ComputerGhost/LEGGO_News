@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import List from './List';
 
 
-export default function CharacterList() {
+export default function () {
     var [search, setSearch] = useState('');
     var history = useHistory();
 
