@@ -34,10 +34,13 @@ export default function Editor({
     const ReactEditorJS = createReactEditorJS();
 
     function handleChange(apiInstance?: EditorJS) {
+        console.log(apiInstance);
         if (apiInstance && onApiSet) {
             onApiSet(apiInstance);
         }
     }
+
+    const initialData = JSON.parse("{\"blocks\": [{\"type\":\"paragraph\",\"data\":{\"text\":\"content test\"}}]}");
 
     return (
         <div
@@ -47,7 +50,8 @@ export default function Editor({
             ref={forwardedRef}
         >
             <ReactEditorJS
-                onChange={handleChange}
+                data={initialData}
+                onInitialize={handleChange}
                 tools={EDITOR_JS_TOOLS}
             />
         </div>

@@ -35,12 +35,7 @@ export default function CharacterEdit({
     }, [data]);
 
     useEffect(() => {
-        if (editorApi?.render) {
-            editorApi.render({
-                version: data?.editorVersion,
-                blocks: JSON.parse(data?.content ?? "[]")
-            });
-        }
+        return;
     }, [data, editorApi]);
 
     async function handleSaveClicked() {
