@@ -1,5 +1,6 @@
 ﻿using API.DTOs;
 using AutoMapper;
+using Business.DTOs;
 using Data.Models;
 
 namespace API
@@ -8,10 +9,6 @@ namespace API
     {
         public MappingProfile()
         {
-            CreateMap<Article, ArticleSummary>();
-            CreateMap<Article, ArticleDetails>();
-            CreateMap<ArticleSaveData, Article>();
-
             CreateMap<Character, CharacterSummary>();
             CreateMap<Character, CharacterDetails>();
             CreateMap<CharacterSaveData, Character>();

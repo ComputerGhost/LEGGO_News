@@ -1,15 +1,11 @@
-﻿using API.DTOs;
-using AutoMapper;
+﻿using AutoMapper;
+using Business.DTOs;
+using Business.Repositories.Interfaces;
 using Data;
-using Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -18,53 +14,39 @@ namespace API.Controllers
     [Route("[controller]")]
     public class ArticlesController : Controller
     {
-        public readonly DatabaseContext _context;
-        public readonly IMapper _mapper;
+        private readonly IArticlesRepository _articlesRepository;
 
-        public ArticlesController(DatabaseContext databaseContext, IMapper mapper)
+        public ArticlesController(IArticlesRepository articlesRepository)
         {
-            _context = databaseContext;
-            _mapper = mapper;
+            _articlesRepository = articlesRepository;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResults<ArticleSummary>))]
         public IActionResult List([FromQuery] SearchParameters parameters)
         {
-            var foundArticles = _context.Article;
-
-            var articlesPage = foundArticles
-                .Skip(parameters.Offset)
-                .Take(parameters.Count);
-
-            return Json(new SearchResults<ArticleSummary> {
-                Key = parameters.Key,
-                Offset = parameters.Offset,
-                Count = articlesPage.Count(),
-                TotalCount = foundArticles.Count(),
-                Data = articlesPage.Select(article => _mapper.Map<ArticleSummary>(article))
-            });
+            var searchResults = _articlesRepository.Search(parameters);
+            return Json(searchResults);
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ArticleDetails))]
         public IActionResult Get(int id)
         {
-            var article = _context.Article.Find((long)id);
-            var details = _mapper.Map<ArticleDetails>(article);
-            return Json(details);
+            var article = _articlesRepository.Fetch(id);
+            if (article == null)
+            {
+                return NotFound();
+            }
+            return Json(article);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ArticleSummary))]
         public IActionResult Create([FromBody] ArticleSaveData articleSaveData)
         {
-            var newArticle = _mapper.Map<Article>(articleSaveData);
-            _context.Article.Add(newArticle);
-            _context.SaveChanges();
-
-            var summary = _mapper.Map<ArticleSummary>(newArticle);
-            return new CreatedResult($"./{newArticle.Id}", summary);
+            var summary = _articlesRepository.Create(articleSaveData);
+            return new CreatedResult($"./{summary.Id}", summary);
         }
 
         [HttpPut("{id}")]
