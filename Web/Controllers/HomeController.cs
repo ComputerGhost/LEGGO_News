@@ -32,11 +32,6 @@ namespace Web.Controllers
             return View(articles);
         }
 
-        public IActionResult Numbers()
-        {
-            return View();
-        }
-
         public IActionResult Schedule()
         {
             return View();
