@@ -29,7 +29,7 @@ export default function ({
             <List component={Paper}>
                 {data && data.pages.map((page) =>
                     page.data.map((article) =>
-                        <ListItem article={article} />
+                        <ListItem key={article.id} article={article} />
                     )
                 )}
             </List>
