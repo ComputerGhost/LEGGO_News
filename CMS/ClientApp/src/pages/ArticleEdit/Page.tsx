@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Box, Checkbox, Container, FormControlLabel, IconButton, Tab, TextField } from '@material-ui/core';
-import { Editor, Page, TabPanel } from '../components';
+import { Box, Container, IconButton, Tab } from '@material-ui/core';
+import { Page } from '../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
-import { ArticleDetails, useArticle, useUpdateArticle } from '../api/articles';
+import { useArticle, useUpdateArticle } from '../../api/articles';
 import { TabContext, TabList } from '@material-ui/lab';
-import EditorJS, { OutputBlockData, OutputData } from '@editorjs/editorjs';
+import EditorJS from '@editorjs/editorjs';
+import ContentTab from './ContentTab';
+import MetadataTab from './MetadataTab';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -21,27 +23,17 @@ interface IProps {
 export default function CharacterEdit({
     articleId,
 }: IProps) {
+    const classes = useStyles();
     const [tabIndex, setTabIndex] = useState('0');
     const [title, setTitle] = useState<string>('');
     const [topStory, setTopStory] = useState<boolean>(false);
     const [editorApi, setEditorApi] = useState<EditorJS>();
-
-    const classes = useStyles();
     const { data } = useArticle(articleId);
     const mutator = useUpdateArticle(articleId);
 
     useEffect(() => {
         setTitle(data?.title ?? '');
     }, [data]);
-
-    useEffect(() => {
-        if (editorApi?.render) {
-            editorApi.render({
-                version: data?.editorVersion,
-                blocks: JSON.parse(data?.content ?? "[]")
-            });
-        }
-    }, [data, editorApi]);
 
     async function handleSaveClicked() {
         const content = await editorApi!.saver.save();
@@ -50,6 +42,10 @@ export default function CharacterEdit({
             editorVersion: content.version!,
             content: JSON.stringify(content.blocks),
         });
+    }
+
+    if (!data) {
+        return <Page title='Edit Article'><p>Loading</p></Page >;
     }
 
     const toolbar =
@@ -70,27 +66,18 @@ export default function CharacterEdit({
                             <Tab label='Metadata' value='1' />
                         </TabList>
                     </Box>
-                    <TabPanel value='0'>
-                        <TextField
-                            fullWidth
-                            label='Title'
-                            margin='normal'
-                            onChange={(e) => setTitle(e.target.value)}
-                            value={title}
-                        />
-                        <Editor
-                            onApiSet={setEditorApi}
-                            fullWidth
-                            label='Content'
-                            margin='normal'
-                        />
-                    </TabPanel>
-                    <TabPanel value='1'>
-                        <FormControlLabel
-                            control={<Checkbox checked={topStory} onChange={(e) => setTopStory(e.target.checked)} />}
-                            label="Top story"
-                        />
-                    </TabPanel>
+                    <ContentTab
+                        tabIndex='0'
+                        title={title}
+                        setTitle={setTitle}
+                        initialContent={JSON.parse(`{"blocks": ${data.content}}`)}
+                        setEditorApi={setEditorApi}
+                    />
+                    <MetadataTab
+                        tabIndex='1'
+                        topStory={topStory}
+                        setTopStory={setTopStory}
+                    />
                 </TabContext>
             </Container>
         </Page>

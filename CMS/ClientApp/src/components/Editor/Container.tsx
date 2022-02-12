@@ -1,10 +1,11 @@
 ﻿import React, { Component, forwardRef, Ref } from 'react';
 import { FormControl, InputLabel, OutlinedInput } from '@material-ui/core';
-import EditorJS from '@editorjs/editorjs';
+import EditorJS, { OutputData } from '@editorjs/editorjs';
 import Editor, { IEditorProps } from './Editor';
 
 interface IProps {
     label: string,
+    initialData?: OutputData,
     onApiSet?: (api: EditorJS) => void,
     // Forwarded props
     fullWidth?: boolean,
@@ -23,6 +24,7 @@ export default class Container extends Component<IProps> {
             return (
                 <Editor
                     {...props}
+                    initialData={this.props.initialData}
                     onApiSet={this.props.onApiSet}
                     forwardedRef={forwardedRef}
                 />

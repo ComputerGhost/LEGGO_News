@@ -23,6 +23,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\pages\ArticleCreate\ContentTab.tsx" />
+    <None Remove="ClientApp\src\pages\ArticleEdit\ContentTab.tsx" />
+    <None Remove="ClientApp\src\pages\ArticleEdit\index.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\pages\ArticleCreate\ContentTab.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\pages\ArticleEdit\ContentTab.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\pages\ArticleEdit\index.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="ClientApp\src\api\articles.ts">
       <SubType>Code</SubType>
     </None>
@@ -72,6 +86,9 @@
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\AuthRoute.tsx">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\pages\ArticleCreate\index.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\pages\ArticleList\index.ts">

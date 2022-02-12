@@ -72,7 +72,7 @@ export function useUpdateArticle(articleId: number | undefined) {
     });
 }
 
-export function useDeleteCharacter(articleId: number) {
+export function useDeleteArticle(articleId: number) {
     return useMutation(async () => {
         const endpoint = `${process.env.REACT_APP_API_URL}/articles/${articleId}`;
         const response = await fetch(endpoint, {
