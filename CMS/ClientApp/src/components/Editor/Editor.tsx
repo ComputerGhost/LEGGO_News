@@ -1,7 +1,7 @@
 ﻿import React, { ChangeEventHandler, FocusEventHandler, Ref } from 'react';
 import { createReactEditorJS } from 'react-editor-js';
 import { makeStyles } from '@material-ui/styles';
-import EditorJS from '@editorjs/editorjs';
+import EditorJS, { OutputData } from '@editorjs/editorjs';
 import { EDITOR_JS_TOOLS } from './Tools';
 
 const useStyles = makeStyles({
@@ -11,8 +11,7 @@ const useStyles = makeStyles({
 });
 
 export interface IEditorProps {
-
-    // In current version, not called until a change is made.
+    initialData?: OutputData,
     onApiSet?: (api: EditorJS) => void,
 
     // MaterialUI InputBaseComponent
@@ -23,6 +22,7 @@ export interface IEditorProps {
 }
 
 export default function Editor({
+    initialData,
     onApiSet,
     onFocus,
     onBlur,
@@ -40,8 +40,8 @@ export default function Editor({
         }
     }
 
-    const initialData = JSON.parse("{\"blocks\": [{\"type\":\"paragraph\",\"data\":{\"text\":\"content test\"}}]}");
-
+    //const initialData = JSON.parse("{\"blocks\": [{\"type\":\"paragraph\",\"data\":{\"text\":\"content test\"}}]}");
+    console.log('in editor');
     return (
         <div
             className={classes.container}
