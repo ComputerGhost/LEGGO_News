@@ -1,11 +1,14 @@
-﻿@{
+﻿@using Business.DTOs
+@model SearchResults<ArticleSummary>;
+@{
     ViewData["Title"] = "Latest News";
 }
 
-@for (int i = 0; i != 10; ++i) { @:
+@foreach (var summary in Model.Data)
+{
     <div class="border rounded p-2 mb-3">
         <img src="~/images/logo_64.png" class="float-right">
-        <h6>Some news story here</h6>
-        <p>Lorem ipsum dolor sit amet.  I don't remember the rest.  This will basically just be a snippet of the story.</p>
+        <h6>@summary.Title</h6>
+        <p>Lorem ipsum dolor sit amet.  I don't remember the rest.  This will be a short preview of the story.</p>
     </div>
 }

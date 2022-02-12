@@ -4,18 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Business.Repositories.Interfaces;
 using System.Threading.Tasks;
 using Web.Models;
+using Business.DTOs;
 
 namespace Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IArticlesRepository _articlesRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IArticlesRepository articlesRepository)
         {
-            _logger = logger;
+            _articlesRepository = articlesRepository;
         }
 
         public IActionResult AboutExid()
@@ -25,7 +27,9 @@ namespace Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var parameters = new SearchParameters();
+            var articles = _articlesRepository.Search(parameters);
+            return View(articles);
         }
 
         public IActionResult Numbers()
