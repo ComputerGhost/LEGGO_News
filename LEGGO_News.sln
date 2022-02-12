@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Media", "Lib\Media\Media.cs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Static", "Static\Static.csproj", "{A7BE3B73-3601-49B7-A759-2ABEF3F1B78B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleTranslator", "ArticleTranslator\ArticleTranslator.csproj", "{B68319C6-6742-43ED-964F-55F3E132D797}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleTranslator", "Lib\ArticleTranslator\ArticleTranslator.csproj", "{B68319C6-6742-43ED-964F-55F3E132D797}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C7F8B842-4913-470B-B028-270662675D30}"
 EndProject
@@ -30,11 +30,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleTranslatorTests", "A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Lib\Business\Business.csproj", "{829440CA-AC75-4C8E-9A4D-22F86E2FBB21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessTests", "BusinessTests\BusinessTests.csproj", "{46938A2A-A29E-4221-B97C-54B86515F1E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessTests", "Tests\BusinessTests\BusinessTests.csproj", "{46938A2A-A29E-4221-B97C-54B86515F1E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APITests", "APITests\APITests.csproj", "{EF4F65A3-6135-4982-B104-9611FA986525}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APITests", "Tests\APITests\APITests.csproj", "{EF4F65A3-6135-4982-B104-9611FA986525}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebTests", "WebTests\WebTests.csproj", "{341A8DC0-FB9D-43D7-BA4F-88900E6AF9BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebTests", "Tests\WebTests\WebTests.csproj", "{341A8DC0-FB9D-43D7-BA4F-88900E6AF9BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
