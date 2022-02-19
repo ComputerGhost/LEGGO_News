@@ -29,7 +29,7 @@ export default function () {
         const content = await editorApi!.saver.save();
         await mutator.mutate({
             title,
-            editorVersion: content.version!,
+            format: 'editorjs',
             content: JSON.stringify(content.blocks),
         });
         history.replace('./' + mutator.data!.id);

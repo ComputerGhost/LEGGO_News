@@ -1,18 +1,17 @@
-﻿import { OutputBlockData } from "@editorjs/editorjs";
-import { QueryFunctionContext, useInfiniteQuery, useMutation, useQuery } from "react-query";
+﻿import { QueryFunctionContext, useInfiniteQuery, useMutation, useQuery } from "react-query";
 import { SearchResults, getNextPageParam } from "./search";
 
 
 export interface ArticleDetails {
     id: number,
     title: string,
-    editorVersion: string,
+    format: string,
     content: string,
 }
 
 export interface ArticleSaveData {
     title: string,
-    editorVersion: string,
+    format: string,
     content: string,
 }
 

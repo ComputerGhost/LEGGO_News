@@ -6,9 +6,11 @@
 
 @foreach (var summary in Model.Data)
 {
-    <div class="border rounded p-2 mb-3">
-        <img src="~/images/logo_64.png" class="float-right">
-        <h6>@summary.Title</h6>
-        <p>Lorem ipsum dolor sit amet.  I don't remember the rest.  This will be a short preview of the story.</p>
+    <div class="media border mb-3 p-3 position-relative">
+        <div class="media-body">
+            <h6>@summary.Title</h6>
+            <a class="stretched-link" href="/article/@summary.Id">Read more</a>
+        </div>
+        <img src="~/images/logo_64.png" class="ml-3">
     </div>
 }

@@ -1,0 +1,10 @@
+﻿@using Business.DTOs
+@model ArticleDetails
+
+<header>
+    <h1>@Html.Encode(Model.Title)</h1>
+</header>
+
+<article>
+    @Html.Raw(Model.Content)
+</article>
