@@ -10,13 +10,13 @@ namespace WebTests
     [TestClass]
     public class HomeControllerTests
     {
-        private Mock<IArticlesRepository> _mockArticlesRepository;
+        private Mock<IArticleRepository> _mockArticlesRepository;
         private HomeController _homeController;
 
         [TestInitialize]
         public void Initialize()
         {
-            _mockArticlesRepository = new Mock<IArticlesRepository>();
+            _mockArticlesRepository = new Mock<IArticleRepository>();
             _homeController = new HomeController(_mockArticlesRepository.Object);
         }
 

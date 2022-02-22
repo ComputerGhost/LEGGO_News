@@ -1,29 +1,23 @@
 ﻿using API.Controllers;
 using Business.DTOs;
-using Business.Repositories;
 using Business.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace APITests.Controllers
 {
     [TestClass]
     public class ArticlesControllerTests
     {
-        private Mock<IArticlesRepository> _mockArticlesRepository;
+        private Mock<IArticleRepository> _mockArticleRepository;
         private ArticlesController _articlesController;
 
         [TestInitialize]
         public void Initialize()
         {
-            _mockArticlesRepository = new Mock<IArticlesRepository>();
-            _articlesController = new ArticlesController(_mockArticlesRepository.Object);
+            _mockArticleRepository = new Mock<IArticleRepository>();
+            _articlesController = new ArticlesController(_mockArticleRepository.Object);
         }
 
         [TestMethod]
@@ -34,7 +28,7 @@ namespace APITests.Controllers
             _articlesController.List(parameters);
 
             // assert
-            _mockArticlesRepository.Verify(r => r.Search(It.Is<SearchParameters>(p => p == parameters)));
+            _mockArticleRepository.Verify(r => r.Search(It.Is<SearchParameters>(p => p == parameters)));
         }
 
         [TestMethod]
@@ -46,7 +40,7 @@ namespace APITests.Controllers
             {
                 Key = REQUEST_KEY
             };
-            _mockArticlesRepository.Setup(r => r.Search(It.IsAny<SearchParameters>())).Returns(expectedResults);
+            _mockArticleRepository.Setup(r => r.Search(It.IsAny<SearchParameters>())).Returns(expectedResults);
 
             // act
             var parameters = new SearchParameters();
@@ -55,7 +49,7 @@ namespace APITests.Controllers
             // assert
             Assert.IsInstanceOfType(result, typeof(JsonResult));
             var jsonResult = (JsonResult)result;
-            Assert.IsInstanceOfType((result as JsonResult).Value, typeof(SearchResults<ArticleSummary>));
+            Assert.IsInstanceOfType(jsonResult.Value, typeof(SearchResults<ArticleSummary>));
             var actualResults = (SearchResults<ArticleSummary>)jsonResult.Value;
             Assert.AreEqual(actualResults.Key, REQUEST_KEY);
         }
@@ -70,7 +64,7 @@ namespace APITests.Controllers
             _articlesController.Get(ARTICLE_ID);
 
             // assert
-            _mockArticlesRepository.Verify(r => r.Fetch(It.Is<long>(p => p == ARTICLE_ID)));
+            _mockArticleRepository.Verify(r => r.Fetch(It.Is<long>(p => p == ARTICLE_ID)));
         }
 
         [TestMethod]
@@ -82,7 +76,7 @@ namespace APITests.Controllers
             {
                 Id = ARTICLE_ID
             };
-            _mockArticlesRepository.Setup(r => r.Fetch(It.IsAny<long>())).Returns(expectedDetails);
+            _mockArticleRepository.Setup(r => r.Fetch(It.IsAny<long>())).Returns(expectedDetails);
 
             // act
             var result = _articlesController.Get(ARTICLE_ID);
@@ -99,7 +93,7 @@ namespace APITests.Controllers
         public void Get_WhenNotFound_ReturnsNotFound()
         {
             // arrange
-            _mockArticlesRepository.Setup(r => r.Fetch(It.IsAny<long>())).Returns<ArticleDetails>(null);
+            _mockArticleRepository.Setup(r => r.Fetch(It.IsAny<long>())).Returns<ArticleDetails>(null);
 
             // act
             var result = _articlesController.Get(0);
@@ -118,13 +112,13 @@ namespace APITests.Controllers
                 Title = ARTICLE_TITLE
             };
             var createdSummary = new ArticleSummary();
-            _mockArticlesRepository.Setup(r => r.Create(It.IsAny<ArticleSaveData>())).Returns(createdSummary);
+            _mockArticleRepository.Setup(r => r.Create(It.IsAny<ArticleSaveData>())).Returns(createdSummary);
 
             // act
             _articlesController.Create(incomingSaveData);
 
             // assert
-            _mockArticlesRepository.Verify(r => r.Create(It.Is<ArticleSaveData>(sd => sd.Title == ARTICLE_TITLE)));
+            _mockArticleRepository.Verify(r => r.Create(It.Is<ArticleSaveData>(sd => sd.Title == ARTICLE_TITLE)));
         }
 
         [TestMethod]
@@ -136,7 +130,7 @@ namespace APITests.Controllers
             {
                 Id = ARTICLE_ID
             };
-            _mockArticlesRepository.Setup(r => r.Create(It.IsAny<ArticleSaveData>())).Returns(createdSummary);
+            _mockArticleRepository.Setup(r => r.Create(It.IsAny<ArticleSaveData>())).Returns(createdSummary);
 
             // act
             var saveData = new ArticleSaveData();

@@ -1,8 +1,5 @@
 ﻿using Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Data
 {
@@ -11,6 +8,7 @@ namespace Data
         public DbSet<Article> Article { get; set; }
         public DbSet<Character> Character { get; set; }
         public DbSet<Media> Media { get; set; }
+        public DbSet<Tag> Tag { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
@@ -33,21 +31,21 @@ namespace Data
                 .Property("Id")
                 .UseIdentityColumn();
 
-            modelBuilder.Entity<Lead>()
+            modelBuilder.Entity<Media>()
                 .Property("Id")
                 .UseIdentityColumn();
 
-            modelBuilder.Entity<Media>()
+            modelBuilder.Entity<Tag>()
                 .Property("Id")
                 .UseIdentityColumn();
 
 
             // Set up relations
 
-            //modelBuilder.Entity<Lead>()
-            //    .HasMany(left => left.Character)
-            //    .WithMany(right => right.Lead)
-            //    .UsingEntity(join => join.ToTable("LeadCharacter"));
+            modelBuilder.Entity<Article>()
+                .HasMany(left => left.Tags)
+                .WithMany(right => right.Articles)
+                .UsingEntity(join => join.ToTable("ArticleTag"));
 
         }
 

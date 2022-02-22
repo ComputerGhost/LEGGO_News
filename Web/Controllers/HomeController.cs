@@ -13,9 +13,9 @@ namespace Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IArticlesRepository _articlesRepository;
+        private readonly IArticleRepository _articlesRepository;
 
-        public HomeController(IArticlesRepository articlesRepository)
+        public HomeController(IArticleRepository articlesRepository)
         {
             _articlesRepository = articlesRepository;
         }

@@ -14,18 +14,18 @@ namespace API.Controllers
     [Route("[controller]")]
     public class ArticlesController : Controller
     {
-        private readonly IArticlesRepository _articlesRepository;
+        private readonly IArticleRepository _articleRepository;
 
-        public ArticlesController(IArticlesRepository articlesRepository)
+        public ArticlesController(IArticleRepository articleRepository)
         {
-            _articlesRepository = articlesRepository;
+            _articleRepository = articleRepository;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResults<ArticleSummary>))]
         public IActionResult List([FromQuery] SearchParameters parameters)
         {
-            var searchResults = _articlesRepository.Search(parameters);
+            var searchResults = _articleRepository.Search(parameters);
             return Json(searchResults);
         }
 
@@ -33,7 +33,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ArticleDetails))]
         public IActionResult Get(int id)
         {
-            var article = _articlesRepository.Fetch(id);
+            var article = _articleRepository.Fetch(id);
             if (article == null)
             {
                 return NotFound();
@@ -45,7 +45,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ArticleSummary))]
         public IActionResult Create([FromBody] ArticleSaveData articleSaveData)
         {
-            var summary = _articlesRepository.Create(articleSaveData);
+            var summary = _articleRepository.Create(articleSaveData);
             return new CreatedResult($"./{summary.Id}", summary);
         }
 

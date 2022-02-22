@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Page, SearchToolbar } from '../../components';
 import { Container, IconButton, } from '@material-ui/core';
@@ -12,19 +12,19 @@ export default function () {
     var history = useHistory();
 
     function handleAddClicked() {
-        history.push('/characters/new');
+        history.push('/tags/new');
     }
 
     const toolbar =
         <>
-            <SearchToolbar placeholder='Search characters...' onChange={setSearch} />
+            <SearchToolbar placeholder='Search tags...' onChange={setSearch} />
             <IconButton color='inherit' onClick={handleAddClicked}>
                 <FontAwesomeIcon icon={faPlus} fixedWidth />
             </IconButton>
         </>;
 
     return (
-        <Page title='Characters' toolbar={toolbar}>
+        <Page title='Tags' toolbar={toolbar}>
             <Container>
                 <List search={search} />
             </Container>

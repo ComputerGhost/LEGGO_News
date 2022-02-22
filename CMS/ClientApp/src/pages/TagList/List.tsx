@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { List, Paper } from '@material-ui/core';
 import InfiniteScroll from '../../components/InfiniteScroll';
-import { useArticles } from '../../api/articles';
+import { useTags } from '../../api/tags';
 import ListItem from './ListItem';
 
 interface IProps {
@@ -11,7 +11,7 @@ interface IProps {
 export default function ({
     search
 }: IProps) {
-    const { data, fetchNextPage, hasNextPage } = useArticles(search);
+    const { data, fetchNextPage, hasNextPage } = useTags(search);
     const [count, setCount] = useState(0);
 
     useCallback(() => {
@@ -26,12 +26,11 @@ export default function ({
         >
             <List component={Paper}>
                 {data && data.pages.map((page) =>
-                    page.data.map((article) =>
-                        <ListItem key={article.id} article={article} />
+                    page.data.map((tag) =>
+                        <ListItem key={tag.id} tag={tag} />
                     )
                 )}
             </List>
         </InfiniteScroll>
     );
 }
-

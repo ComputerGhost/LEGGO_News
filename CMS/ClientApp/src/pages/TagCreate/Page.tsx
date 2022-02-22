@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Container, IconButton, TextField } from '@material-ui/core';
-import { Page } from '../components';
+import { Page } from '../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
-import { useCreateCharacter } from '../api/characters';
-import { DatePicker } from '@material-ui/lab';
+import { useCreateTag } from '../../api/tags';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -17,20 +16,14 @@ const useStyles = makeStyles((theme) => ({
 export default function () {
     const classes = useStyles();
     const history = useHistory();
-    const mutator = useCreateCharacter();
+    const mutator = useCreateTag();
 
-    const [birthDate, setBirthDate] = useState<Date | null>(null);
-    const [englishName, setEnglishName] = useState<string>('');
-    const [koreanName, setKoreanName] = useState<string>('');
-    const [emoji, setEmoji] = useState<string>('');
+    const [name, setName] = useState<string>('');
     const [description, setDescription] = useState<string>('');
 
     async function handleSaveClicked() {
         await mutator.mutate({
-            birthDate,
-            englishName,
-            koreanName,
-            emoji,
+            name,
             description,
         });
         if (mutator.isSuccess)
@@ -39,6 +32,11 @@ export default function () {
             console.error('Creation failed.');
             console.log(mutator);
         }
+    }
+
+    function handleNameChanged(newName: string) {
+        newName = newName.replace(/\W/, '');
+        setName(newName);
     }
 
     const toolbar =
@@ -50,34 +48,14 @@ export default function () {
         </>;
 
     return (
-        <Page title='Create Character' toolbar={toolbar}>
+        <Page title='Create Tag' toolbar={toolbar}>
             <Container>
-                <DatePicker
-                    label='Birth Date'
-                    onChange={(newValue: Date | null) => setBirthDate(newValue)}
-                    value={birthDate}
-                    renderInput={(params) => <TextField fullWidth margin='normal' {...params} />}
-                />
                 <TextField
                     fullWidth
-                    label='English Name'
+                    label='Name'
                     margin='normal'
-                    onChange={(e) => setEnglishName(e.target.value)}
-                    value={englishName}
-                />
-                <TextField
-                    fullWidth
-                    label='Korean Name'
-                    margin='normal'
-                    onChange={(e) => setKoreanName(e.target.value)}
-                    value={koreanName}
-                />
-                <TextField
-                    fullWidth
-                    label='Emoji'
-                    margin='normal'
-                    onChange={(e) => setEmoji(e.target.value)}
-                    value={emoji}
+                    onChange={(e) => handleNameChanged(e.target.value)}
+                    value={name}
                 />
                 <TextField
                     label='Description'

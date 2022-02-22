@@ -1,5 +1,4 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import { Container, IconButton } from '@material-ui/core';
 import { ImageGrid, Page, SearchToolbar } from '../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
