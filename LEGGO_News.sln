@@ -26,11 +26,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C7F8B842
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{CEE10CB6-4323-47F2-B9AE-9B9F26F9C3CB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleTranslatorTests", "ArticleTranslatorTests\ArticleTranslatorTests.csproj", "{1FDC5C08-B95F-420A-AD7D-4FF306204B31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleTranslatorTests", "Tests\Lib\ArticleTranslatorTests\ArticleTranslatorTests.csproj", "{1FDC5C08-B95F-420A-AD7D-4FF306204B31}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Lib\Business\Business.csproj", "{829440CA-AC75-4C8E-9A4D-22F86E2FBB21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessTests", "Tests\BusinessTests\BusinessTests.csproj", "{46938A2A-A29E-4221-B97C-54B86515F1E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessTests", "Tests\Lib\BusinessTests\BusinessTests.csproj", "{46938A2A-A29E-4221-B97C-54B86515F1E0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APITests", "Tests\APITests\APITests.csproj", "{EF4F65A3-6135-4982-B104-9611FA986525}"
 EndProject

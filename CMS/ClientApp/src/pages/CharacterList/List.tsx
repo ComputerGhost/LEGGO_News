@@ -7,7 +7,7 @@ interface IProps {
     search: string,
 }
 
-export default function List({
+export default function ({
     search
 }: IProps) {
     const { data, fetchNextPage, hasNextPage } = useCharacters(search);

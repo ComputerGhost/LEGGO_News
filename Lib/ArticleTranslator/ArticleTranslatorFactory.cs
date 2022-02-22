@@ -5,7 +5,7 @@ namespace ArticleTranslator
 {
     public class ArticleTranslatorFactory
     {
-        public static IArticleTranslator CreateTranslator(string format)
+        public IArticleTranslator CreateTranslator(string format)
         {
             // We need to add WordPress and possibly more formats later.
             switch (format) {

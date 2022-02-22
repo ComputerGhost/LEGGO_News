@@ -7,9 +7,9 @@ namespace Web.Controllers
     [Route("[controller]")]
     public class ArticleController : Controller
     {
-        private readonly IArticlesRepository _articlesRepository;
+        private readonly IArticleRepository _articlesRepository;
 
-        public ArticleController(IArticlesRepository articlesRepository)
+        public ArticleController(IArticleRepository articlesRepository)
         {
             _articlesRepository = articlesRepository;
         }
@@ -19,7 +19,8 @@ namespace Web.Controllers
         {
             var article = _articlesRepository.Fetch(id);
 
-            var translator = ArticleTranslatorFactory.CreateTranslator(article.Format);
+            var factory = new ArticleTranslatorFactory();
+            var translator = factory.CreateTranslator(article.Format);
             article.Content = translator.TranslateToHtml(article.Content);
 
             return View(article);

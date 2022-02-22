@@ -8,7 +8,8 @@ namespace Business.Setup
     {
         public static void Configure(IServiceCollection services)
         {
-            services.AddTransient<IArticlesRepository, ArticlesRepository>();
+            services.AddTransient<IArticleRepository, ArticleRepository>();
+            services.AddTransient<ITagRepository, TagRepository>();
         }
     }
 }

@@ -7,12 +7,12 @@ using System.Linq;
 
 namespace Business.Repositories
 {
-    public class ArticlesRepository : IArticlesRepository
+    public class ArticleRepository : IArticleRepository
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
 
-        public ArticlesRepository(DatabaseContext databaseContext, IMapper mapper)
+        public ArticleRepository(DatabaseContext databaseContext, IMapper mapper)
         {
             _databaseContext = databaseContext;
             _mapper = mapper;

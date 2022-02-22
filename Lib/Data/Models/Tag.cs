@@ -3,25 +3,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
 {
-    public class Article
+    public class Tag
     {
-        public Article()
+        public Tag()
         {
-            Tags = new HashSet<Tag>();
+            Articles = new HashSet<Article>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
-        public string Title { get; set; }
+        public string Name { get; set; }
 
-        public string Format { get; set; }
-
-        public string Content { get; set; }
+        public string Description { get; set; }
 
 
         // Relationships
 
-        public virtual ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<Article> Articles { get; set; }
     }
 }

@@ -14,11 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Lib\Business\Business.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Repositories\" />
+    <ProjectReference Include="..\..\..\Lib\ArticleTranslator\ArticleTranslator.csproj" />
   </ItemGroup>
 
 </Project>

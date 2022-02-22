@@ -11,6 +11,9 @@ namespace Business.Setup
             CreateMap<Article, ArticleSummary>();
             CreateMap<Article, ArticleDetails>();
             CreateMap<ArticleSaveData, Article>();
+            CreateMap<Tag, TagSummary>();
+            CreateMap<Tag, TagDetails>();
+            CreateMap<TagSaveData, Tag>();
         }
     }
 }

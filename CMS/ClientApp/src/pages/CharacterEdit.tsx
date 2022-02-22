@@ -17,7 +17,7 @@ interface IProps {
     characterId?: number,
 }
 
-export default function CharacterEdit({
+export default function ({
     characterId,
 }: IProps) {
     const classes = useStyles();

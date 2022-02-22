@@ -1,5 +1,5 @@
 ﻿import React from "react";
-import { createStyles, makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 import { Drawer, IconButton, List, Theme, Toolbar, Typography, useTheme } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -8,6 +8,7 @@ import {
     faQuestionCircle,
     faPenNib,
     faPhotoVideo,
+    faTag,
     faTheaterMasks,
 } from '@fortawesome/free-solid-svg-icons';
 import DrawerItem from './DrawerItem';
@@ -59,6 +60,7 @@ export default function NavDrawer({ width, open, allowClose, onDrawerClosed }: I
             <List>
                 <DrawerItem text='Articles' icon={faPenNib} href='/articles' />
                 <DrawerItem text='Media' icon={faPhotoVideo} href='/media' />
+                <DrawerItem text='Tags' icon={faTag} href='/tags' />
             </List>
 
             <Typography variant='h6' className={classes.header}>Setup</Typography>
