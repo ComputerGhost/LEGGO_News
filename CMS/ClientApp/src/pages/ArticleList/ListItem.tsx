@@ -3,7 +3,7 @@ import { ListItem, ListItemText, ListItemButton, IconButton } from '@material-ui
 import { ArticleSummary } from '../../api/articles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface IProps {
     article: ArticleSummary,
@@ -12,14 +12,14 @@ interface IProps {
 export default function ({
     article
 }: IProps) {
-    var history = useHistory();
+    var navigate = useNavigate();
 
     function handleViewClicked() {
         // nop for now.
     }
 
     function handleEditClicked() {
-        history.push(`./articles/${article.id}`);
+        navigate(`./articles/${article.id}`);
     }
 
     const secondaryAction =

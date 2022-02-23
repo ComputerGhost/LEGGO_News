@@ -47,7 +47,7 @@ namespace Business.Repositories
         public SearchResults<TagSummary> Search(SearchParameters parameters)
         {
             var foundTags = _databaseContext.Tag.AsQueryable();
-            if (string.IsNullOrEmpty(parameters.Query))
+            if (!string.IsNullOrEmpty(parameters.Query))
             {
                 foundTags = foundTags.Where(tag => tag.Name.Contains(parameters.Query));
             }

@@ -1,4 +1,4 @@
-﻿import React, { ChangeEventHandler, FocusEventHandler, Ref } from 'react';
+﻿import { ChangeEventHandler, FocusEventHandler, Ref } from 'react';
 import { createReactEditorJS } from 'react-editor-js';
 import { makeStyles } from '@material-ui/styles';
 import EditorJS, { OutputData } from '@editorjs/editorjs';

@@ -3,16 +3,16 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Page, SearchToolbar } from '../../components';
 import { Container, IconButton, } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import List from './List';
 
 
 export default function () {
     var [search, setSearch] = useState('');
-    var history = useHistory();
+    var navigate = useNavigate();
 
     function handleAddClicked() {
-        history.push('/characters/new');
+        navigate('/characters/new');
     }
 
     const toolbar =

@@ -1,61 +1,38 @@
 import React from 'react';
-import { Switch, useRouteMatch } from 'react-router-dom';
-import { AuthRoute } from './components';
+import { Route, Routes } from 'react-router-dom';
+import { useAuth } from './hooks/useAuth';
 import { ArticleCreate, ArticleEdit, ArticleList, CharacterCreate, CharacterEdit, CharacterList, Help, Home, Media, TagCreate, TagEdit, TagList } from './pages';
 
 export default function App() {
-    const match = useRouteMatch();
+
+    var user = useAuth();
+
+    if (!user || !user.email) {
+        // This needs replaced later but for now just use the backend to force a refresh.
+        window.location.reload();
+    }
 
     return (
-        <>
-            <Switch>
+        <Routes>
 
-                <AuthRoute exact path='/'>
-                    <Home />
-                </AuthRoute>
+            <Route path='/' element={<Home />} />
 
-                <AuthRoute exact path='/articles'>
-                    <ArticleList />
-                </AuthRoute>
-                <AuthRoute exact path='/articles/new'>
-                    <ArticleCreate />
-                </AuthRoute>
-                <AuthRoute
-                    exact path='/articles/:articleId(\d+)'
-                    render={({ match }) => <ArticleEdit articleId={match.params['articleId']} />}
-                />
+            <Route path='/articles' element={<ArticleList />} />
+            <Route path='/articles/new' element={<ArticleCreate />} />
+            <Route path='/articles/:id(\d+)' element={<ArticleEdit />} />
 
-                <AuthRoute exact path='/characters'>
-                    <CharacterList />
-                </AuthRoute>
-                <AuthRoute exact path='/characters/new'>
-                    <CharacterCreate />
-                </AuthRoute>
-                <AuthRoute
-                    exact path='/characters/:characterId(\d+)'
-                    render={({ match }) => <CharacterEdit characterId={match.params['characterId']} />}
-                />
+            <Route path='/characters' element={<CharacterList />} />
+            <Route path='/characters/new' element={<CharacterCreate />} />
+            <Route path='/characters/:id(\d+)' element={<CharacterEdit />} />
 
-                <AuthRoute exact path='/tags'>
-                    <TagList />
-                </AuthRoute>
-                <AuthRoute exact path='/tags/new'>
-                    <TagCreate />
-                </AuthRoute>
-                <AuthRoute
-                    exact path='/tags/:tagId(\d+)'
-                    render={({ match }) => <TagEdit tagId={match.params['tagId']} />}
-                />
+            <Route path='/tags' element={<TagList />} />
+            <Route path='/tags/new' element={<TagCreate />} />
+            <Route path='/tags/:id(\d+)' element={<TagEdit />} />
 
-                <AuthRoute exact path='/help'>
-                    <Help />
-                </AuthRoute>
+            <Route path='/help' element={<Help />} />
 
-                <AuthRoute exact path='/media'>
-                    <Media />
-                </AuthRoute>
+            <Route path='/media' element={<Media />} />
 
-            </Switch>
-        </>
+        </Routes>
     );
 };

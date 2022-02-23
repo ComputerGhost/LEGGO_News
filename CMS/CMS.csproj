@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.14" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.2" />
     <PackageReference Include="ProxyKit" Version="2.3.4" />
   </ItemGroup>
 
@@ -100,7 +100,7 @@
     <None Update="ClientApp\src\components\Page.tsx">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\components\AuthRoute.tsx">
+    <None Update="ClientApp\src\components\RequireAuth.tsx">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\pages\ArticleCreate\index.ts">
