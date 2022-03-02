@@ -1,5 +1,5 @@
-﻿import { QueryFunctionContext, useInfiniteQuery, useMutation, useQuery } from "react-query";
-import { SearchParameters, SearchResults, getNextPageParam } from "./search";
+﻿import { useMutation } from "react-query";
+import RestApi from "./RestApi";
 
 
 export interface MediaSummary {
@@ -15,29 +15,16 @@ export interface MediaSummary {
 }
 
 
+const media = new RestApi<MediaSummary, unknown, unknown>('media');
+
 export function useMedia(search: string) {
-    const getTags = async ({ pageParam }: QueryFunctionContext) => {
-        const parameters = new URLSearchParams({
-            query: search,
-            offset: pageParam?.toString() ?? 0,
-        });
-        const endpoint = `${process.env.REACT_APP_API_URL}/media`;
-        const response = await fetch(endpoint + '?' + parameters);
-        return await response.json() as SearchResults<MediaSummary>;
-    }
-    return useInfiniteQuery(['media', search], getTags, { getNextPageParam });
+    return media.useItems(search);
+}
+
+export function useDeleteMedia(mediaId: number) {
+    return media.useDeleteItem(mediaId);
 }
 
 export function useUploadMedia() {
-    return useMutation(async (file: File) => {
-        const formData = new FormData();
-        formData.append('file', file);
-
-        const endpoint = `${process.env.REACT_APP_API_URL}/media`;
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            body: formData,
-        });
-        return await response.json() as MediaSummary;
-    });
+    return media.useUploadItem();
 }

@@ -1,5 +1,4 @@
-﻿import { QueryFunctionContext, useInfiniteQuery, useMutation, useQuery } from "react-query";
-import { SearchResults, getNextPageParam } from "./search";
+﻿import RestApi from "./RestApi";
 
 
 export interface CharacterDetails {
@@ -26,59 +25,26 @@ export interface CharacterSummary {
 }
 
 
+const characters = new RestApi<CharacterSummary, CharacterDetails, CharacterSaveData>('characters');
+
 export function useCharacters(search: string) {
-    const getCharacters = async ({ pageParam }: QueryFunctionContext) => {
-        const parameters = new URLSearchParams({
-            query: search,
-            offset: pageParam?.toString() ?? 0,
-        });
-        const endpoint = `${process.env.REACT_APP_API_URL}/characters`;
-        const response = await fetch(endpoint + '?' + parameters);
-        return await response.json() as SearchResults<CharacterSummary>;
-    }
-    return useInfiniteQuery(['characters', search], getCharacters, { getNextPageParam });
+    return characters.useItems(search);
 }
 
 export function useCharacter(characterId: number | undefined) {
-    const getCharacter = async () => {
-        if (!characterId)
-            return undefined;
-        const endpoint = `${process.env.REACT_APP_API_URL}/characters/${characterId}`;
-        const response = await fetch(endpoint);
-        return await response.json() as CharacterDetails;
-    }
-    return useQuery(['characters', characterId], getCharacter);
+    return characters.useItem(characterId);
 }
 
 export function useCreateCharacter() {
-    return useMutation(async (data: CharacterSaveData) => {
-        const endpoint = `${process.env.REACT_APP_API_URL}/characters`;
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            body: JSON.stringify(data)
-        });
-        return await response.json() as CharacterDetails;
-    });
+    return characters.useCreateItem();
 }
 
 export function useUpdateCharacter(characterId: number | undefined) {
-    return useMutation(async (data: CharacterSaveData) => {
-        if (!characterId)
-            throw new Error('characterId must be defined to update.');
-        const endpoint = `${process.env.REACT_APP_API_URL}/characters/${characterId}`;
-        const response = await fetch(endpoint, {
-            method: 'PUT',
-            body: JSON.stringify(data)
-        });
-        return await response.json() as CharacterDetails;
-    });
+    if (!characterId)
+        throw new Error('characterId must be defined to update.');
+    return characters.useUpdateItem(characterId);
 }
 
 export function useDeleteCharacter(characterId: number) {
-    return useMutation(async () => {
-        const endpoint = `${process.env.REACT_APP_API_URL}/characters/${characterId}`;
-        const response = await fetch(endpoint, {
-            method: 'DELETE',
-        });
-    });
+    return characters.useDeleteItem(characterId);
 }

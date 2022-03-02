@@ -52,6 +52,9 @@
     <None Update="ClientApp\src\api\articles.ts">
       <SubType>Code</SubType>
     </None>
+    <None Update="ClientApp\src\api\RestApi.ts">
+      <SubType>Code</SubType>
+    </None>
     <None Update="ClientApp\src\api\tags.ts">
       <SubType>Code</SubType>
     </None>
@@ -59,9 +62,6 @@
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\hooks\useAuth.ts">
-      <SubType>Code</SubType>
-    </None>
-    <None Update="ClientApp\src\api\search.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\api\media.ts">

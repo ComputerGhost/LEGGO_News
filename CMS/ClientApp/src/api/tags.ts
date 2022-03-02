@@ -1,5 +1,4 @@
-﻿import { QueryFunctionContext, useInfiniteQuery, useMutation, useQuery } from "react-query";
-import { SearchResults, getNextPageParam } from "./search";
+﻿import RestApi from "./RestApi";
 
 
 export interface TagDetails {
@@ -19,61 +18,26 @@ export interface TagSummary {
 }
 
 
+const tags = new RestApi<TagSummary, TagDetails, TagSaveData>('tags');
+
 export function useTags(search: string) {
-    const getTags = async ({ pageParam }: QueryFunctionContext) => {
-        const parameters = new URLSearchParams({
-            query: search,
-            offset: pageParam?.toString() ?? 0
-        });
-        const endpoint = `${process.env.REACT_APP_API_URL}/tags`;
-        const response = await fetch(endpoint + '?' + parameters);
-        return await response.json() as SearchResults<TagSummary>;
-    }
-    return useInfiniteQuery(['tags', search], getTags, { getNextPageParam });
+    return tags.useItems(search);
 }
 
 export function useTag(tagId: number | undefined) {
-    const getTag = async () => {
-        if (!tagId)
-            return undefined;
-        const endpoint = `${process.env.REACT_APP_API_URL}/tags/${tagId}`;
-        const response = await fetch(endpoint);
-        return await response.json() as TagDetails;
-    }
-    return useQuery(['tags', tagId], getTag);
+    return tags.useItem(tagId);
 }
 
 export function useCreateTag() {
-    return useMutation(async (data: TagSaveData) => {
-        const endpoint = `${process.env.REACT_APP_API_URL}/tags`;
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            headers: [['Content-Type', 'application/json']],
-            body: JSON.stringify(data)
-        });
-        return await response.json() as TagDetails;
-    });
+    return tags.useCreateItem();
 }
 
 export function useUpdateTag(tagId: number | undefined) {
-    return useMutation(async (data: TagSaveData) => {
-        if (!tagId)
-            throw new Error('tagId must be defined to update.');
-        const endpoint = `${process.env.REACT_APP_API_URL}/tags/${tagId}`;
-        const response = await fetch(endpoint, {
-            method: 'PUT',
-            headers: [['Content-Type', 'application/json']],
-            body: JSON.stringify(data)
-        });
-        return await response.json() as TagDetails;
-    });
+    if (!tagId)
+        throw new Error('tagId must be defined to update.');
+    return tags.useUpdateItem(tagId);
 }
 
 export function useDeleteTag(tagId: number) {
-    return useMutation(async () => {
-        const endpoint = `${process.env.REACT_APP_API_URL}/tags/${tagId}`;
-        const response = await fetch(endpoint, {
-            method: 'DELETE'
-        });
-    });
+    return tags.useDeleteItem(tagId);
 }
