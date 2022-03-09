@@ -1,5 +1,4 @@
-﻿import { useMutation } from "react-query";
-import RestApi from "./RestApi";
+﻿import RestApi from "../RestApi";
 
 
 export interface MediaSummary {

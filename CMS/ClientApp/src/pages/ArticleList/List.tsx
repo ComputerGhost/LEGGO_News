@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { List, Paper } from '@material-ui/core';
 import InfiniteScroll from '../../components/InfiniteScroll';
-import { useArticles } from '../../api/articles';
+import { useArticles } from '../../api/endpoints/articles';
 import ListItem from './ListItem';
 
 interface IProps {
@@ -11,7 +11,8 @@ interface IProps {
 export default function ({
     search
 }: IProps) {
-    const { data, fetchNextPage, hasNextPage } = useArticles(search);
+    const articles = useArticles(search);
+    const { data, fetchNextPage, hasNextPage } = articles;
     const [count, setCount] = useState(0);
 
     useCallback(() => {

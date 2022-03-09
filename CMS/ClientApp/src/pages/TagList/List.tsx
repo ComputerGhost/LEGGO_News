@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { List, Paper } from '@material-ui/core';
 import InfiniteScroll from '../../components/InfiniteScroll';
-import { useTags } from '../../api/tags';
+import { useTags } from '../../api/endpoints/tags';
 import ListItem from './ListItem';
 
 interface IProps {

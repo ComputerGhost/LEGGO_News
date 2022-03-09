@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
@@ -33,6 +34,8 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            IdentityModelEventSource.ShowPII = true;
+
             services.AddDbContext<DatabaseContext>(option =>
             {
                 option.UseSqlServer(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
@@ -60,7 +63,7 @@ namespace API
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "http://localhost:9011";
+                    options.Authority = Configuration["OAuth2:Authority"];
                     options.TokenValidationParameters = new TokenValidationParameters {
                         ValidateAudience = false
                     };
@@ -72,7 +75,7 @@ namespace API
                 cfg.DocumentFilter<JsonPatchDocumentFilter>();
                 cfg.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Api.xml"));
 
-                var oauthBase = new Uri(Configuration["OAuth2:Base_Url"]);
+                var oauthBase = new Uri(Configuration["OAuth2:Authority"]);
                 cfg.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme {
                     Type = SecuritySchemeType.OAuth2,
                     Flows = new OpenApiOAuthFlows {

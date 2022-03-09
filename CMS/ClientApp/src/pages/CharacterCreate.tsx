@@ -5,7 +5,7 @@ import { Page } from '../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { useCreateCharacter } from '../api/characters';
+import { useCreateCharacter } from '../api/endpoints/characters';
 import { DatePicker } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({

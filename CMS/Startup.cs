@@ -4,18 +4,12 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.Net.Http.Headers;
 using ProxyKit;
-using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -67,7 +61,7 @@ namespace CMS
                         OnUserInformationReceived = (UserInformationReceivedContext context) =>
                         {
                             var jwt = JsonSerializer.Serialize(context.User.RootElement);
-                            context.HttpContext.Response.Cookies.Append("jwt", jwt);
+                            context.HttpContext.Response.Cookies.Append(Configuration["OIDC:JwtCookieName"], jwt);
                             return Task.CompletedTask;
                         }
                     };
@@ -112,6 +106,21 @@ namespace CMS
                     var token = await context.GetTokenAsync("access_token");
                     forwardContext.UpstreamRequest.SetBearerToken(token);
                     return await forwardContext.Send();
+                });
+            });
+
+            app.Map("/auth/challenge", cfg =>
+            {
+                cfg.Run(async (context) =>
+                {
+                    if (!context.User.Identity.IsAuthenticated)
+                    {
+                        await context.ChallengeAsync();
+                    }
+                    else
+                    {
+                        context.Response.Redirect("/");
+                    }
                 });
             });
 

@@ -1,4 +1,6 @@
 ﻿import { QueryFunctionContext, useInfiniteQuery, UseInfiniteQueryResult, useMutation, UseMutationResult, useQuery, UseQueryResult } from "react-query";
+import { generatePath } from "react-router";
+import ApiError from "./ApiError";
 
 
 export interface ISearchParameters {
@@ -46,7 +48,7 @@ export default class <ItemSummary, ItemDetails, ItemSaveData>
         };
 
         const key = [this.endpoint, search];
-        return useInfiniteQuery(key, getItems, { getNextPageParam });
+        return useInfiniteQuery(key, getItems, { getNextPageParam, useErrorBoundary: true });
     }
 
 
@@ -61,7 +63,7 @@ export default class <ItemSummary, ItemDetails, ItemSaveData>
     public useItem(itemId: number | undefined): UseQueryResult<ItemDetails> {
         const getItem = async () => await this.getItem(itemId);
         const key = [this.endpoint, itemId];
-        return useQuery(key, getItem);
+        return useQuery(key, getItem, { useErrorBoundary: true });
     }
 
 
@@ -75,7 +77,7 @@ export default class <ItemSummary, ItemDetails, ItemSaveData>
 
     public useCreateItem(): UseMutationResult<ItemSummary, unknown, ItemSaveData> {
         const createItem = async (data: ItemSaveData) => this.createItem(data);
-        return useMutation(createItem);
+        return useMutation(createItem, { useErrorBoundary: true });
     }
 
 
@@ -92,7 +94,7 @@ export default class <ItemSummary, ItemDetails, ItemSaveData>
 
     public useUploadItem(): UseMutationResult<ItemSummary, unknown, File> {
         const uploadItem = async (file: File) => this.uploadItem(file);
-        return useMutation(uploadItem);
+        return useMutation(uploadItem, { useErrorBoundary: true });
     }
 
 
@@ -107,7 +109,7 @@ export default class <ItemSummary, ItemDetails, ItemSaveData>
 
     public useUpdateItem(itemId: number): UseMutationResult<ItemSummary, unknown, ItemSaveData> {
         const updateItem = async (data: ItemSaveData) => this.updateItem(itemId, data);
-        return useMutation(updateItem);
+        return useMutation(updateItem, { useErrorBoundary: true });
     }
 
 
@@ -118,25 +120,38 @@ export default class <ItemSummary, ItemDetails, ItemSaveData>
 
     public useDeleteItem(itemId: number): UseMutationResult {
         const deleteItem = async () => await this.deleteItem(itemId);
-        return useMutation(deleteItem);
+        return useMutation(deleteItem, { useErrorBoundary: true });
     }
-    
+
 
     private buildItemUri(itemId: number): string {
         return this.endpoint + '/' + itemId.toString();
     }
 
     private buildQueryUri(parameters: Record<string, string>): string {
-        const query = '?' + new URLSearchParams(parameters);
-        return this.endpoint + '/' + query;
+        return generatePath(this.endpoint + '/', parameters);
+        //const query = '?' + new URLSearchParams(parameters);
+        //return this.endpoint + '/' + query;
     }
 
     private async fetch(relativeUri: string, options: RequestInit, contentType?: string) {
+        const response = await this.makeFetchRequest(relativeUri, options, contentType);
+        this.checkFetchResponse(response);
+        return response;
+    }
+
+    private async makeFetchRequest(relativeUri: string, options: RequestInit, contentType?: string) {
         const requestUri = `${process.env.REACT_APP_API_URL}/${relativeUri}`;
         const requestOptions = {
             ...options,
             headers: [['Content-Type', contentType ?? 'application/json']],
-        }
+        };
         return await fetch(requestUri, requestOptions);
+    }
+
+    private checkFetchResponse(response: Response) {
+        if (!response.ok) {
+            throw new ApiError(response.status);
+        }
     }
 }

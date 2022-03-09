@@ -1,5 +1,4 @@
-﻿import { useQuery, UseQueryResult } from "react-query";
-import RestApi from "./RestApi";
+﻿import RestApi from "../RestApi";
 
 
 export interface ArticleDetails {
@@ -36,8 +35,9 @@ export function useCreateArticle() {
 }
 
 export function useUpdateArticle(articleId: number | undefined) {
-    if (!articleId)
+    if (!articleId) {
         throw new Error('articleId must be defined to update.');
+    }
     return articles.useUpdateItem(articleId);
 }
 

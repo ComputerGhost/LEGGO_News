@@ -5,7 +5,7 @@ import { Page } from '../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { useCreateTag } from '../../api/tags';
+import { useCreateTag } from '../../api/endpoints/tags';
 
 const useStyles = makeStyles((theme) => ({
     grow: {

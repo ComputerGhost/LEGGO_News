@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { ListItem, ListItemText, ListItemButton, IconButton } from '@material-ui/core';
-import { TagSummary } from '../../api/tags';
+import { TagSummary } from '../../api/endpoints/tags';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';

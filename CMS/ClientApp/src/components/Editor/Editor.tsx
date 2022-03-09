@@ -34,14 +34,11 @@ export default function Editor({
     const ReactEditorJS = createReactEditorJS();
 
     function handleChange(apiInstance?: EditorJS) {
-        console.log(apiInstance);
         if (apiInstance && onApiSet) {
             onApiSet(apiInstance);
         }
     }
 
-    //const initialData = JSON.parse("{\"blocks\": [{\"type\":\"paragraph\",\"data\":{\"text\":\"content test\"}}]}");
-    console.log('in editor');
     return (
         <div
             className={classes.container}

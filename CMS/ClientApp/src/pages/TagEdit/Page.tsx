@@ -4,7 +4,7 @@ import { Container, IconButton, TextField } from '@material-ui/core';
 import { Page } from '../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
-import { useTag, useUpdateTag } from '../../api/tags';
+import { useTag, useUpdateTag } from '../../api/endpoints/tags';
 
 const useStyles = makeStyles((theme) => ({
     grow: {

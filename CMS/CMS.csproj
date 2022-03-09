@@ -49,13 +49,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ClientApp\src\api\articles.ts">
+    <None Update="ClientApp\src\api\ApiError.tsx">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\api\endpoints\articles.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\api\ApiErrorBoundary.tsx">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\api\RestApi.ts">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\api\tags.ts">
+    <None Update="ClientApp\src\api\endpoints\tags.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\Editor\Tools.tsx">
@@ -64,10 +70,10 @@
     <None Update="ClientApp\src\hooks\useAuth.ts">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\api\media.ts">
+    <None Update="ClientApp\src\api\endpoints\media.ts">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\api\characters.ts">
+    <None Update="ClientApp\src\api\endpoints\characters.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\Editor\Editor.tsx">

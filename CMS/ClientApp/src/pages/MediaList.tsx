@@ -3,7 +3,7 @@ import { Container, IconButton } from '@material-ui/core';
 import { ImageGrid, Page, SearchToolbar } from '../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useUploadMedia } from '../api/media';
+import { useUploadMedia } from '../api/endpoints/media';
 
 
 export default function Media() {

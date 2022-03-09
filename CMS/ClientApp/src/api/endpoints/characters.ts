@@ -1,4 +1,4 @@
-﻿import RestApi from "./RestApi";
+﻿import RestApi from "../RestApi";
 
 
 export interface CharacterDetails {

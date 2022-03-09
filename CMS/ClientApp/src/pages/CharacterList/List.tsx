@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import InfiniteScroll from '../../components/InfiniteScroll';
-import { useCharacters } from '../../api/characters';
+import { useCharacters } from '../../api/endpoints/characters';
 
 interface IProps {
     search: string,

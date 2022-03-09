@@ -5,7 +5,7 @@ import { Page } from '../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { useCreateArticle } from '../../api/articles';
+import { useCreateArticle } from '../../api/endpoints/articles';
 import { TabContext, TabList } from '@material-ui/lab';
 import EditorJS from '@editorjs/editorjs';
 import ContentTab from './ContentTab';
