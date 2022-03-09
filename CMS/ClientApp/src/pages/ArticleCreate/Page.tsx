@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Box, Container, IconButton, Tab, TextField } from '@material-ui/core';
-import { Editor, Page, TabPanel } from '../../components';
+import { Box, Container, IconButton, Tab } from '@material-ui/core';
+import { Page } from '../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
-import { useHistory } from 'react-router-dom';
-import { useCreateArticle } from '../../api/articles';
+import { useNavigate } from 'react-router-dom';
+import { useCreateArticle } from '../../api/endpoints/articles';
 import { TabContext, TabList } from '@material-ui/lab';
 import EditorJS from '@editorjs/editorjs';
 import ContentTab from './ContentTab';
@@ -23,7 +23,7 @@ export default function () {
     const [title, setTitle] = useState<string>('');
     const [editorApi, setEditorApi] = useState<EditorJS>();
     const mutator = useCreateArticle();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     async function handleSaveClicked() {
         const content = await editorApi!.saver.save();
@@ -32,7 +32,7 @@ export default function () {
             format: 'editorjs',
             content: JSON.stringify(content.blocks),
         });
-        history.replace('./' + mutator.data!.id);
+        navigate('./' + mutator.data!.id);
     }
 
     const toolbar =

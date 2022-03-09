@@ -2,7 +2,7 @@
 import { ImageList, ImageListItem } from '@material-ui/core';
 import InfiniteScroll from './InfiniteScroll';
 import DropFile from './DropFile';
-import { useMedia } from '../api/media';
+import { useMedia } from '../api/endpoints/media';
 
 interface IProps {
     onFilesDropped: (files: File[]) => void,

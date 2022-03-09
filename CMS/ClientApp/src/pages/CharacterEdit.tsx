@@ -4,7 +4,7 @@ import { Container, IconButton, TextField } from '@material-ui/core';
 import { Page } from '../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
-import { useCharacter, useUpdateCharacter } from '../api/characters';
+import { useCharacter, useUpdateCharacter } from '../api/endpoints/characters';
 import { DatePicker } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({

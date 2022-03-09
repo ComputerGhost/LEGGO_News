@@ -4,7 +4,7 @@ import { Box, Container, IconButton, Tab } from '@material-ui/core';
 import { Page } from '../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
-import { useArticle, useUpdateArticle } from '../../api/articles';
+import { useArticle, useUpdateArticle } from '../../api/endpoints/articles';
 import { TabContext, TabList } from '@material-ui/lab';
 import EditorJS from '@editorjs/editorjs';
 import ContentTab from './ContentTab';

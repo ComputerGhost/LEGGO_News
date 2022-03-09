@@ -4,8 +4,8 @@ import { Container, IconButton, TextField } from '@material-ui/core';
 import { Page } from '../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
-import { useHistory } from 'react-router-dom';
-import { useCreateCharacter } from '../api/characters';
+import { useNavigate } from 'react-router-dom';
+import { useCreateCharacter } from '../api/endpoints/characters';
 import { DatePicker } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function () {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate();
     const mutator = useCreateCharacter();
 
     const [birthDate, setBirthDate] = useState<Date | null>(null);
@@ -34,7 +34,7 @@ export default function () {
             description,
         });
         if (mutator.isSuccess)
-            history.replace('./' + mutator.data!.id);
+            navigate('./' + mutator.data!.id);
         else {
             console.error('Creation failed.');
             console.log(mutator);

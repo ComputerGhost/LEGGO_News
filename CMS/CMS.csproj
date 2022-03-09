@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.14" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.2" />
     <PackageReference Include="ProxyKit" Version="2.3.4" />
   </ItemGroup>
 
@@ -49,10 +49,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ClientApp\src\api\articles.ts">
+    <None Update="ClientApp\src\api\ApiError.tsx">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\api\tags.ts">
+    <None Update="ClientApp\src\api\endpoints\articles.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\api\ApiErrorBoundary.tsx">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\api\RestApi.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\api\endpoints\tags.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\Editor\Tools.tsx">
@@ -61,13 +70,10 @@
     <None Update="ClientApp\src\hooks\useAuth.ts">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\api\search.ts">
+    <None Update="ClientApp\src\api\endpoints\media.ts">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\api\media.ts">
-      <SubType>Code</SubType>
-    </None>
-    <None Update="ClientApp\src\api\characters.ts">
+    <None Update="ClientApp\src\api\endpoints\characters.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\Editor\Editor.tsx">
@@ -100,7 +106,7 @@
     <None Update="ClientApp\src\components\Page.tsx">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\components\AuthRoute.tsx">
+    <None Update="ClientApp\src\components\RequireAuth.tsx">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\pages\ArticleCreate\index.ts">

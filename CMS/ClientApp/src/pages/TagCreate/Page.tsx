@@ -4,8 +4,8 @@ import { Container, IconButton, TextField } from '@material-ui/core';
 import { Page } from '../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
-import { useHistory } from 'react-router-dom';
-import { useCreateTag } from '../../api/tags';
+import { useNavigate } from 'react-router-dom';
+import { useCreateTag } from '../../api/endpoints/tags';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function () {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate();
     const mutator = useCreateTag();
 
     const [name, setName] = useState<string>('');
@@ -27,7 +27,7 @@ export default function () {
             description,
         });
         if (mutator.isSuccess)
-            history.replace('./' + mutator.data!.id);
+            navigate('./' + mutator.data!.id);
         else {
             console.error('Creation failed.');
             console.log(mutator);

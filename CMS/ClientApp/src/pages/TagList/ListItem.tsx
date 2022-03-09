@@ -1,9 +1,9 @@
 ﻿import React from 'react';
 import { ListItem, ListItemText, ListItemButton, IconButton } from '@material-ui/core';
-import { TagSummary } from '../../api/tags';
+import { TagSummary } from '../../api/endpoints/tags';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface IProps {
     tag: TagSummary,
@@ -12,14 +12,14 @@ interface IProps {
 export default function ({
     tag
 }: IProps) {
-    var history = useHistory();
+    var navigate = useNavigate();
 
     function handleViewClicked() {
         // nop for now.
     }
 
     function handleEditClicked() {
-        history.push(`./tags/${tag.id}`);
+        navigate(`./tags/${tag.id}`);
     }
 
     const secondaryAction =
