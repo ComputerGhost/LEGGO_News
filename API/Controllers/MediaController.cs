@@ -28,7 +28,7 @@ namespace API.Controllers
         [ProducesResponseType(200, Type = typeof(SearchResults<MediaSummary>))]
         public IActionResult List([FromQuery] SearchParameters parameters)
         {
-            var foundMedia = _context.Media;
+            var foundMedia = _context.Medias;
 
             var mediaPage = foundMedia
                 .Skip(parameters.Offset)
@@ -89,7 +89,7 @@ namespace API.Controllers
                 }
             }
 
-            _context.Media.Add(newMedia);
+            _context.Medias.Add(newMedia);
             _context.SaveChanges();
 
             return Ok(new MediaSummary {

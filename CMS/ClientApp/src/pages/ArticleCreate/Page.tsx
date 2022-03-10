@@ -32,7 +32,7 @@ export default function () {
             format: 'editorjs',
             content: JSON.stringify(content.blocks),
         });
-        navigate('./' + mutator.data!.id);
+        navigate('../' + mutator.data!.id);
     }
 
     const toolbar =

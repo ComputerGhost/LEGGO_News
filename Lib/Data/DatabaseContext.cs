@@ -5,10 +5,10 @@ namespace Data
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<Article> Article { get; set; }
-        public DbSet<Character> Character { get; set; }
-        public DbSet<Media> Media { get; set; }
-        public DbSet<Tag> Tag { get; set; }
+        public DbSet<Article> Articles { get; set; }
+        public DbSet<Character> Characters { get; set; }
+        public DbSet<Media> Medias { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
@@ -19,25 +19,25 @@ namespace Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Some global configurations that we want are:
-            // 1. Tables are the type name.
-            // 2. Columns named "Id" are primary keys.
+
+            // Set up tables and columns
 
             modelBuilder.Entity<Article>()
-                .Property("Id")
+                .Property(nameof(Article.Id))
                 .UseIdentityColumn();
 
             modelBuilder.Entity<Character>()
-                .Property("Id")
+                .Property(nameof(Character.Id))
                 .UseIdentityColumn();
 
             modelBuilder.Entity<Media>()
-                .Property("Id")
+                .Property(nameof(Media.Id))
                 .UseIdentityColumn();
 
-            modelBuilder.Entity<Tag>()
-                .Property("Id")
-                .UseIdentityColumn();
+            modelBuilder.Entity<Tag>(e => {
+                e.Property(nameof(Tag.Id)).UseIdentityColumn();
+                e.HasIndex(nameof(Tag.Name)).IsUnique();
+            });
 
 
             // Set up relations
