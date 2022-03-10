@@ -20,11 +20,6 @@ namespace Data
             base.OnModelCreating(modelBuilder);
 
 
-            // Set up globals and defaults
-
-            //modelBuilder.UseCollation("utf8mb4_unicode_ci");
-
-
             // Set up tables and columns
 
             modelBuilder.Entity<Article>()
@@ -42,7 +37,6 @@ namespace Data
             modelBuilder.Entity<Tag>(e => {
                 e.Property(nameof(Tag.Id)).UseIdentityColumn();
                 e.HasIndex(nameof(Tag.Name)).IsUnique();
-                //e.Property(nameof(Tag.Name)).UseCollation("utf8mb4_unicode_ci");
             });
 
 

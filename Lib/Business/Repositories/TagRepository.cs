@@ -21,7 +21,7 @@ namespace Business.Repositories
         public TagSummary Create(TagSaveData saveData)
         {
             var newTag = _mapper.Map<Tag>(saveData);
-            _databaseContext.Tag.Add(newTag);
+            _databaseContext.Tags.Add(newTag);
             _databaseContext.SaveChanges();
 
             return _mapper.Map<TagSummary>(newTag);
@@ -29,14 +29,14 @@ namespace Business.Repositories
 
         public void Update(long id, TagSaveData saveData)
         {
-            var tag = _databaseContext.Tag.Find(id);
+            var tag = _databaseContext.Tags.Find(id);
             _mapper.Map(saveData, tag);
             _databaseContext.SaveChanges();
         }
 
         public TagDetails Fetch(long id)
         {
-            var tag = _databaseContext.Tag.Find(id);
+            var tag = _databaseContext.Tags.Find(id);
             if (tag == null)
             {
                 return null;
@@ -46,7 +46,7 @@ namespace Business.Repositories
 
         public SearchResults<TagSummary> Search(SearchParameters parameters)
         {
-            var foundTags = _databaseContext.Tag.AsQueryable();
+            var foundTags = _databaseContext.Tags.AsQueryable();
             if (!string.IsNullOrEmpty(parameters.Query))
             {
                 foundTags = foundTags.Where(tag => tag.Name.Contains(parameters.Query));
@@ -68,8 +68,8 @@ namespace Business.Repositories
 
         public void Delete(long id)
         {
-            var tag = _databaseContext.Tag.Find(id);
-            _databaseContext.Tag.Remove(tag);
+            var tag = _databaseContext.Tags.Find(id);
+            _databaseContext.Tags.Remove(tag);
             _databaseContext.SaveChanges();
         }
     }

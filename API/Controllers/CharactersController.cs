@@ -28,7 +28,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResults<CharacterSummary>))]
         public IActionResult List([FromQuery] SearchParameters parameters)
         {
-            var foundCharacters = _context.Character;
+            var foundCharacters = _context.Characters;
 
             var charactersPage = foundCharacters
                 .Skip(parameters.Offset)
@@ -47,7 +47,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CharacterDetails))]
         public IActionResult Get(int id)
         {
-            var character = _context.Character.Find(id);
+            var character = _context.Characters.Find(id);
             var characterDetails = _mapper.Map<CharacterDetails>(character);
             return Ok(characterDetails);
         }
@@ -57,7 +57,7 @@ namespace API.Controllers
         public IActionResult Create([FromBody] CharacterSaveData characterSaveData)
         {
             var character = _mapper.Map<Character>(characterSaveData);
-            _context.Character.Add(character);
+            _context.Characters.Add(character);
             _context.SaveChanges();
 
             var characterDetails = _mapper.Map<CharacterDetails>(character);
@@ -68,7 +68,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult Edit(int id, [FromBody] CharacterSaveData characterSaveData)
         {
-            var character = _context.Character.Find(id);
+            var character = _context.Characters.Find(id);
             _mapper.Map(characterSaveData, character);
             _context.SaveChanges();
 
@@ -79,8 +79,8 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult Delete(int id)
         {
-            var character = _context.Character.Find(id);
-            _context.Character.Remove(character);
+            var character = _context.Characters.Find(id);
+            _context.Characters.Remove(character);
             return NoContent();
         }
 

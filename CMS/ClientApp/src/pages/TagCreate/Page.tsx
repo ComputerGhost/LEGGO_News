@@ -27,7 +27,7 @@ export default function () {
             description,
         });
         if (mutator.isSuccess)
-            navigate('./' + mutator.data!.id);
+            navigate('../' + mutator.data!.id);
         else {
             console.error('Creation failed.');
             console.log(mutator);

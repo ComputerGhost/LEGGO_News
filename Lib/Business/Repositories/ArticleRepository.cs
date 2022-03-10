@@ -21,7 +21,7 @@ namespace Business.Repositories
         public ArticleSummary Create(ArticleSaveData saveData)
         {
             var newArticle = _mapper.Map<Article>(saveData);
-            _databaseContext.Article.Add(newArticle);
+            _databaseContext.Articles.Add(newArticle);
             _databaseContext.SaveChanges();
 
             return _mapper.Map<ArticleSummary>(newArticle);
@@ -29,7 +29,7 @@ namespace Business.Repositories
 
         public ArticleDetails Fetch(long id)
         {
-            var article = _databaseContext.Article.Find(id);
+            var article = _databaseContext.Articles.Find(id);
             if (article == null)
             {
                 return null;
@@ -39,7 +39,7 @@ namespace Business.Repositories
 
         public SearchResults<ArticleSummary> Search(SearchParameters parameters)
         {
-            var foundArticles = _databaseContext.Article;
+            var foundArticles = _databaseContext.Articles;
 
             var articlesPage = foundArticles
                 .Skip(parameters.Offset)
