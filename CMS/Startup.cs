@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,6 +56,7 @@ namespace CMS
                     options.ResponseType = OpenIdConnectResponseType.Code;
                     options.SaveTokens = true;
                     options.UsePkce = false;
+                    options.UseTokenLifetime = true;
 
                     options.Events = new OpenIdConnectEvents
                     {
@@ -62,6 +64,20 @@ namespace CMS
                         {
                             var jwt = JsonSerializer.Serialize(context.User.RootElement);
                             context.HttpContext.Response.Cookies.Append(Configuration["OIDC:JwtCookieName"], jwt);
+                            return Task.CompletedTask;
+                        },
+                        // Can I handle this in React? 🤔
+                        OnRedirectToIdentityProvider = (RedirectContext context) =>
+                        {
+                            // See <https://stackoverflow.com/questions/36795259/>.
+                            var isAjaxRequest = context.Request.Headers != null && context.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+                            if (isAjaxRequest)
+                            {
+                                context.Response.Headers.Remove("Set-Cookie");
+                                // Intentionally breaking the standard and not sending a WWW-Authenticate header with the 401.
+                                context.Response.StatusCode = 401;
+                                context.HandleResponse();
+                            }
                             return Task.CompletedTask;
                         }
                     };
@@ -106,21 +122,6 @@ namespace CMS
                     var token = await context.GetTokenAsync("access_token");
                     forwardContext.UpstreamRequest.SetBearerToken(token);
                     return await forwardContext.Send();
-                });
-            });
-
-            app.Map("/auth/challenge", cfg =>
-            {
-                cfg.Run(async (context) =>
-                {
-                    if (!context.User.Identity.IsAuthenticated)
-                    {
-                        await context.ChallengeAsync();
-                    }
-                    else
-                    {
-                        context.Response.Redirect("/");
-                    }
                 });
             });
 

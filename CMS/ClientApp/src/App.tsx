@@ -9,7 +9,7 @@ export default function ()
     var user = useAuth();
 
     function handleAuthenticationRequired() {
-        window.location.href = '/auth/challenge';
+        window.location.reload();
     }
 
     if (!user || !user.email) {
