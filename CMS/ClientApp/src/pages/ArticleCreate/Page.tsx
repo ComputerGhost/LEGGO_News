@@ -26,13 +26,13 @@ export default function () {
     const navigate = useNavigate();
 
     async function handleSaveClicked() {
-        const content = await editorApi!.saver.save();
-        await mutator.mutate({
+        const content = await editorApi!.save();
+        const response = await mutator.mutateAsync({
             title,
             format: 'editorjs',
             content: JSON.stringify(content.blocks),
         });
-        navigate('../' + mutator.data!.id);
+        navigate('./' + response.id);
     }
 
     const toolbar =

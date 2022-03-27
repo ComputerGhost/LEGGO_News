@@ -27,10 +27,10 @@ namespace Business.Repositories
             return _mapper.Map<TagSummary>(newTag);
         }
 
-        public void Update(long id, TagSaveData saveData)
+        public void Delete(long id)
         {
             var tag = _databaseContext.Tags.Find(id);
-            _mapper.Map(saveData, tag);
+            _databaseContext.Tags.Remove(tag);
             _databaseContext.SaveChanges();
         }
 
@@ -66,10 +66,10 @@ namespace Business.Repositories
             };
         }
 
-        public void Delete(long id)
+        public void Update(long id, TagSaveData saveData)
         {
             var tag = _databaseContext.Tags.Find(id);
-            _databaseContext.Tags.Remove(tag);
+            _mapper.Map(saveData, tag);
             _databaseContext.SaveChanges();
         }
     }

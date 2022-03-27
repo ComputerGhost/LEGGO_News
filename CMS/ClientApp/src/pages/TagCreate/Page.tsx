@@ -22,12 +22,12 @@ export default function () {
     const [description, setDescription] = useState<string>('');
 
     async function handleSaveClicked() {
-        await mutator.mutate({
+        const response = await mutator.mutateAsync({
             name,
             description,
         });
-        if (mutator.isSuccess)
-            navigate('../' + mutator.data!.id);
+        if (response)
+            navigate('./' + response.id);
         else {
             console.error('Creation failed.');
             console.log(mutator);

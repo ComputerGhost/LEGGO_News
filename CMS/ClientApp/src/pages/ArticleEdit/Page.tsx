@@ -36,8 +36,8 @@ export default function CharacterEdit({
     }, [data]);
 
     async function handleSaveClicked() {
-        const content = await editorApi!.saver.save();
-        await mutator.mutate({
+        const content = await editorApi!.save();
+        await mutator.mutateAsync({
             title,
             format: "editorjs",
             content: JSON.stringify(content.blocks),

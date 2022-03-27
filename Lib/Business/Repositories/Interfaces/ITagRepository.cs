@@ -5,9 +5,9 @@ namespace Business.Repositories.Interfaces
     public interface ITagRepository
     {
         TagSummary Create(TagSaveData saveData);
-        void Update(long id, TagSaveData saveData);
+        void Delete(long id);
         TagDetails Fetch(long id);
         SearchResults<TagSummary> Search(SearchParameters parameters);
-        void Delete(long id);
+        void Update(long id, TagSaveData saveData);
     }
 }

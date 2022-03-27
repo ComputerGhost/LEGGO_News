@@ -18,12 +18,28 @@ namespace API.Controllers
             _tagsRepository = tagRepository;
         }
 
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResults<TagSummary>))]
-        public IActionResult List([FromQuery] SearchParameters parameters)
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(TagSummary))]
+        public IActionResult Create([FromBody] TagSaveData tagSaveData)
         {
-            var searchResults = _tagsRepository.Search(parameters);
-            return Json(searchResults);
+            var summary = _tagsRepository.Create(tagSaveData);
+            return new CreatedResult($"./{summary.Id}", summary);
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult Delete(int id)
+        {
+            _tagsRepository.Delete(id);
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult Edit(int id, [FromBody] TagSaveData tagSaveData)
+        {
+            _tagsRepository.Update(id, tagSaveData);
+            return Ok();
         }
 
         [HttpGet("{id}")]
@@ -38,28 +54,12 @@ namespace API.Controllers
             return Json(tag);
         }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(TagSummary))]
-        public IActionResult Create([FromBody] TagSaveData tagSaveData)
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResults<TagSummary>))]
+        public IActionResult List([FromQuery] SearchParameters parameters)
         {
-            var summary = _tagsRepository.Create(tagSaveData);
-            return new CreatedResult($"./{summary.Id}", summary);
-        }
-
-        [HttpPut("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult Edit(int id, [FromBody] TagSaveData tagSaveData)
-        {
-            _tagsRepository.Update(id, tagSaveData);
-            return Ok();
-        }
-
-        [HttpDelete]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult Delete(int id)
-        {
-            _tagsRepository.Delete(id);
-            return Ok();
+            var searchResults = _tagsRepository.Search(parameters);
+            return Json(searchResults);
         }
 
     }

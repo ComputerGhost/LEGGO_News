@@ -1,8 +1,8 @@
 import React from 'react';
 import { ListItem, ListItemText, ListItemButton, IconButton } from '@material-ui/core';
-import { ArticleSummary } from '../../api/endpoints/articles';
+import { ArticleSummary, useDeleteArticle } from '../../api/endpoints/articles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
 interface IProps {
@@ -13,19 +13,29 @@ export default function ({
     article
 }: IProps) {
     var navigate = useNavigate();
+    var deleteArticle = useDeleteArticle(article.id);
 
-    function handleViewClicked() {
-        // nop for now.
+    function handleDeleteClick() {
+        deleteArticle.mutate(undefined);
     }
 
     function handleEditClicked() {
         navigate(`./articles/${article.id}`);
     }
 
+    function handleViewClicked() {
+        // nop for now.
+    }
+
     const secondaryAction =
-        <IconButton onClick={handleEditClicked}>
-            <FontAwesomeIcon icon={faEdit} fixedWidth />
-        </IconButton >;
+        <>
+            <IconButton onClick={handleDeleteClick}>
+                <FontAwesomeIcon icon={faTrash} fixedWidth />
+            </IconButton>
+            <IconButton onClick={handleEditClicked}>
+                <FontAwesomeIcon icon={faEdit} fixedWidth />
+            </IconButton >
+        </>;
 
     return (
         <ListItem disablePadding secondaryAction={secondaryAction}>
