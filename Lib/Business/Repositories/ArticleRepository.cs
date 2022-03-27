@@ -39,7 +39,8 @@ namespace Business.Repositories
 
         public SearchResults<ArticleSummary> Search(SearchParameters parameters)
         {
-            var foundArticles = _databaseContext.Articles;
+            var foundArticles = _databaseContext.Articles
+                .Where(a => a.Title.Contains(parameters.Query));
 
             var articlesPage = foundArticles
                 .Skip(parameters.Offset)
