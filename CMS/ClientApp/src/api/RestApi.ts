@@ -131,7 +131,7 @@ export default class <ItemSummary, ItemDetails, ItemSaveData>
 
     private buildQueryUri(parameters: Record<string, string>): string {
         var queryString = new URLSearchParams(parameters).toString();
-        return `${this.endpoint}/${queryString}`;
+        return `${this.endpoint}/?${queryString}`;
     }
 
     private async fetch(relativeUri: string, options: RequestInit, contentType?: string) {
@@ -152,7 +152,6 @@ export default class <ItemSummary, ItemDetails, ItemSaveData>
         const requestOptions = {
             ...options,
             headers: [
-                ['Bearer', `Bearer ${this.getUser()?.access_token}`],
                 ['Content-Type', contentType ?? 'application/json'],
                 ['X-Requested-With', 'XMLHttpRequest']
             ],
