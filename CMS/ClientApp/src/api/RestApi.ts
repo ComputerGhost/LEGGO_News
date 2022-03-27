@@ -130,7 +130,8 @@ export default class <ItemSummary, ItemDetails, ItemSaveData>
     }
 
     private buildQueryUri(parameters: Record<string, string>): string {
-        return generatePath(this.endpoint + '/', parameters);
+        var queryString = new URLSearchParams(parameters).toString();
+        return `${this.endpoint}/${queryString}`;
     }
 
     private async fetch(relativeUri: string, options: RequestInit, contentType?: string) {
