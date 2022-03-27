@@ -21,12 +21,28 @@ namespace API.Controllers
             _articleRepository = articleRepository;
         }
 
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResults<ArticleSummary>))]
-        public IActionResult List([FromQuery] SearchParameters parameters)
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ArticleSummary))]
+        public IActionResult Create([FromBody] ArticleSaveData articleSaveData)
         {
-            var searchResults = _articleRepository.Search(parameters);
-            return Json(searchResults);
+            var summary = _articleRepository.Create(articleSaveData);
+            return new CreatedResult($"./{summary.Id}", summary);
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult Delete(int id)
+        {
+            _articleRepository.Delete(id);
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult Edit(int id, [FromBody] ArticleSaveData articleSaveData)
+        {
+            _articleRepository.Update(id, articleSaveData);
+            return Ok();
         }
 
         [HttpGet("{id}")]
@@ -41,34 +57,12 @@ namespace API.Controllers
             return Json(article);
         }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ArticleSummary))]
-        public IActionResult Create([FromBody] ArticleSaveData articleSaveData)
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResults<ArticleSummary>))]
+        public IActionResult List([FromQuery] SearchParameters parameters)
         {
-            var summary = _articleRepository.Create(articleSaveData);
-            return new CreatedResult($"./{summary.Id}", summary);
-        }
-
-        [HttpPut("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult Edit(int id, [FromBody] ArticleSaveData article)
-        {
-            return Ok();
-        }
-
-        [HttpPatch]
-        [Consumes("application/json-patch+json")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult Edit(int id, [FromBody] JsonPatchDocument<ArticleSaveData> values)
-        {
-            return Ok();
-        }
-
-        [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult Delete(int id)
-        {
-            return Ok();
+            var searchResults = _articleRepository.Search(parameters);
+            return Json(searchResults);
         }
 
     }

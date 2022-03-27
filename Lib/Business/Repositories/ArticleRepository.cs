@@ -27,6 +27,13 @@ namespace Business.Repositories
             return _mapper.Map<ArticleSummary>(newArticle);
         }
 
+        public void Delete(long id)
+        {
+            var article = _databaseContext.Articles.Find(id);
+            _databaseContext.Articles.Remove(article);
+            _databaseContext.SaveChanges();
+        }
+
         public ArticleDetails Fetch(long id)
         {
             var article = _databaseContext.Articles.Find(id);
@@ -39,8 +46,11 @@ namespace Business.Repositories
 
         public SearchResults<ArticleSummary> Search(SearchParameters parameters)
         {
-            var foundArticles = _databaseContext.Articles
-                .Where(a => a.Title.Contains(parameters.Query));
+            var foundArticles = _databaseContext.Articles.AsQueryable();
+            if (!string.IsNullOrEmpty(parameters.Query))
+            {
+                foundArticles = foundArticles.Where(article => article.Title.Contains(parameters.Query));
+            }
 
             var articlesPage = foundArticles
                 .Skip(parameters.Offset)
@@ -54,6 +64,13 @@ namespace Business.Repositories
                 TotalCount = foundArticles.Count(),
                 Data = articlesPage.Select(article => _mapper.Map<ArticleSummary>(article))
             };
+        }
+
+        public void Update(long id, ArticleSaveData saveData)
+        {
+            var article = _databaseContext.Articles.Find(id);
+            _mapper.Map(saveData, article);
+            _databaseContext.SaveChanges();
         }
     }
 }
