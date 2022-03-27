@@ -1,5 +1,6 @@
 ﻿import { QueryFunctionContext, useInfiniteQuery, UseInfiniteQueryResult, useMutation, UseMutationResult, useQuery, UseQueryResult } from "react-query";
 import { generatePath } from "react-router";
+import { User } from "oidc-client-ts";
 import ApiError from "./ApiError";
 
 
@@ -130,8 +131,6 @@ export default class <ItemSummary, ItemDetails, ItemSaveData>
 
     private buildQueryUri(parameters: Record<string, string>): string {
         return generatePath(this.endpoint + '/', parameters);
-        //const query = '?' + new URLSearchParams(parameters);
-        //return this.endpoint + '/' + query;
     }
 
     private async fetch(relativeUri: string, options: RequestInit, contentType?: string) {
@@ -140,13 +139,27 @@ export default class <ItemSummary, ItemDetails, ItemSaveData>
         return response;
     }
 
+    private getUser(): User|null {
+        const oidcStorage = localStorage.getItem(`oidc.user:http://localhost:9011:dc487e3d-1a6a-49b6-a957-150dd821bbd8`);
+        if (!oidcStorage)
+            return null;
+        return User.fromStorageString(oidcStorage);
+    }
+
     private async makeFetchRequest(relativeUri: string, options: RequestInit, contentType?: string) {
         const requestUri = `${process.env.REACT_APP_API_URL}/${relativeUri}`;
         const requestOptions = {
             ...options,
-            headers: [['Content-Type', contentType ?? 'application/json']],
+            headers: [
+                ['Bearer', `Bearer ${this.getUser()?.access_token}`],
+                ['Content-Type', contentType ?? 'application/json'],
+                ['X-Requested-With', 'XMLHttpRequest']
+            ],
+            redirect: 'manual' as RequestRedirect
         };
-        return await fetch(requestUri, requestOptions);
+        var response = await fetch(requestUri, requestOptions);
+        this.checkFetchResponse(response);
+        return response;
     }
 
     private checkFetchResponse(response: Response) {

@@ -8,7 +8,7 @@ export interface CurrentUser {
 }
 
 export function useAuth() {
-    var [cookies] = useCookies(['jwt']);
-    var jwtCookie = cookies.jwt as CurrentUser;
-    return jwtCookie;
+    var [cookies] = useCookies(['oidc-user']);
+    var userCookie = cookies['oidc-user'] as CurrentUser;
+    return userCookie;
 }

@@ -1,0 +1,1 @@
+{"version":3,"file":"useAuth.js","sourceRoot":"","sources":["useAuth.ts"],"names":[],"mappings":";;;AAAA,6CAA0C;AAS1C,SAAgB,OAAO;IACd,IAAA,OAAO,GAAI,yBAAU,CAAC,CAAC,WAAW,CAAC,CAAC,GAA7B,CAA8B;IAC1C,IAAI,UAAU,GAAG,OAAO,CAAC,WAAW,CAAgB,CAAC;IACrD,OAAO,UAAU,CAAC;AACtB,CAAC;AAJD,0BAIC"}
