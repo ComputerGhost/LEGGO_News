@@ -1,6 +1,5 @@
 ﻿using SixLabors.ImageSharp;
 using System;
-using System.IO;
 
 namespace Media
 {

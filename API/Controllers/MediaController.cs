@@ -1,13 +1,11 @@
-﻿using API.DTOs;
-using Business.DTOs;
-using Data;
+﻿using Business.DTOs;
+using Business.Repositories.Interfaces;
 using Data.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -17,39 +15,70 @@ namespace API.Controllers
     [Route("[controller]")]
     public class MediaController : Controller
     {
-        private readonly DatabaseContext _context;
+        private readonly IMediaRepository _mediaRepository;
 
-        public MediaController(DatabaseContext context)
+        public MediaController(IMediaRepository mediaRepository)
         {
-            _context = context;
+            _mediaRepository = mediaRepository;
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(MediaSummary))]
+        public async Task<IActionResult> Create([FromForm] IFormFile file)
+        {
+            // TODO: pull most of this into some sort of service class
+
+            var basePath = Path.Combine(Environment.GetEnvironmentVariable("STATIC_BASE_PATH"), "Images");
+
+            var mediaSaveData = new MediaSaveNewData
+            {
+                OriginalFilename = file.FileName,
+            };
+
+            using (var memoryStream = new MemoryStream())
+            {
+                file.CopyTo(memoryStream);
+                memoryStream.Position = 0;
+                using (var image = await Media.ImageOperations.Load(memoryStream))
+                {
+                    image.FileName = $"{Guid.NewGuid()}.{image.Extension}";
+                    mediaSaveData.MimeType = image.MimeType;
+                    mediaSaveData.LocalFilename = image.FileName;
+                    mediaSaveData.LargestResize = await Media.ImageOperations.SaveVariants(image, basePath);
+                }
+            }
+
+            var summary = _mediaRepository.Create(mediaSaveData);
+            return CreatedAtAction(nameof(Get), new { id = summary.Id }, summary);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult Edit(int id, [FromBody] MediaSaveExistingData mediaSaveData)
+        {
+            _mediaRepository.Update(id, mediaSaveData);
+            return NoContent();
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MediaDetails))]
+        public IActionResult Get(int id)
+        {
+            var media = _mediaRepository.Fetch(id);
+            if (media == null)
+            {
+                return NotFound();
+            }
+            return Json(media);
         }
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(SearchResults<MediaSummary>))]
         public IActionResult List([FromQuery] SearchParameters parameters)
         {
-            var foundMedia = _context.Medias;
-
-            var mediaPage = foundMedia
-                .Skip(parameters.Offset)
-                .Take(parameters.Count);
-
-            return Json(new SearchResults<MediaSummary> {
-                Key = parameters.Key,
-                Offset = parameters.Offset,
-                Count = mediaPage.Count(),
-                TotalCount = foundMedia.Count(),
-                Data = mediaPage.Select(media => new MediaSummary {
-                    Id = media.Id,
-                    Credit = media.Credit,
-                    CreditUrl = media.CreditUrl,
-                    OriginalUrl = getImageUrl(media, MediaSize.Original),
-                    ThumbnailUrl = getImageUrl(media, MediaSize.Thumbnail),
-                    SmallSizeUrl = getImageUrl(media, MediaSize.Small),
-                    MediumSizeUrl = getImageUrl(media, MediaSize.Medium),
-                    LargeSizeUrl = getImageUrl(media, MediaSize.Large),
-                }),
-            });
+            var searchResults = _mediaRepository.Search(parameters);
+            return Json(searchResults);
         }
 
         private static string getImageUrl(Data.Models.Media media, string type)
@@ -65,44 +94,5 @@ namespace API.Controllers
             return null;
         }
 
-        [HttpPost]
-        [Consumes("multipart/form-data")]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(MediaSummary))]
-        public async Task<IActionResult> Create([FromForm] IFormFile file)
-        {
-            var baseUrl = Path.Combine(Environment.GetEnvironmentVariable("STATIC_BASE_URL"), "Images");
-            var basePath = Path.Combine(Environment.GetEnvironmentVariable("STATIC_BASE_PATH"), "Images");
-
-            var newMedia = new Data.Models.Media {
-                OriginalFilename = file.FileName,
-                Caption = file.FileName,
-            };
-
-            using (var memoryStream = new MemoryStream()) {
-                file.CopyTo(memoryStream);
-                memoryStream.Position = 0;
-                using (var image = await Media.ImageOperations.Load(memoryStream)) {
-                    image.FileName = $"{Guid.NewGuid()}.{image.Extension}";
-                    newMedia.MimeType = image.MimeType;
-                    newMedia.LocalFilename = image.FileName;
-                    newMedia.LargestResize = await Media.ImageOperations.SaveVariants(image, basePath);
-                }
-            }
-
-            _context.Medias.Add(newMedia);
-            _context.SaveChanges();
-
-            return Ok(new MediaSummary {
-                Id = newMedia.Id,
-                Caption = "Image number " + 0,
-                Credit = "Nathan",
-                CreditUrl = "https://leggonews.com",
-                OriginalUrl = Path.Combine(baseUrl, newMedia.LocalFilename),
-                ThumbnailUrl = Path.Combine(baseUrl, "thumbnail", newMedia.LocalFilename),
-                SmallSizeUrl = Path.Combine(baseUrl, "small", newMedia.LocalFilename),
-                MediumSizeUrl = Path.Combine(baseUrl, "medium", newMedia.LocalFilename),
-                LargeSizeUrl = Path.Combine(baseUrl, "large", newMedia.LocalFilename),
-            });
-        }
     }
 }

@@ -1,8 +1,9 @@
 ﻿import React, { ReactElement, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Theme, useMediaQuery } from '@material-ui/core';
+import { useMediaQuery } from '@material-ui/core';
 import { Toolbar, useTheme } from '@material-ui/core';
-import { NavDrawer, TopBar } from './';
+import TopBar from './TopBar';
+import NavDrawer from './NavDrawer';
 
 const drawerWidth = 240;
 
@@ -12,11 +13,12 @@ interface IProps {
     children: ReactElement | ReactElement[],
 }
 
-export default function Page({
+export default function ({
     title,
     toolbar,
     children
-}: IProps) {
+}: IProps)
+{
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 

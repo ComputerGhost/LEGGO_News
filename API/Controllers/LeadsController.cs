@@ -1,5 +1,5 @@
-﻿using API.DTOs;
-using Business.DTOs;
+﻿using Business.DTOs;
+using Business.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,40 +11,55 @@ namespace API.Controllers
     [Route("[controller]")]
     public class LeadsController : Controller
     {
+        private readonly ILeadRepository _leadRepository;
 
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResults<LeadSummary>))]
-        public IActionResult List([FromQuery] SearchParameters parameters)
+        public LeadsController(ILeadRepository leadRepository)
         {
-            return Json(new SearchResults<LeadSummary>());
-        }
-
-        [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LeadDetails))]
-        public IActionResult Get(int id)
-        {
-            return Json(new CharacterDetails());
+            _leadRepository = leadRepository;
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public IActionResult Create([FromBody] LeadSaveData character)
+        public IActionResult Create([FromBody] LeadSaveData leadSaveData)
         {
-            return Ok();
-        }
-
-        [HttpPut("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult Edit(int id, [FromBody] LeadSaveData character)
-        {
-            return Ok();
+            var summary = _leadRepository.Create(leadSaveData);
+            return CreatedAtAction(nameof(Get), new { id = summary.Id }, summary);
         }
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult Delete(int id)
         {
+            _leadRepository.Delete(id);
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult Edit(int id, [FromBody] LeadSaveData leadSaveData)
+        {
+            _leadRepository.Update(id, leadSaveData);
             return Ok();
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LeadDetails))]
+        public IActionResult Get(int id)
+        {
+            var lead = _leadRepository.Fetch(id);
+            if (lead == null)
+            {
+                return NotFound();
+            }
+            return Json(lead);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResults<LeadSummary>))]
+        public IActionResult List([FromQuery] SearchParameters parameters)
+        {
+            var searchResults = _leadRepository.Search(parameters);
+            return Json(searchResults);
         }
 
     }

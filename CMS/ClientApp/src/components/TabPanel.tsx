@@ -1,11 +1,12 @@
-﻿import React, { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { useTabContext } from '@material-ui/lab';
 
 // This is a modified copy/paste from:
 // https://github.com/mui-org/material-ui/issues/21250
 // It allows tab switching without unmounts.
 
-export default function TabPanel(props: any) {
+export default function (props: any)
+{
     const {
         children,
         className,

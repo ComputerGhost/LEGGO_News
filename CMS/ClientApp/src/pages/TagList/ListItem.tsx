@@ -19,7 +19,7 @@ export default function ({
     }
 
     function handleEditClicked() {
-        navigate(`./tags/${tag.id}`);
+        navigate(`./${tag.id}`);
     }
 
     const secondaryAction =

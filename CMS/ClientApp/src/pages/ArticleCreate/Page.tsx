@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Box, Container, IconButton, Tab } from '@material-ui/core';
-import { Page } from '../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +9,7 @@ import { TabContext, TabList } from '@material-ui/lab';
 import EditorJS from '@editorjs/editorjs';
 import ContentTab from './ContentTab';
 import MetadataTab from './MetadataTab';
+import Page from '../../components/Page';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function () {
+export default function()
+{
     const classes = useStyles();
     const [tabIndex, setTabIndex] = useState('0');
     const [title, setTitle] = useState<string>('');

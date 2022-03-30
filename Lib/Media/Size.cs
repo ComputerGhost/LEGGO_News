@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Media
+﻿namespace Media
 {
     public struct Size
     {
