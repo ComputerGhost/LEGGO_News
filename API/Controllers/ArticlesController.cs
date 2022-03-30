@@ -1,10 +1,7 @@
-﻿using AutoMapper;
-using Business.DTOs;
+﻿using Business.DTOs;
 using Business.Repositories.Interfaces;
-using Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -26,7 +23,7 @@ namespace API.Controllers
         public IActionResult Create([FromBody] ArticleSaveData articleSaveData)
         {
             var summary = _articleRepository.Create(articleSaveData);
-            return new CreatedResult($"./{summary.Id}", summary);
+            return CreatedAtAction(nameof(Get), new { id = summary.Id }, summary);
         }
 
         [HttpDelete("{id}")]
@@ -34,7 +31,7 @@ namespace API.Controllers
         public IActionResult Delete(int id)
         {
             _articleRepository.Delete(id);
-            return Ok();
+            return NoContent();
         }
 
         [HttpPut("{id}")]
@@ -42,7 +39,7 @@ namespace API.Controllers
         public IActionResult Edit(int id, [FromBody] ArticleSaveData articleSaveData)
         {
             _articleRepository.Update(id, articleSaveData);
-            return Ok();
+            return NoContent();
         }
 
         [HttpGet("{id}")]

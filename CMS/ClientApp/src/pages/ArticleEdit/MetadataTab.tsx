@@ -1,6 +1,6 @@
 import { Checkbox, FormControlLabel } from '@material-ui/core';
 import React from 'react';
-import { TabPanel } from '../../components';
+import TabPanel from '../../components/TabPanel';
 
 interface IProps {
     tabIndex: string,

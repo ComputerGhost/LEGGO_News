@@ -9,6 +9,9 @@ namespace Business.Setup
         public static void Configure(IServiceCollection services)
         {
             services.AddTransient<IArticleRepository, ArticleRepository>();
+            services.AddTransient<ICharacterRepository, CharacterRepository>();
+            services.AddTransient<ILeadRepository, LeadRepository>();
+            services.AddTransient<IMediaRepository, MediaRepository>();
             services.AddTransient<ITagRepository, TagRepository>();
         }
     }

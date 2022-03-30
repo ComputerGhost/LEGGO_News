@@ -1,21 +1,15 @@
+using API.Utility;
 using Data;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace API
 {
@@ -23,100 +17,66 @@ namespace API
     {
         readonly string AllowAllOriginsCors = "AllOrigins";
 
-        public IConfiguration Configuration { get; }
+        public Config Config { get; }
 
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            Config = (Config)configuration.Get(typeof(Config));
         }
 
+
+        private void SetCorsOptions(CorsOptions options)
+        {
+            options.AddPolicy(AllowAllOriginsCors, builder =>
+            {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyMethod();
+                builder.AllowAnyOrigin();
+                builder.AllowAnyHeader();
+            });
+        }
+
+        private void SetMvcToUseJson(MvcOptions options)
+        {
+            options.Filters.Add(new ConsumesAttribute("application/json"));
+            options.Filters.Add(new ProducesAttribute("application/json"));
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            IdentityModelEventSource.ShowPII = true;
-
-            services.AddDbContext<DatabaseContext>(option =>
+            services.AddDbContext<DatabaseContext>(options =>
             {
-                option.UseSqlServer(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
+                options.UseSqlServer(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
             });
 
             services.AddControllers();
-
-            services.AddCors(cfg =>
-            {
-                cfg.AddPolicy(AllowAllOriginsCors, builder =>
-                {
-                    builder.AllowAnyOrigin();
-                    builder.AllowAnyMethod();
-                    builder.AllowAnyOrigin();
-                    builder.AllowAnyHeader();
-                });
-            });
-
-            services.AddMvc(cfg =>
-            {
-                cfg.Filters.Add(new ConsumesAttribute("application/json"));
-                cfg.Filters.Add(new ProducesAttribute("application/json"));
-            });
-
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
-                {
-                    options.Authority = Configuration["OAuth2:Authority"];
-                    options.TokenValidationParameters = new TokenValidationParameters {
-                        ValidateAudience = false
-                    };
-                    options.RequireHttpsMetadata = false;
-                });
-
-            services.AddSwaggerGen(cfg =>
-            {
-                cfg.DocumentFilter<JsonPatchDocumentFilter>();
-                cfg.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Api.xml"));
-
-                var oauthBase = new Uri(Configuration["OAuth2:Authority"]);
-                cfg.AddSecurityDefinition("OAuth2", new OpenApiSecurityScheme {
-                    Type = SecuritySchemeType.OAuth2,
-                    Flows = new OpenApiOAuthFlows {
-                        AuthorizationCode = new OpenApiOAuthFlow {
-                            AuthorizationUrl = new Uri(oauthBase, "/oauth2/authorize"),
-                            TokenUrl = new Uri(oauthBase, "/oauth2/token"),
-                            Scopes = new Dictionary<string, string> {
-                                { "Public", "public" }
-                            }
-                        }
-                    }
-                });
-            });
-
+            services.AddCors(options => SetCorsOptions(options));
+            services.AddMvc(options => SetMvcToUseJson(options));
+            services.AddMySwagger();
+            services.AddMyAuth(Config.OAuth2);
             services.AddAutoMapper(typeof(Business.Setup.MappingProfile));
+
             Business.Setup.DependencyInjection.Configure(services);
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment()) {
+            if (env.IsDevelopment())
+            {
+                IdentityModelEventSource.ShowPII = true;
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseCors(AllowAllOriginsCors);
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            app
+                .UseHttpsRedirection()
+                .UseRouting()
+                .UseCors(AllowAllOriginsCors)
+                .UseMyAuth()
+                .UseEndpoints(conventions => conventions.MapControllers())
+                .UseMySwagger();
         }
     }
 }

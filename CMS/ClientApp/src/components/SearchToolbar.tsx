@@ -43,10 +43,11 @@ interface IProps {
     onChange: (search: string) => void,
 }
 
-export default function SearchToolbar({
+export default function ({
     placeholder,
     onChange,
-}: IProps) {
+}: IProps)
+{
     const theme = useTheme();
     const classes = useStyles(theme)();
 

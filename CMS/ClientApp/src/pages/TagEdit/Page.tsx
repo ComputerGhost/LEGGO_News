@@ -1,10 +1,11 @@
 ﻿import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Container, IconButton, TextField } from '@material-ui/core';
-import { Page } from '../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { useTag, useUpdateTag } from '../../api/endpoints/tags';
+import { useParams } from 'react-router-dom';
+import Page from '../../components/Page';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -12,13 +13,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-interface IProps {
-    tagId?: number,
-}
+export default function()
+{
+    const tagId = parseInt(useParams().id!);
 
-export default function ({
-    tagId,
-}: IProps) {
     const classes = useStyles();
     const { data } = useTag(tagId)
     const mutator = useUpdateTag(tagId);

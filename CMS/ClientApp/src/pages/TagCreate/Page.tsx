@@ -1,11 +1,11 @@
 ﻿import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Container, IconButton, TextField } from '@material-ui/core';
-import { Page } from '../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { useCreateTag } from '../../api/endpoints/tags';
+import Page from '../../components/Page';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function () {
+export default function()
+{
     const classes = useStyles();
     const navigate = useNavigate();
     const mutator = useCreateTag();

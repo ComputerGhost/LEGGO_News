@@ -7,6 +7,7 @@ namespace Data
     {
         public DbSet<Article> Articles { get; set; }
         public DbSet<Character> Characters { get; set; }
+        public DbSet<Lead> Leads { get; set; }
         public DbSet<Media> Medias { get; set; }
         public DbSet<Tag> Tags { get; set; }
 
@@ -28,6 +29,10 @@ namespace Data
 
             modelBuilder.Entity<Character>()
                 .Property(nameof(Character.Id))
+                .UseIdentityColumn();
+
+            modelBuilder.Entity<Lead>()
+                .Property(nameof(Lead.Id))
                 .UseIdentityColumn();
 
             modelBuilder.Entity<Media>()

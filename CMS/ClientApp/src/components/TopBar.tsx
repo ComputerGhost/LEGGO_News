@@ -1,6 +1,5 @@
 ﻿import React, { ReactElement } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { AppBar, IconButton, Toolbar, Typography, Theme } from '@material-ui/core';
+import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 
@@ -13,13 +12,14 @@ interface IProps {
     children: ReactElement | null,
 }
 
-export default function TopBar({
+export default function ({
     drawerWidth,
     onDrawerOpen,
     isMobile,
     title,
     children
-}: IProps) {
+}: IProps)
+{
     return (
         <>
             <AppBar position='fixed' sx={{ paddingLeft: isMobile ? 0 : drawerWidth + 'px' }}>

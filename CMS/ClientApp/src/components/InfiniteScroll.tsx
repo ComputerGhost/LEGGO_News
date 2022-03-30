@@ -1,4 +1,4 @@
-﻿import React, { ReactElement, useEffect } from 'react';
+﻿import { ReactElement, useEffect } from 'react';
 import { default as WrappedComponent } from 'react-infinite-scroll-component';
 
 interface IProps {
@@ -9,13 +9,13 @@ interface IProps {
 }
 
 // This can be replaced with the third-party one after they fix the bugs.
-export default function InfiniteScroll({
+export default function ({
     children,
     dataLength,
     hasMore,
     next,
-}: IProps) {
-
+}: IProps)
+{
     // Fixes a bug on InfiniteScroll
     // Source: https://github.com/ankeetmaini/react-infinite-scroll-component/issues/217
     useEffect(() => {

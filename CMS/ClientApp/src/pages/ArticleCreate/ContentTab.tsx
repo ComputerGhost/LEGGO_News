@@ -1,7 +1,8 @@
 ﻿import React from 'react';
 import { TextField } from '@material-ui/core';
-import { Editor, TabPanel } from '../../components';
 import EditorJS from '@editorjs/editorjs';
+import TabPanel from '../../components/TabPanel';
+import Editor from '../../components/Editor';
 
 interface IProps {
     tabIndex: string,

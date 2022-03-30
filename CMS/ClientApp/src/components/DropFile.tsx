@@ -5,10 +5,11 @@ interface IProps {
     children: ReactElement,
 }
 
-export default function DropFile({
+export default function ({
     onDrop,
     children,
-}: IProps) {
+}: IProps)
+{
 
     function handleDragOver(event: React.DragEvent<HTMLDivElement>) {
         event.preventDefault();

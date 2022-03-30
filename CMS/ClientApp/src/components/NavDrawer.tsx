@@ -33,7 +33,7 @@ interface IProps {
     onDrawerClosed: () => void,
 }
 
-export default function NavDrawer({ width, open, allowClose, onDrawerClosed }: IProps) {
+export default function ({ width, open, allowClose, onDrawerClosed }: IProps) {
     const theme = useTheme();
     const classes = useStyles(theme, width);
 

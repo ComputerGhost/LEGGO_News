@@ -9,10 +9,11 @@ interface IProps {
     search: string,
 }
 
-export default function ImageGrid({
+export default function ({
     onFilesDropped,
     search,
-}: IProps) {
+}: IProps)
+{
     const { data, fetchNextPage, hasNextPage } = useMedia(search);
     const [count, setCount] = useState(0);
 

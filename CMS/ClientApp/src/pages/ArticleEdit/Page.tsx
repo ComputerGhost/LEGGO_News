@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Box, Container, IconButton, Tab } from '@material-ui/core';
-import { Page } from '../../components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { useArticle, useUpdateArticle } from '../../api/endpoints/articles';
@@ -9,6 +8,8 @@ import { TabContext, TabList } from '@material-ui/lab';
 import EditorJS from '@editorjs/editorjs';
 import ContentTab from './ContentTab';
 import MetadataTab from './MetadataTab';
+import { useParams } from 'react-router-dom';
+import Page from '../../components/Page';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -16,13 +17,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-interface IProps {
-    articleId?: number,
-}
+export default function()
+{
+    const articleId = parseInt(useParams().id!);
 
-export default function CharacterEdit({
-    articleId,
-}: IProps) {
     const classes = useStyles();
     const [tabIndex, setTabIndex] = useState('0');
     const [title, setTitle] = useState<string>('');

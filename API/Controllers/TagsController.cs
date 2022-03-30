@@ -23,7 +23,7 @@ namespace API.Controllers
         public IActionResult Create([FromBody] TagSaveData tagSaveData)
         {
             var summary = _tagsRepository.Create(tagSaveData);
-            return new CreatedResult($"./{summary.Id}", summary);
+            return CreatedAtAction(nameof(Get), new { id = summary.Id }, summary);
         }
 
         [HttpDelete]
@@ -31,7 +31,7 @@ namespace API.Controllers
         public IActionResult Delete(int id)
         {
             _tagsRepository.Delete(id);
-            return Ok();
+            return NoContent();
         }
 
         [HttpPut("{id}")]
@@ -39,7 +39,7 @@ namespace API.Controllers
         public IActionResult Edit(int id, [FromBody] TagSaveData tagSaveData)
         {
             _tagsRepository.Update(id, tagSaveData);
-            return Ok();
+            return NoContent();
         }
 
         [HttpGet("{id}")]
