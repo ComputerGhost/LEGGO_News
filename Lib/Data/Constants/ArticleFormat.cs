@@ -2,6 +2,6 @@
 {
     public class ArticleFormat
     {
-        public const string EditorJs = "EditorJs";
+        public const string EditorJs = "editorjs";
     }
 }

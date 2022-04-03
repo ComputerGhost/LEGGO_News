@@ -30,7 +30,7 @@ export default function()
         const content = await editorApi!.save();
         const response = await mutator.mutateAsync({
             title,
-            format: "EditorJs",
+            format: "editorjs",
             content: JSON.stringify(content.blocks),
         });
         navigate('./' + response.id);

@@ -18,11 +18,14 @@ namespace ArticleTranslator.EditorJs.Utility
             var type = (string)jObject["type"];
             var data = jObject["data"];
 
-            switch (type) {
-                case "paragraph":
-                    return data.ToObject<Paragraph>(serializer);
+            switch (type)
+            {
                 case "header":
                     return data.ToObject<Header>(serializer);
+                case "list":
+                    return data.ToObject<List>(serializer);
+                case "paragraph":
+                    return data.ToObject<Paragraph>(serializer);
                 default:
                     throw new NotImplementedException(type);
             }

@@ -2,7 +2,7 @@
 
 namespace ArticleTranslator.EditorJs.Blocks
 {
-    abstract class Block
+    internal abstract class Block
     {
         public abstract void RenderTo(StringBuilder stringBuilder);
     }
