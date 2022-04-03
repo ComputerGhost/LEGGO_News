@@ -1,16 +1,16 @@
-﻿using System.Text;
-using System.Web;
+﻿using ArticleTranslator.EditorJs.Utility;
+using System.Text;
 
-namespace ArticleTranslator.EditorJs.Models
+namespace ArticleTranslator.EditorJs.Blocks
 {
     class Header : Block
     {
         public string Text { get; set; }
         public int Level { get; set; }
 
-        public override void Render(StringBuilder stringBuilder)
+        public override void RenderTo(StringBuilder stringBuilder)
         {
-            string safeText = HttpUtility.HtmlEncode(Text);
+            var safeText = Sanitization.KeepOnlySafeTags(Text);
             stringBuilder.Append($"<h{Level}>{safeText}</h{Level}>");
         }
     }

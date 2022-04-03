@@ -20,7 +20,7 @@ export default function ({
     }
 
     function handleEditClicked() {
-        navigate(`./articles/${article.id}`);
+        navigate(`./${article.id}`);
     }
 
     function handleViewClicked() {
