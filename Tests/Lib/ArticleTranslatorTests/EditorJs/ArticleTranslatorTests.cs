@@ -6,9 +6,10 @@ namespace ArticleTranslatorTests.EditorJs
     [TestClass]
     public class ArticleTranslatorTests
     {
-        private IArticleTranslator Translator { get; }
+        private IArticleTranslator Translator { get; set; }
 
-        public ArticleTranslatorTests()
+        [TestInitialize]
+        public void Initialize()
         {
             var factory = new ArticleTranslatorFactory();
             Translator = factory.CreateTranslator("editorjs");
@@ -33,13 +34,23 @@ namespace ArticleTranslatorTests.EditorJs
         }
 
         [TestMethod]
-        public void TranslateToHtml_WithSpecialCharacters_EscapesCharacters()
+        public void TranslateToHtml_WithInvalidTags_RemovesTags()
         {
             var json = @"[
-                {'type': 'header', 'data': {'text' : '<header>', 'level': 1}},
-                {'type': 'paragraph', 'data': {'text' : '<paragraph>'}}
+                {'type': 'header', 'data': {'text' : '<header/>', 'level': 1}},
+                {'type': 'paragraph', 'data': {'text' : '<paragraph/>'}}
             ]";
-            var expectedHtml = "<h1>&lt;header&gt;</h1><p>&lt;paragraph&gt;</p>";
+            var expectedHtml = "<h1></h1><p></p>";
+            Assert.AreEqual(expectedHtml, Translator.TranslateToHtml(json));
+        }
+
+        [TestMethod]
+        public void TranslateToHtml_WithFormatTags_IncludesFormatTags()
+        {
+            var json = @"[
+                {'type': 'paragraph', 'data': {'text' : '<b>bold</b><em>emphasis</em>'}}
+            ]";
+            var expectedHtml = "<p><b>bold</b><em>emphasis</em></p>";
             Assert.AreEqual(expectedHtml, Translator.TranslateToHtml(json));
         }
 
@@ -61,6 +72,17 @@ namespace ArticleTranslatorTests.EditorJs
                 {'type': 'paragraph', 'data': {'text' : 'paragraph content'}}
             ]";
             var expectedHtml = "<p>paragraph content</p>";
+            Assert.AreEqual(expectedHtml, Translator.TranslateToHtml(json));
+        }
+
+        [TestMethod]
+        public void TranslateToHtml_WithLists_ReturnsListTags()
+        {
+            var json = @"[
+                {'type': 'list', 'data': {'style': 'ordered', 'items': ['one', 'two']}},
+                {'type': 'list', 'data': {'style': 'unordered', 'items': ['one', 'two']}}
+            ]";
+            var expectedHtml = "<ol><li>one</li><li>two</li></ol><ul><li>one</li><li>two</li></ul>";
             Assert.AreEqual(expectedHtml, Translator.TranslateToHtml(json));
         }
     }

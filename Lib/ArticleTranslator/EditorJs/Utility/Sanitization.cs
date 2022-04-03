@@ -4,25 +4,27 @@ namespace ArticleTranslator.EditorJs.Utility
 {
     internal class Sanitization
     {
-        private static HtmlSanitizer _sanitizer;
-        private static HtmlSanitizer Sanitizer
+        private static HtmlSanitizer _formatSanitizer;
+        private static HtmlSanitizer FormatSanitizer
         {
             get
             {
-                if (_sanitizer == null)
+                if (_formatSanitizer == null)
                 {
-                    _sanitizer = new HtmlSanitizer();
-                    _sanitizer.Tag("a").CheckAttributeUrl("href").RemoveEmpty();
-                    _sanitizer.Tag("b").RemoveEmpty();
-                    _sanitizer.Tag("i").RemoveEmpty();
+                    _formatSanitizer = new HtmlSanitizer();
+                    _formatSanitizer.Tag("a").CheckAttributeUrl("href").RemoveEmpty();
+                    _formatSanitizer.Tag("em").RemoveEmpty();
+                    _formatSanitizer.Tag("b").RemoveEmpty();
+                    _formatSanitizer.Tag("i").RemoveEmpty();
+                    _formatSanitizer.Tag("strong").RemoveEmpty();
                 }
-                return _sanitizer;
+                return _formatSanitizer;
             }
         }
 
-        public static string KeepOnlySafeTags(string dirtyHtml)
+        public static string KeepOnlyFormatTags(string dirtyHtml)
         {
-            return Sanitizer.Sanitize(dirtyHtml);
+            return FormatSanitizer.Sanitize(dirtyHtml);
         }
 
     }

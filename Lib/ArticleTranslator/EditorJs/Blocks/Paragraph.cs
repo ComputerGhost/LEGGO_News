@@ -3,13 +3,13 @@ using System.Text;
 
 namespace ArticleTranslator.EditorJs.Blocks
 {
-    class Paragraph : Block
+    internal class Paragraph : Block
     {
         public string Text { get; set; }
 
         public override void RenderTo(StringBuilder stringBuilder)
         {
-            var safeText = Sanitization.KeepOnlySafeTags(Text);
+            var safeText = Sanitization.KeepOnlyFormatTags(Text);
             stringBuilder.Append($"<p>{safeText}</p>");
         }
     }

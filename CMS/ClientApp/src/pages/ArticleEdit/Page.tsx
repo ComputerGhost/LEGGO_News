@@ -37,7 +37,7 @@ export default function()
         const content = await editorApi!.save();
         await mutator.mutateAsync({
             title,
-            format: "EditorJs",
+            format: "editorjs",
             content: JSON.stringify(content.blocks),
         });
     }

@@ -8,7 +8,7 @@ namespace ArticleTranslator
         public IArticleTranslator CreateTranslator(string format)
         {
             // We need to add WordPress and possibly more formats later.
-            switch (format) {
+            switch (format.ToLower()) {
                 case ArticleFormat.EditorJs:
                     return new EditorJs.ArticleTranslator();
                 default:
