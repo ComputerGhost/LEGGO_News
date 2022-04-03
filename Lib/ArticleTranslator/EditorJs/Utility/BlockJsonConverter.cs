@@ -1,11 +1,11 @@
-﻿using ArticleTranslator.EditorJs.Models;
+﻿using ArticleTranslator.EditorJs.Blocks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 
-namespace ArticleTranslator.EditorJs
+namespace ArticleTranslator.EditorJs.Utility
 {
-    class BlockJsonConverter : JsonConverter
+    internal class BlockJsonConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {

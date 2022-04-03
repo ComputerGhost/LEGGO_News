@@ -1,8 +1,12 @@
 ﻿@using Business.DTOs
 @model ArticleDetails
 
+@{ 
+    ViewData["title"] = @Model.Title;
+}
+
 <header>
-    <h1>@Html.Encode(Model.Title)</h1>
+    <h1>@Model.Title</h1>
 </header>
 
 <article>

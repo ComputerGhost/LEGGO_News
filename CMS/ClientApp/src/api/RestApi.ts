@@ -1,6 +1,4 @@
 ﻿import { QueryFunctionContext, useInfiniteQuery, UseInfiniteQueryResult, useMutation, UseMutationResult, useQuery, UseQueryResult } from "react-query";
-import { generatePath } from "react-router";
-import { User } from "oidc-client-ts";
 import ApiError from "./ApiError";
 
 
@@ -99,16 +97,15 @@ export default class <ItemSummary, ItemDetails, ItemSaveData>
     }
 
 
-    public async updateItem(itemId: number, data: ItemSaveData): Promise<ItemSummary> {
+    public async updateItem(itemId: number, data: ItemSaveData): Promise<void> {
         const uri = this.buildItemUri(itemId);
-        const response = await this.fetch(uri, {
+        await this.fetch(uri, {
             method: 'PUT',
             body: JSON.stringify(data)
         });
-        return await response.json();
     }
 
-    public useUpdateItem(itemId: number): UseMutationResult<ItemSummary, unknown, ItemSaveData> {
+    public useUpdateItem(itemId: number): UseMutationResult<void, unknown, ItemSaveData> {
         const updateItem = async (data: ItemSaveData) => this.updateItem(itemId, data);
         return useMutation(updateItem, { useErrorBoundary: true });
     }
@@ -138,13 +135,6 @@ export default class <ItemSummary, ItemDetails, ItemSaveData>
         const response = await this.makeFetchRequest(relativeUri, options, contentType);
         this.checkFetchResponse(response);
         return response;
-    }
-
-    private getUser(): User|null {
-        const oidcStorage = localStorage.getItem(`oidc.user:http://localhost:9011:dc487e3d-1a6a-49b6-a957-150dd821bbd8`);
-        if (!oidcStorage)
-            return null;
-        return User.fromStorageString(oidcStorage);
     }
 
     private async makeFetchRequest(relativeUri: string, options: RequestInit, contentType?: string) {
