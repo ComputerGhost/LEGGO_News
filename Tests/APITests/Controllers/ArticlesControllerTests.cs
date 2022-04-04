@@ -137,9 +137,8 @@ namespace APITests.Controllers
             var result = _articlesController.Create(saveData);
 
             // assert
-            Assert.IsInstanceOfType(result, typeof(CreatedResult));
-            var createdResult = (CreatedResult)result;
-            Assert.AreEqual($"./{ARTICLE_ID}", createdResult.Location);
+            Assert.IsInstanceOfType(result, typeof(CreatedAtActionResult));
+            var createdResult = (CreatedAtActionResult)result;
             Assert.IsInstanceOfType(createdResult.Value, typeof(ArticleSummary));
             var actualSummary = (ArticleSummary)createdResult.Value;
             Assert.AreEqual(ARTICLE_ID, actualSummary.Id);

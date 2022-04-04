@@ -26,6 +26,8 @@ namespace ArticleTranslator.EditorJs.Utility
                     return data.ToObject<List>(serializer);
                 case "paragraph":
                     return data.ToObject<Paragraph>(serializer);
+                case "quote":
+                    return data.ToObject<Quote>(serializer);
                 default:
                     throw new NotImplementedException(type);
             }
