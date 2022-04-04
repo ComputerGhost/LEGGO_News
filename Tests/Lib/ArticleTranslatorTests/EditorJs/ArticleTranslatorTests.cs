@@ -85,5 +85,15 @@ namespace ArticleTranslatorTests.EditorJs
             var expectedHtml = "<ol><li>one</li><li>two</li></ol><ul><li>one</li><li>two</li></ul>";
             Assert.AreEqual(expectedHtml, Translator.TranslateToHtml(json));
         }
+
+        [TestMethod]
+        public void TranslateToHtml_WithQuotes_ReturnsQuotesTags()
+        {
+            var json = @"[
+                {'type': 'quote', 'data': {'text' : 'content text', 'caption': 'caption text'}}
+            ]";
+            var expectedHtml = "<figure><blockquote>content text</blockquote><figcaption>caption text</figcaption></figure>";
+            Assert.AreEqual(expectedHtml, Translator.TranslateToHtml(json));
+        }
     }
 }

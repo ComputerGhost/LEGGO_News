@@ -137,9 +137,8 @@ namespace APITests.Controllers
             var result = _tagsController.Create(saveData);
 
             // assert
-            Assert.IsInstanceOfType(result, typeof(CreatedResult));
-            var createdResult = (CreatedResult)result;
-            Assert.AreEqual($"./{TAG_ID}", createdResult.Location);
+            Assert.IsInstanceOfType(result, typeof(CreatedAtActionResult));
+            var createdResult = (CreatedAtActionResult)result;
             Assert.IsInstanceOfType(createdResult.Value, typeof(TagSummary));
             var actualSummary = (TagSummary)createdResult.Value;
             Assert.AreEqual(TAG_ID, actualSummary.Id);
