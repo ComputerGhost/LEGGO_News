@@ -59,6 +59,8 @@
     "@types/react-router-dom": "5.3.3",
     "@types/reactstrap": "8.7.1",
     "cross-env": "7.0.3",
+    "editorjs-drag-drop": "^1.0.3",
+    "editorjs-undo": "^2.0.0-rc.3",
     "nan": "^2.15.0",
     "typescript": "^4.5.5"
   },

@@ -1,8 +1,10 @@
-﻿import { ChangeEventHandler, FocusEventHandler, Ref } from 'react';
+﻿import { ChangeEventHandler, FocusEventHandler, Ref, useCallback, useRef } from 'react';
 import { createReactEditorJS } from 'react-editor-js';
 import { makeStyles } from '@material-ui/styles';
 import EditorJS, { OutputData } from '@editorjs/editorjs';
 import { EDITOR_JS_TOOLS } from './Tools';
+const Undo = require('editorjs-undo');
+const DragDrop = require('editorjs-drag-drop');
 
 const useStyles = makeStyles({
     container: {
@@ -30,13 +32,24 @@ export default function Editor({
     forwardedRef,
 }: IEditorProps) {
     var classes = useStyles();
+    const editorCore = useRef<EditorJS|null>(null);
 
     const ReactEditorJS = createReactEditorJS();
 
-    function handleChange(apiInstance?: EditorJS) {
-        if (apiInstance && onApiSet) {
-            onApiSet(apiInstance);
+    const handleInitialize = useCallback((instance?: EditorJS) => {
+        if (instance) {
+            editorCore.current = instance;
+            if (onApiSet) {
+                onApiSet(instance);
+            }
         }
+    }, []);
+
+    function handleReady() {
+        const editor = (editorCore.current as any)?._editorJS;
+
+        new Undo({ editor });
+        new DragDrop(editor);
     }
 
     return (
@@ -48,7 +61,8 @@ export default function Editor({
         >
             <ReactEditorJS
                 data={initialData}
-                onInitialize={handleChange}
+                onInitialize={handleInitialize}
+                onReady={handleReady}
                 tools={EDITOR_JS_TOOLS}
             />
         </div>
