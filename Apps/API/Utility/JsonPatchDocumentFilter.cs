@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace API
+namespace API.Utility
 {
     /// <summary>
     /// Fixes the display of JsonPatch in Swagger

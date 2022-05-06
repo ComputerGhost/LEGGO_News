@@ -1,6 +1,6 @@
 ﻿using Business.DTOs;
 using Business.Repositories.Interfaces;
-using Data.Constants;
+using Database.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -81,7 +81,7 @@ namespace API.Controllers
             return Json(searchResults);
         }
 
-        private static string getImageUrl(Data.Models.Media media, string type)
+        private static string getImageUrl(Database.Models.Media media, string type)
         {
             var baseUrl = Path.Combine(Environment.GetEnvironmentVariable("STATIC_BASE_URL"), "Images");
 

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Business.DTOs;
 using Business.Repositories.Interfaces;
-using Data;
-using Data.Models;
+using Database;
+using Database.Models;
 using System.Linq;
 
 namespace Business.Repositories

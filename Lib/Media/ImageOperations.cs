@@ -1,4 +1,4 @@
-﻿using Data.Constants;
+﻿using Database.Constants;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Processing;

@@ -1,4 +1,4 @@
-﻿namespace Data.Constants
+﻿namespace Database.Constants
 {
     public class ArticleFormat
     {

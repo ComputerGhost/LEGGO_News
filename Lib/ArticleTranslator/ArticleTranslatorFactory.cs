@@ -1,4 +1,4 @@
-﻿using Data.Constants;
+﻿using Database.Constants;
 using System;
 
 namespace ArticleTranslator

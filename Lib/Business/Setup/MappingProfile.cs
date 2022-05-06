@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Business.DTOs;
-using Data.Models;
+using Database.Models;
 
 namespace Business.Setup
 {
