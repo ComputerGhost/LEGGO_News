@@ -1,24 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Calendar;
+using Database.DTOs;
+using Database.Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using Business.Repositories.Interfaces;
 using System.Threading.Tasks;
 using Web.Models;
-using Business.DTOs;
+using Web.ViewModels;
 
 namespace Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IArticleRepository _articlesRepository;
+        private readonly ICalendarService _calendarService;
 
-        public HomeController(IArticleRepository articlesRepository)
+        public HomeController(
+            IArticleRepository articlesRepository,
+            ICalendarService calendarService)
         {
             _articlesRepository = articlesRepository;
+            _calendarService = calendarService;
         }
+
 
         public IActionResult AboutExid()
         {
@@ -32,9 +36,18 @@ namespace Web.Controllers
             return View(articles);
         }
 
-        public IActionResult Schedule()
+        public async Task<IActionResult> Schedule()
         {
-            return View();
+            var calendars = _calendarService.ListCalendars();
+
+            var search = new Calendar.DTOs.SearchParameters();
+            var events = await _calendarService.ListEventsAsync(search);
+
+            return View(new ScheduleViewModel
+            {
+                Calendars = calendars,
+                Events = events,
+            });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

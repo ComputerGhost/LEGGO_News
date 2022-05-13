@@ -1,36 +1,25 @@
-﻿@{
+﻿@model Web.ViewModels.ScheduleViewModel
+@{
     ViewData["Title"] = "Schedule";
 }
 
+<h1>Schedule</h1>
+
 <section>
-    <h2>Filter</h2>
     <form>
         <div class="d-flex mb-2">
-            <div class="form-check pr-3">
-                <input type="checkbox" class="form-check-input" id="show-birthdays">
-                <label class="form-check-label" for="show-birthdays">Birthdays</label>
-            </div>
-            <div class="form-check pr-3">
-                <input type="checkbox" class="form-check-input" id="show-official-events">
-                <label class="form-check-label" for="show-birthdays">EXID Official</label>
-            </div>
-            <div class="form-check pr-3">
-                <input type="checkbox" class="form-check-input" id="show-sponsors">
-                <label class="form-check-label" for="show-birthdays">EXID Sponsors</label>
-            </div>
-            <div class="form-check pr-3">
-                <input type="checkbox" class="form-check-input" id="show-leggo-events">
-                <label class="form-check-label" for="show-birthdays">LEGGO Events</label>
-            </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="show-scheduled-news">
-                <label class="form-check-label" for="show-birthdays">Scheduled News</label>
-            </div>
+            @foreach (var calendar in Model.Calendars)
+            {
+                <div class="form-check pr-3" style="color: @calendar.Color">
+                    <input type="checkbox" class="form-check-input" id="@calendar.Name">
+                    <label class="form-check-label" for="@calendar.Name">@calendar.Name</label>
+                </div>
+            }
         </div>
     </form>
 </section>
 
-<section>
+<section class="mt-3">
     @{ 
         var today = DateTime.Today;
 
@@ -47,7 +36,30 @@
         var date = startDate;
     }
 
+    <!--
+        Okay, so here's the idea...
+        Let's make it interesting later.  For right now, let's just finish the ticket.
+        *) Create a CreateCalendarMatrix or something method in the Calendar service, and move these render calculations there.
+        1) Do not add navigating side-side or hitting the API to pull more info.
+        1) Remove the API endpoints possibly (after some thought) as those won't be needed yet.  Or maybe keep 'em?  Think about it.'
+        1) Pretty up the code that we have.
+        1) REMOVE THE API KEY FROM THE CONFIGS!!!
+        1) Make a ticket to move the configs to a common area.
+        1) Make a ticket to add going left and right on the calendar.
+
+        Additional thoughts from 5/11:
+        1) Maybe have CalendarService class in the relevant apps, 
+        and remove Calendars.CalendarService which is doing too much.
+        1) Each app's Services.CalendarService can implement the stuff it's needing specifically.
+        1) This will require moving the Calendar.Internal classes to be public of course.
+    -->
+
     <table class="table">
+        <tr>
+            <th colspan="7">
+                <h3 class="text-center m-0">Month 2022</h3>
+            </th>
+        </tr>
         <tr>
             <th>Monday</th>
             <th>Tuesday</th>
