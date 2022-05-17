@@ -1,5 +1,5 @@
-﻿using Business.DTOs;
-using Business.Repositories.Interfaces;
+﻿using Database.DTOs;
+using Database.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

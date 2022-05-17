@@ -65,6 +65,9 @@
     <None Update="ClientApp\src\api\ApiErrorBoundary.tsx">
       <SubType>Code</SubType>
     </None>
+    <None Update="ClientApp\src\api\endpoints\calendars.ts">
+      <SubType>Code</SubType>
+    </None>
     <None Update="ClientApp\src\api\RestApi.ts">
       <SubType>Code</SubType>
     </None>
@@ -113,10 +116,19 @@
     <None Update="ClientApp\src\pages\ArticleList\index.ts">
       <SubType>Code</SubType>
     </None>
+    <None Update="ClientApp\src\pages\CalendarCreate\index.ts">
+      <SubType>Code</SubType>
+    </None>
     <None Update="ClientApp\src\pages\CharacterCreate\index.ts">
       <SubType>Code</SubType>
     </None>
+    <None Update="ClientApp\src\pages\CalendarEdit\index.ts">
+      <SubType>Code</SubType>
+    </None>
     <None Update="ClientApp\src\pages\CharacterEdit\index.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\pages\CalendarList\index.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\pages\CharacterList\index.ts">

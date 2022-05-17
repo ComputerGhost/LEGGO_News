@@ -1,6 +1,5 @@
-﻿using Business.DTOs;
-using Business.Repositories.Interfaces;
-using Database.Constants;
+﻿using Database.DTOs;
+using Database.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -79,19 +78,6 @@ namespace API.Controllers
         {
             var searchResults = _mediaRepository.Search(parameters);
             return Json(searchResults);
-        }
-
-        private static string getImageUrl(Database.Models.Media media, string type)
-        {
-            var baseUrl = Path.Combine(Environment.GetEnvironmentVariable("STATIC_BASE_URL"), "Images");
-
-            if (type == MediaSize.Original)
-                return Path.Combine(baseUrl, media.LocalFilename);
-
-            if (MediaSize.Compare(media.LargestResize, type) >= 0)
-                return Path.Combine(baseUrl, type, media.LocalFilename);
-
-            return null;
         }
 
     }

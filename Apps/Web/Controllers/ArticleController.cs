@@ -1,5 +1,5 @@
 ﻿using ArticleTranslator;
-using Business.Repositories.Interfaces;
+using Database.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers

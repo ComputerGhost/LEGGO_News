@@ -1,10 +1,11 @@
+using API.Setup;
 using API.Utility;
-using Database;
+using Calendar.Setup;
+using Database.Setup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -45,19 +46,18 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DatabaseContext>(options =>
+            services.AddDatabase(new DatabaseConfiguration
             {
-                options.UseSqlServer(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
+                ConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING")
             });
+            services.AddCalendar(Config.Calendar);
 
             services.AddControllers();
             services.AddCors(options => SetCorsOptions(options));
             services.AddMvc(options => SetMvcToUseJson(options));
-            services.AddMySwagger();
+            services.AddMySwagger(Config.OAuth2);
             services.AddMyAuth(Config.OAuth2);
-            services.AddAutoMapper(typeof(Business.Setup.MappingProfile));
-
-            Business.Setup.DependencyInjection.Configure(services);
+            services.AddAutoMapper(typeof(MappingProfile));
         }
 
 

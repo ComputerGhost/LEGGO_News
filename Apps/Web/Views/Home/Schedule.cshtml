@@ -1,53 +1,36 @@
-﻿@{
+﻿@model ScheduleViewModel
+@{
     ViewData["Title"] = "Schedule";
 }
 
+<h1>Schedule</h1>
+
 <section>
-    <h2>Filter</h2>
     <form>
         <div class="d-flex mb-2">
-            <div class="form-check pr-3">
-                <input type="checkbox" class="form-check-input" id="show-birthdays">
-                <label class="form-check-label" for="show-birthdays">Birthdays</label>
-            </div>
-            <div class="form-check pr-3">
-                <input type="checkbox" class="form-check-input" id="show-official-events">
-                <label class="form-check-label" for="show-birthdays">EXID Official</label>
-            </div>
-            <div class="form-check pr-3">
-                <input type="checkbox" class="form-check-input" id="show-sponsors">
-                <label class="form-check-label" for="show-birthdays">EXID Sponsors</label>
-            </div>
-            <div class="form-check pr-3">
-                <input type="checkbox" class="form-check-input" id="show-leggo-events">
-                <label class="form-check-label" for="show-birthdays">LEGGO Events</label>
-            </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="show-scheduled-news">
-                <label class="form-check-label" for="show-birthdays">Scheduled News</label>
-            </div>
+            @foreach (var calendar in Model.Calendars)
+            {
+                <div class="form-check pr-3" style="color: @calendar.Color">
+                    <input type="checkbox" class="form-check-input" id="@calendar.Name">
+                    <label class="form-check-label" for="@calendar.Name">@calendar.Name</label>
+                </div>
+            }
         </div>
     </form>
 </section>
 
-<section>
-    @{ 
-        var today = DateTime.Today;
-
-        var startOfMonth = new DateTime(today.Year, today.Month, 1);
-        var startDate = startOfMonth;
-        while (startDate.DayOfWeek != DayOfWeek.Monday)
-            startDate = startDate.AddDays(-1);
-
-        var endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
-        var endDate = endOfMonth;
-        while (endDate.DayOfWeek != DayOfWeek.Monday)
-            endDate = endDate.AddDays(1);
-
-        var date = startDate;
+<section class="mt-3">
+    @{
+        var headerText = Model.Matrix.MonthStart.ToString("MMM yyyy");
+        //
     }
 
     <table class="table">
+        <tr>
+            <th colspan="7">
+                <h3 class="text-center m-0">@headerText</h3>
+            </th>
+        </tr>
         <tr>
             <th>Monday</th>
             <th>Tuesday</th>
@@ -57,17 +40,18 @@
             <th>Saturday</th>
             <th>Sunday</th>
         </tr>
-        @while (date <= endDate) {
+        @foreach (var week in Model.Matrix.Weeks)
+        {
             <tr>
-                @do {
-                    var className = date.Month == today.Month ? "" : "text-muted";
+                @foreach (var day in week.Days)
+                {
                     <td>
-                        <h6 class="@className">
-                            @date.Day
-                        </h6>
+                        @foreach (var e in day.Events)
+                        {
+                            @e.Title
+                        }
                     </td>
-                    date = date.AddDays(1);
-                } while (date.DayOfWeek != DayOfWeek.Monday);
+                }
             </tr>
         }
     </table>

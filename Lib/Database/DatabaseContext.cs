@@ -1,15 +1,16 @@
-﻿using Database.Models;
+﻿using Database.Internal.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Database
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<Article> Articles { get; set; }
-        public DbSet<Character> Characters { get; set; }
-        public DbSet<Lead> Leads { get; set; }
-        public DbSet<Media> Medias { get; set; }
-        public DbSet<Tag> Tags { get; set; }
+        internal DbSet<Article> Articles { get; set; }
+        internal DbSet<Calendar> Calendars { get; set; }
+        internal DbSet<Character> Characters { get; set; }
+        internal DbSet<Lead> Leads { get; set; }
+        internal DbSet<Media> Medias { get; set; }
+        internal DbSet<Tag> Tags { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
@@ -25,6 +26,10 @@ namespace Database
 
             modelBuilder.Entity<Article>()
                 .Property(nameof(Article.Id))
+                .UseIdentityColumn();
+
+            modelBuilder.Entity<Calendar>()
+                .Property(nameof(Calendar.Id))
                 .UseIdentityColumn();
 
             modelBuilder.Entity<Character>()
