@@ -1,6 +1,6 @@
-﻿using Calendar.DTOs;
+﻿using Calendar.Setup;
 
-namespace API
+namespace API.Setup
 {
     public struct Config
     {

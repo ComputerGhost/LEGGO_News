@@ -1,36 +1,39 @@
-﻿using Calendar.DTOs;
+﻿using Calendar.Models;
+using Calendar.Interfaces;
 using Google.Apis.Calendar.v3.Data;
-using GoogleCalendarService = Google.Apis.Calendar.v3.CalendarService;
+using Google.Apis.Calendar.v3;
 
-namespace Calendar.Internal
+namespace Calendar
 {
-    public class EventsRepository
+    public class EventsService : IEventsService
     {
-        private readonly GoogleCalendarService _googleCalendarService;
+        private readonly CalendarService _googleCalendarService;
 
-        public EventsRepository(GoogleCalendarService googleCalendarService)
+        public EventsService(CalendarService googleCalendarService)
         {
             _googleCalendarService = googleCalendarService;
         }
 
 
         public async Task<IEnumerable<EventInfo>> ListEventsAsync(
-            IEnumerable<CalendarInfo> calendars, 
-            SearchParameters parameters)
+            IEnumerable<CalendarInfo> calendarInfos,
+            DateTimeOffset start,
+            DateTimeOffset end)
         {
             var all = new List<EventInfo>();
-            foreach (var calendar in calendars)
+            foreach (var calendarInfo in calendarInfos)
             {
-                all.AddRange(await ListEventsAsync(calendar, parameters));
+                all.AddRange(await ListEventsAsync(calendarInfo, start, end));
             }
             return all;
         }
 
         public async Task<IEnumerable<EventInfo>> ListEventsAsync(
             CalendarInfo calendarInfo,
-            SearchParameters parameters)
+            DateTimeOffset start,
+            DateTimeOffset end)
         {
-            var googleEvents = await GetEventsFromGoogleAsync(calendarInfo, parameters);
+            var googleEvents = await GetEventsFromGoogleAsync(calendarInfo, start, end);
             var ourEvents = googleEvents.Select(e => ConvertToOurEvent(calendarInfo, e));
             return ourEvents;
         }
@@ -38,12 +41,13 @@ namespace Calendar.Internal
 
         private async Task<IList<Event>> GetEventsFromGoogleAsync(
             CalendarInfo calendarInfo,
-            SearchParameters parameters)
+            DateTimeOffset start,
+            DateTimeOffset end)
         {
             var request = _googleCalendarService.Events.List(calendarInfo.GoogleId);
             request.SingleEvents = true;
-            request.TimeMin = ToCalendarTime(calendarInfo, parameters.Start);
-            request.TimeMax = ToCalendarTime(calendarInfo, parameters.End);
+            request.TimeMin = TimeTools.InTimezone(start, calendarInfo.TimezoneOffset).DateTime;
+            request.TimeMax = TimeTools.InTimezone(end, calendarInfo.TimezoneOffset).DateTime;
 
             var response = await request.ExecuteAsync();
 
@@ -59,24 +63,13 @@ namespace Calendar.Internal
             return new EventInfo
             {
                 Color = calendarInfo.Color,
-                End = FromCalendarTime(calendarInfo, endDate),
+                End = TimeTools.AsTimezone(endDate, calendarInfo.TimezoneOffset),
                 EventUri = googleEvent.HtmlLink,
                 GoogleCalendarId = calendarInfo.GoogleId,
                 IsAllDay = isAllDay,
-                Start = FromCalendarTime(calendarInfo, startDate),
+                Start = TimeTools.AsTimezone(startDate, calendarInfo.TimezoneOffset),
                 Title = googleEvent.Summary,
             };
-        }
-
-        private DateTime ToCalendarTime(CalendarInfo calendarInfo, DateTimeOffset source)
-        {
-            return source.ToOffset(calendarInfo.TimezoneOffset).DateTime;
-        }
-
-        private DateTimeOffset FromCalendarTime(CalendarInfo calendarInfo, DateTime source)
-        {
-            var convertableSource = DateTime.SpecifyKind(source, DateTimeKind.Unspecified);
-            return new DateTimeOffset(convertableSource, calendarInfo.TimezoneOffset);
         }
 
     }

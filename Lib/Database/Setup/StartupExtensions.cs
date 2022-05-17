@@ -1,5 +1,4 @@
-﻿using Database.Internal;
-using Database.Internal.Setup;
+﻿using Database.Internal.Setup;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Lib\Calendar\Calendar.csproj" />
+    <ProjectReference Include="..\..\Lib\Database\Database.csproj" />
     <ProjectReference Include="..\..\Lib\Media\Media.csproj" />
   </ItemGroup>
 

@@ -1,7 +1,11 @@
-﻿using Calendar;
-using Calendar.DTOs;
+﻿using AutoMapper;
+using Calendar;
+using Calendar.Interfaces;
+using Calendar.Models;
+using Database.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,21 +17,29 @@ namespace API.Controllers
     [Route("[controller]")]
     public class EventsController : Controller
     {
-        private readonly ICalendarService _calendarService;
+        private readonly ICalendarRepository _calendarRepository;
+        private readonly IEventsService _eventsService;
+        private readonly IMapper _mapper;
 
-        public EventsController(ICalendarService calendarService)
+        public EventsController(
+            ICalendarRepository calendarRepository,
+            IEventsService eventsService,
+            IMapper mapper)
         {
-            _calendarService = calendarService;
+            _calendarRepository = calendarRepository;
+            _eventsService = eventsService;
+            _mapper = mapper;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EventInfo>))]
-        public async Task<IActionResult> List([FromQuery] IEnumerable<string> calendarIds, [FromQuery] SearchParameters parameters)
+        public async Task<IActionResult> List([FromQuery] DateTimeOffset start, [FromQuery] DateTimeOffset end)
         {
-            var selectedCalendars = calendarIds.Any()
-                ? _calendarService.GetCalendarsFromIds(calendarIds)
-                : _calendarService.ListCalendars();
-            var results = await _calendarService.ListEventsAsync(selectedCalendars, parameters);
+            var dbCalendars = _calendarRepository.List();
+            var libCalendars = _mapper.Map<CalendarInfo>(dbCalendars);
+
+            var results = await _eventsService.ListEventsAsync(libCalendars, start, end);
+
             return Json(results);
         }
 

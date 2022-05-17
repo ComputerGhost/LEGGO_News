@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Database.Constants
+namespace Media
 {
     public class MediaSize
     {

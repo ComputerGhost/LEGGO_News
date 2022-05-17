@@ -1,3 +1,4 @@
+using Calendar.Setup;
 using Database.Setup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using Web.Setup;
 using Web.Utility;
 
 namespace Web
@@ -31,6 +33,7 @@ namespace Web
 
             services.AddRouting(options => AddSlugifyConstraint(options));
             services.AddControllersWithViews();
+            services.AddAutoMapper(typeof(MappingProfile));
         }
 
         private void AddSlugifyConstraint(RouteOptions options)

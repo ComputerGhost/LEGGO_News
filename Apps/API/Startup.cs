@@ -1,4 +1,6 @@
+using API.Setup;
 using API.Utility;
+using Calendar.Setup;
 using Database.Setup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -55,6 +57,7 @@ namespace API
             services.AddMvc(options => SetMvcToUseJson(options));
             services.AddMySwagger(Config.OAuth2);
             services.AddMyAuth(Config.OAuth2);
+            services.AddAutoMapper(typeof(MappingProfile));
         }
 
 

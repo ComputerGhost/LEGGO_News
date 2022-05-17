@@ -1,4 +1,4 @@
-﻿namespace Database.Constants
+﻿namespace ArticleTranslator
 {
     public class ArticleFormat
     {

@@ -1,8 +1,7 @@
-﻿namespace Calendar.DTOs
+﻿namespace Calendar.Setup
 {
     public struct CalendarConfig
     {
         public string GoogleApiKey { get; set; }
-        public IEnumerable<CalendarInfo> Calendars { get; set; }
     }
 }

@@ -12,6 +12,10 @@ namespace Database.Internal.Setup
             CreateMap<Article, ArticleDetails>();
             CreateMap<ArticleSaveData, Article>();
 
+            CreateMap<Calendar, CalendarSummary>();
+            CreateMap<Calendar, CalendarDetails>();
+            CreateMap<CalendarSaveData, Calendar>();
+
             CreateMap<Character, CharacterSummary>();
             CreateMap<Character, CharacterDetails>();
             CreateMap<CharacterSaveData, Character>();

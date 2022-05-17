@@ -2,7 +2,6 @@
 {
     public class TimeTools
     {
-
         /// <summary>
         /// Constructs a DateTimeOffset with the given date and timezone.
         /// </summary>
@@ -51,7 +50,7 @@
         /// </summary>
         public static DateTimeOffset MonthStart(DateTimeOffset source)
         {
-            return new DateTimeOffset(source.Year, source.Month, 0, 0, 0, 0, source.Offset);
+            return new DateTimeOffset(source.Year, source.Month, 1, 0, 0, 0, source.Offset);
         }
 
         /// <summary>
@@ -73,6 +72,5 @@
             }
             return new DateTimeOffset(source.Year, source.Month, source.Day, 0, 0, 0, source.Offset);
         }
-
     }
 }

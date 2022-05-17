@@ -1,6 +1,6 @@
-﻿using Calendar.DTOs;
+﻿using Calendar.Setup;
 
-namespace Web
+namespace Web.Setup
 {
     public class Config
     {

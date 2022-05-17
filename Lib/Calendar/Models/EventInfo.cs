@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Calendar.DTOs
+﻿namespace Calendar.Models
 {
     public struct EventInfo
     {
-        public string GoogleCalendarId { get; set; }
-
         /// <summary>
         /// This color will match the color of the calendar.
         /// </summary>
@@ -21,6 +13,8 @@ namespace Calendar.DTOs
         /// URL of the event on Google
         /// </summary>
         public string EventUri { get; set; }
+
+        public string GoogleCalendarId { get; set; }
 
         public bool IsAllDay { get; set; }
 

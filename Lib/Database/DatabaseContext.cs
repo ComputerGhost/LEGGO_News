@@ -6,6 +6,7 @@ namespace Database
     public class DatabaseContext : DbContext
     {
         internal DbSet<Article> Articles { get; set; }
+        internal DbSet<Calendar> Calendars { get; set; }
         internal DbSet<Character> Characters { get; set; }
         internal DbSet<Lead> Leads { get; set; }
         internal DbSet<Media> Medias { get; set; }
@@ -25,6 +26,10 @@ namespace Database
 
             modelBuilder.Entity<Article>()
                 .Property(nameof(Article.Id))
+                .UseIdentityColumn();
+
+            modelBuilder.Entity<Calendar>()
+                .Property(nameof(Calendar.Id))
                 .UseIdentityColumn();
 
             modelBuilder.Entity<Character>()

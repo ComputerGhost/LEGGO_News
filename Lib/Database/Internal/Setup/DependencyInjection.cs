@@ -10,6 +10,7 @@ namespace Database.Internal.Setup
         {
             services
                 .AddTransient<IArticleRepository, ArticleRepository>()
+                .AddTransient<ICalendarRepository, CalendarRepository>()
                 .AddTransient<ICharacterRepository, CharacterRepository>()
                 .AddTransient<ILeadRepository, LeadRepository>()
                 .AddTransient<IMediaRepository, MediaRepository>()

@@ -1,10 +1,9 @@
-﻿namespace Calendar.DTOs
+﻿namespace Calendar.Models
 {
     public struct CalendarInfo
     {
-        public string GoogleId { get; set; }
         public string Color { get; set; }
-        public string Name { get; set; }
+        public string GoogleId { get; set; }
         public TimeSpan TimezoneOffset { get; set; }
     }
 }
