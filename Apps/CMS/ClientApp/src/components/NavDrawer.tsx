@@ -10,6 +10,7 @@ import {
     faPhotoVideo,
     faTag,
     faTheaterMasks,
+    faCalendar,
 } from '@fortawesome/free-solid-svg-icons';
 import DrawerItem from './DrawerItem';
 
@@ -65,6 +66,7 @@ export default function ({ width, open, allowClose, onDrawerClosed }: IProps) {
 
             <Typography variant='h6' className={classes.header}>Setup</Typography>
             <List>
+                <DrawerItem text='Calendars' icon={faCalendar} href='/calendars' />
                 <DrawerItem text='Characters' icon={faTheaterMasks} href='/characters' />
             </List>
 

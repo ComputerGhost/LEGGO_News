@@ -8,7 +8,7 @@ namespace Database.Repositories.Interfaces
         CalendarSummary Create(CalendarSaveData saveData);
         void Delete(long id);
         CalendarDetails Fetch(long id);
-        IEnumerable<CalendarSummary> List();
+        SearchResults<CalendarSummary> Search(SearchParameters parameters);
         void Update(long id, CalendarSaveData saveData);
     }
 }

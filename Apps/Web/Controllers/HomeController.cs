@@ -50,8 +50,8 @@ namespace Web.Controllers
         {
             var now = TimeTools.InTimezone(DateTimeOffset.UtcNow, "Korea Standard Time");
 
-            var dbCalendars = _calendarRepository.List().ToList();
-            var libCalendars = dbCalendars.Select(c => _mapper.Map<CalendarInfo>(c));
+            var dbCalendars = _calendarRepository.Search(new SearchParameters());
+            var libCalendars = dbCalendars.Data.Select(c => _mapper.Map<CalendarInfo>(c));
 
             var monthMatrix = new MonthMatrix(now, DayOfWeek.Monday);
             var events = await _eventsService.ListEventsAsync(libCalendars, monthMatrix.MonthStart, monthMatrix.MonthEnd);
@@ -59,7 +59,7 @@ namespace Web.Controllers
 
             return View(new ScheduleViewModel
             {
-                Calendars = dbCalendars,
+                Calendars = dbCalendars.Data,
                 Matrix = monthMatrix,
             });
         }

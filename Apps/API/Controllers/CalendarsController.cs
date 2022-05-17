@@ -1,11 +1,8 @@
-﻿using Calendar;
-using Calendar.Models;
-using Database.DTOs;
+﻿using Database.DTOs;
 using Database.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace API.Controllers
 {
@@ -58,10 +55,10 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CalendarInfo>))]
-        public IActionResult List()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResults<CalendarSummary>))]
+        public IActionResult List([FromQuery] SearchParameters parameters)
         {
-            var results = _calendarRepository.List();
+            var results = _calendarRepository.Search(parameters);
             return Json(results);
         }
     }

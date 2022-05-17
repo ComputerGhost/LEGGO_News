@@ -14,6 +14,9 @@ import TagCreate from './pages/TagCreate';
 import TagEdit from './pages/TagEdit';
 import TagList from './pages/TagList';
 import MediaList from './pages/MediaList';
+import CalendarCreate from './pages/CalendarCreate';
+import CalendarEdit from './pages/CalendarEdit';
+import CalendarList from './pages/CalendarList';
 
 export default function ()
 {
@@ -36,6 +39,10 @@ export default function ()
                 <Route path='/articles' element={<ArticleList />} />
                 <Route path='/articles/new' element={<ArticleCreate />} />
                 <Route path='/articles/:id' element={<ArticleEdit />} />
+
+                <Route path='/calendars' element={<CalendarList />} />
+                <Route path='/calendars/new' element={<CalendarCreate />} />
+                <Route path='/calendars/:id' element={<CalendarEdit />} />
 
                 <Route path='/characters' element={<CharacterList />} />
                 <Route path='/characters/new' element={<CharacterCreate />} />

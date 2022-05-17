@@ -44,6 +44,29 @@ namespace Database.Repositories
             return _mapper.Map<CalendarDetails>(calendar);
         }
 
+        public SearchResults<CalendarSummary> Search(SearchParameters parameters)
+        {
+            var foundCalendars = _databaseContext.Calendars.AsQueryable();
+            if (!string.IsNullOrEmpty(parameters.Query))
+            {
+                foundCalendars = foundCalendars.Where(calendar =>
+                    calendar.Name.Contains(parameters.Query));
+            }
+
+            var calendarsPage = foundCalendars
+                .Skip(parameters.Offset)
+                .Take(parameters.Count);
+
+            return new SearchResults<CalendarSummary>
+            {
+                Key = parameters.Key,
+                Offset = parameters.Offset,
+                Count = calendarsPage.Count(),
+                TotalCount = foundCalendars.Count(),
+                Data = calendarsPage.Select(character => _mapper.Map<CalendarSummary>(character))
+            };
+        }
+
         public IEnumerable<CalendarSummary> List()
         {
             var calendars = _databaseContext.Calendars;

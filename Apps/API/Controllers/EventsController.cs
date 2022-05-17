@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
-using Calendar;
 using Calendar.Interfaces;
 using Calendar.Models;
+using Database.DTOs;
 using Database.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace API.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [Authorize]
     [Route("[controller]")]
     public class EventsController : Controller
     {
@@ -35,7 +35,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EventInfo>))]
         public async Task<IActionResult> List([FromQuery] DateTimeOffset start, [FromQuery] DateTimeOffset end)
         {
-            var dbCalendars = _calendarRepository.List();
+            var dbCalendars = _calendarRepository.Search(new SearchParameters());
             var libCalendars = _mapper.Map<CalendarInfo>(dbCalendars);
 
             var results = await _eventsService.ListEventsAsync(libCalendars, start, end);
