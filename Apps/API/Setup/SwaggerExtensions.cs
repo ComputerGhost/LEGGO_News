@@ -1,21 +1,18 @@
-﻿using API.Utility;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace API.Setup
 {
     public static class SwaggerExtensions
     {
+        private const string SecurityDefinitionName = "OAuth2";
 
-        private static OpenApiSecurityScheme GetSwaggerSecurityDefinition(Config.OAuth2Config oauthConfig)
+        public static void AddMySecurityDefinition(this SwaggerGenOptions options, Uri oauthBase)
         {
-            var oauthBase = new Uri(oauthConfig.Authority);
-
-            return new OpenApiSecurityScheme
+            options.AddSecurityDefinition(SecurityDefinitionName, new OpenApiSecurityScheme
             {
                 Type = SecuritySchemeType.OAuth2,
                 Flows = new OpenApiOAuthFlows
@@ -26,16 +23,16 @@ namespace API.Setup
                         TokenUrl = new Uri(oauthBase, "/oauth2/token"),
                         Scopes = new Dictionary<string, string>
                         {
-                            { "Public", "public" }
+                            { "openid", "Needed for sign-in." }
                         }
                     }
                 }
-            };
+            });
         }
 
-        private static OpenApiSecurityRequirement GetSwaggerSecurityRequirement()
+        public static void AddMySecurityRequirement(this SwaggerGenOptions options)
         {
-            return new OpenApiSecurityRequirement
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
                     new OpenApiSecurityScheme
@@ -43,31 +40,12 @@ namespace API.Setup
                         Reference = new OpenApiReference
                         {
                             Type = ReferenceType.SecurityScheme,
-                            Id = "OAuth2"
+                            Id = SecurityDefinitionName
                         }
                     },
                     new string[] { }
                 }
-            };
-        }
-
-        public static void AddMySwagger(this IServiceCollection services, Config.OAuth2Config oauthConfig)
-        {
-            services.AddSwaggerGen(options =>
-            {
-                options.DocumentFilter<JsonPatchDocumentFilter>();
-                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Api.xml"));
-                options.AddSecurityDefinition("OAuth2", GetSwaggerSecurityDefinition(oauthConfig));
-                options.AddSecurityRequirement(GetSwaggerSecurityRequirement());
             });
         }
-
-
-        public static void UseMySwagger(this IApplicationBuilder app)
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-
     }
 }

@@ -1,15 +1,11 @@
 ﻿using Calendar.Setup;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace API.Setup
 {
     public struct Config
     {
-        public struct OAuth2Config
-        {
-            public string Authority { get; set; }
-        }
-
         public CalendarConfig Calendar { get; set; }
-        public OAuth2Config OAuth2 { get; set; }
+        public JwtBearerOptions JwtSettings { get; set; }
     }
 }
