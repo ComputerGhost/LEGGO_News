@@ -8,12 +8,12 @@ namespace Calendar.Matrix
         public DateTimeOffset WeekEnd { get; set; }
         public IReadOnlyList<DayMatrix> Days { get; }
 
-        public WeekMatrix(DateTimeOffset weekStart, DayOfWeek firstDayOfWeek)
+        public WeekMatrix(DateTimeOffset dayInWeek, DayOfWeek firstDayOfWeek)
         {
-            WeekStart = TimeTools.WeekStart(weekStart, firstDayOfWeek);
-            WeekEnd = TimeTools.WeekEnd(weekStart, firstDayOfWeek);
+            WeekStart = TimeTools.WeekStart(dayInWeek, firstDayOfWeek);
+            WeekEnd = TimeTools.WeekEnd(dayInWeek, firstDayOfWeek);
             Days = Enumerable.Range(0, 7)
-                .Select(i => new DayMatrix(weekStart.AddDays(i)))
+                .Select(i => new DayMatrix(WeekStart.AddDays(i)))
                 .ToList();
         }
 

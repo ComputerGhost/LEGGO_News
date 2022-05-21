@@ -21,6 +21,22 @@
         }
 
         /// <summary>
+        /// Returns the name for the day of the week.
+        /// </summary>
+        public static string NameOfDay(DateTimeOffset date)
+        {
+            return NameOfDay(date.DayOfWeek);
+        }
+
+        /// <summary>
+        /// Returns the name for the day of the week.
+        /// </summary>
+        public static string NameOfDay(DayOfWeek dayOfWeek)
+        {
+            return dayOfWeek.ToString();
+        }
+
+        /// <summary>
         /// Returns an equal DateTimeOffset but adjusted for a different timezone.
         /// </summary>
         public static DateTimeOffset InTimezone(DateTimeOffset source, string timezone)
@@ -66,7 +82,7 @@
         /// </summary>
         public static DateTimeOffset WeekStart(DateTimeOffset source, DayOfWeek firstDayOfWeek = DayOfWeek.Monday)
         {
-            while (source.DayOfWeek == firstDayOfWeek)
+            while (source.DayOfWeek != firstDayOfWeek)
             {
                 source = source.AddDays(-1);
             }
