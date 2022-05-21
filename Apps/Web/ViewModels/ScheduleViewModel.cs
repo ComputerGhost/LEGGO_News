@@ -1,6 +1,4 @@
-﻿using Calendar;
-using Calendar.Matrix;
-using Calendar.Models;
+﻿using Calendar.Matrix;
 using Database.DTOs;
 using System.Collections.Generic;
 

@@ -46,14 +46,16 @@ namespace Web.Controllers
             return View(articles);
         }
 
-        public async Task<IActionResult> Schedule()
+        public async Task<IActionResult> Schedule(DateTime? month)
         {
-            var now = TimeTools.InTimezone(DateTimeOffset.UtcNow, "Korea Standard Time");
+            var when = month.HasValue
+                ? TimeTools.AsTimezone(month.Value, "Korea Standard Time")
+                : TimeTools.InTimezone(DateTimeOffset.UtcNow, "Korea Standard Time");
 
             var dbCalendars = _calendarRepository.Search(new SearchParameters());
             var libCalendars = dbCalendars.Data.Select(c => _mapper.Map<CalendarInfo>(c));
 
-            var monthMatrix = new MonthMatrix(now, DayOfWeek.Monday);
+            var monthMatrix = new MonthMatrix(when, DayOfWeek.Monday);
             var events = await _eventsService.ListEventsAsync(libCalendars, monthMatrix.MonthStart, monthMatrix.MonthEnd);
             monthMatrix.AddEvents(events);
 

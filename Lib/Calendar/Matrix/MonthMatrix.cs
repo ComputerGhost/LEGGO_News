@@ -13,10 +13,17 @@ namespace Calendar.Matrix
             MonthStart = TimeTools.MonthStart(dateInMonth);
             MonthEnd = TimeTools.MonthEnd(dateInMonth);
 
-            var weekCount = (MonthEnd - MonthStart).Days / 7 + 1;
-            Weeks = Enumerable.Range(0, weekCount)
-                .Select(i => new WeekMatrix(MonthStart.AddDays(i * 7), firstDayOfWeek))
-                .ToList();
+            var firstWeekStart = TimeTools.WeekStart(MonthStart);
+            var lastWeekEnd = TimeTools.WeekEnd(MonthEnd);
+            var weekCount = (lastWeekEnd - firstWeekStart).Days / 7 + 1;
+
+            var weeks = new List<WeekMatrix>();
+            for (var i = 0; i < weekCount; i++)
+            {
+                var dayInWeek = MonthStart.AddDays(i * 7);
+                weeks.Add(new WeekMatrix(dayInWeek, firstDayOfWeek));
+            }
+            Weeks = weeks;
         }
 
         public void AddEvents(IEnumerable<EventInfo> eventInfos)
