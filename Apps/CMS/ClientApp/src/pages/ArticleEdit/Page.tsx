@@ -49,7 +49,7 @@ export default function()
     const toolbar =
         <>
             <div className={classes.grow} />
-            <IconButton onClick={handleSaveClicked}>
+            <IconButton color='inherit' onClick={handleSaveClicked}>
                 <FontAwesomeIcon icon={faSave} fixedWidth />
             </IconButton>
         </>;
