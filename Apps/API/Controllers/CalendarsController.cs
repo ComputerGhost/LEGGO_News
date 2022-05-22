@@ -1,13 +1,13 @@
 ﻿using Database.DTOs;
 using Database.Repositories.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Users.Attributes;
+using Users.Constants;
 
 namespace API.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("[controller]")]
     public class CalendarsController : Controller
     {
@@ -19,6 +19,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [AuthorizeRoles()]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CalendarSummary))]
         public IActionResult Create([FromBody] CalendarSaveData calendarSaveData)
         {
@@ -27,6 +28,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [AuthorizeRoles()]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult Delete(int id)
         {
@@ -35,6 +37,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
+        [AuthorizeRoles(Roles.Administrator)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult Edit(int id, [FromBody] CalendarSaveData calendarSaveData)
         {

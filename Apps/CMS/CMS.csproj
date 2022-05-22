@@ -30,6 +30,7 @@
     <None Remove="ClientApp\src\pages\TagCreate\Page.tsx" />
     <None Remove="ClientApp\src\pages\TagList\ListItem.tsx" />
     <None Remove="ClientApp\src\pages\TagList\Page.tsx" />
+    <None Remove="ClientApp\src\services\AuthService.ts" />
     <None Remove="ClientApp\tsconfig.json" />
   </ItemGroup>
 
@@ -53,6 +54,7 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\pages\TagList\ListItem.tsx" />
     <TypeScriptCompile Include="ClientApp\src\pages\TagList\Page.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\services\AuthService.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,9 +62,6 @@
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\api\endpoints\articles.ts">
-      <SubType>Code</SubType>
-    </None>
-    <None Update="ClientApp\src\api\ApiErrorBoundary.tsx">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\api\endpoints\calendars.ts">
@@ -75,9 +74,6 @@
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\Editor\Tools.tsx">
-      <SubType>Code</SubType>
-    </None>
-    <None Update="ClientApp\src\hooks\useAuth.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\api\endpoints\media.ts">

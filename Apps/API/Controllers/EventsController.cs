@@ -3,7 +3,6 @@ using Calendar.Interfaces;
 using Calendar.Models;
 using Database.DTOs;
 using Database.Repositories.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,7 +12,6 @@ using System.Threading.Tasks;
 namespace API.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("[controller]")]
     public class EventsController : Controller
     {

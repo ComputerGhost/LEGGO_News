@@ -26,6 +26,11 @@
     <ProjectReference Include="..\..\Lib\Calendar\Calendar.csproj" />
     <ProjectReference Include="..\..\Lib\Database\Database.csproj" />
     <ProjectReference Include="..\..\Lib\Media\Media.csproj" />
+    <ProjectReference Include="..\..\Users\Users.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Constants\" />
   </ItemGroup>
 
 

@@ -3,6 +3,8 @@ using Database.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Users.Attributes;
+using Users.Constants;
 
 namespace API.Controllers
 {
@@ -19,6 +21,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [AuthorizeRoles(Roles.Journalist)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(TagSummary))]
         public IActionResult Create([FromBody] TagSaveData tagSaveData)
         {
@@ -27,6 +30,7 @@ namespace API.Controllers
         }
 
         [HttpDelete]
+        [AuthorizeRoles()]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult Delete(int id)
         {
@@ -35,6 +39,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
+        [AuthorizeRoles(Roles.Editor)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult Edit(int id, [FromBody] TagSaveData tagSaveData)
         {
