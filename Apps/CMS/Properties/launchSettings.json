@@ -13,7 +13,10 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "REACT_APP_API_URL": "https://localhost:44381/api",
+        "REACT_APP_API_URL": "https://localhost:44300/",
+        "REACT_APP_CLIENT_ROOT": "https://localhost:44381/",
+        "REACT_APP_OIDC_CLIENT_ID": "dc487e3d-1a6a-49b6-a957-150dd821bbd8",
+        "REACT_APP_OIDC_AUTHORITY": "http://localhost:9011",
         "WDS_SOCKET_PORT": "0"
       }
     },

@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import ApiErrorBoundary from './api/ApiErrorBoundary';
-import { useAuth } from './hooks/useAuth';
+import { UserManager } from 'oidc-client-ts';
 import ArticleCreate from './pages/ArticleCreate';
 import ArticleEdit from './pages/ArticleEdit';
 import ArticleList from './pages/ArticleList';
@@ -17,46 +16,51 @@ import MediaList from './pages/MediaList';
 import CalendarCreate from './pages/CalendarCreate';
 import CalendarEdit from './pages/CalendarEdit';
 import CalendarList from './pages/CalendarList';
+import AuthService from './services/AuthService';
 
 export default function ()
 {
-    var user = useAuth();
+    const [isSignedIn, setIsSignedIn] = useState(false);
 
-    function handleAuthenticationRequired() {
-        window.location.reload();
-    }
+    var authService = new AuthService();
+    authService.getUser().then(user => {
+        if (user) {
+            setIsSignedIn(true);
+        }
+        if (!user) {
+            authService.login();
+        }
+    });
 
-    if (!user || !user.email) {
-        handleAuthenticationRequired();
+    if (!isSignedIn) {
+        return <p>Please sign in.</p>
     }
 
     return (
-        <ApiErrorBoundary onAuthenticationRequired={handleAuthenticationRequired}>
-            <Routes>
+        <Routes>
 
-                <Route path='/' element={<Home />} />
+            <Route path='/' element={<Home />} />
 
-                <Route path='/articles' element={<ArticleList />} />
-                <Route path='/articles/new' element={<ArticleCreate />} />
-                <Route path='/articles/:id' element={<ArticleEdit />} />
+            <Route path='/articles' element={<ArticleList />} />
+            <Route path='/articles/new' element={<ArticleCreate />} />
+            <Route path='/articles/:id' element={<ArticleEdit />} />
 
-                <Route path='/calendars' element={<CalendarList />} />
-                <Route path='/calendars/new' element={<CalendarCreate />} />
-                <Route path='/calendars/:id' element={<CalendarEdit />} />
+            <Route path='/calendars' element={<CalendarList />} />
+            <Route path='/calendars/new' element={<CalendarCreate />} />
+            <Route path='/calendars/:id' element={<CalendarEdit />} />
 
-                <Route path='/characters' element={<CharacterList />} />
-                <Route path='/characters/new' element={<CharacterCreate />} />
-                <Route path='/characters/:id' element={<CharacterEdit />} />
+            <Route path='/characters' element={<CharacterList />} />
+            <Route path='/characters/new' element={<CharacterCreate />} />
+            <Route path='/characters/:id' element={<CharacterEdit />} />
 
-                <Route path='/tags' element={<TagList />} />
-                <Route path='/tags/new' element={<TagCreate />} />
-                <Route path='/tags/:id' element={<TagEdit />} />
+            <Route path='/tags' element={<TagList />} />
+            <Route path='/tags/new' element={<TagCreate />} />
+            <Route path='/tags/:id' element={<TagEdit />} />
 
-                <Route path='/help' element={<Help />} />
+            <Route path='/help' element={<Help />} />
 
-                <Route path='/media' element={<MediaList />} />
+            <Route path='/media' element={<MediaList />} />
 
-            </Routes>
-        </ApiErrorBoundary>
+        </Routes>
     );
 };
