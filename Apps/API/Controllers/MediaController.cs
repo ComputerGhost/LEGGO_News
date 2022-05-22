@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Users.Attributes;
+using Users.Constants;
 
 namespace API.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("[controller]")]
     public class MediaController : Controller
     {
@@ -22,6 +23,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [AuthorizeRoles(Roles.Journalist)]
         [Consumes("multipart/form-data")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(MediaSummary))]
         public async Task<IActionResult> Create([FromForm] IFormFile file)
@@ -53,6 +55,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
+        [AuthorizeRoles(Roles.Journalist, Roles.Editor)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult Edit(int id, [FromBody] MediaSaveExistingData mediaSaveData)
         {
