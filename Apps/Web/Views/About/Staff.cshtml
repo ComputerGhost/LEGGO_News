@@ -1,9 +1,74 @@
 ﻿@{
     ViewData["Title"] = "Staff";
+
+    void RenderTwitterLink(string username)
+    {
+        <a class="card-link" href="https://twitter.com/@username" target="_blank">
+            <i class="fab fa-instagram fa-fw"></i>&nbsp;@username
+        </a>
+    }
+
+    void RenderInstagramLink(string username)
+    {
+        <a class="card-link" href="https://www.instagram.com/@username/" target="_blank">
+            <i class="fab fa-twitter fa-fw"></i>&nbsp;@username
+        </a>
+    }
 }
 
 <h1>LEGGO News Staff</h1>
 
 <section>
     <p>We are very thankful to the LEGGOs who keep LEGGO News going.</p>
+</section>
+
+<div class="row">
+    <div class="col-12 col-sm-6 col-md-4">
+        <section class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">LEGGO Nathan</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Administrator</h6>
+                @{ RenderTwitterLink("LEGGO_Nathan"); }<br>
+                @{ RenderInstagramLink("leggo_nathan"); }
+            </div>
+        </section>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+        <section class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">RULA</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Editor</h6>
+                @{ RenderTwitterLink("mywayhyelin"); }<br>
+                @{ RenderInstagramLink("babyhyelin"); }
+            </div>
+        </section>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+        <section class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Atarka</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Columnist</h6>
+                @{ RenderTwitterLink("TarkaAndrew"); }<br>
+                @{ RenderInstagramLink("leggoatarka"); }
+            </div>
+        </section>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+        <section class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">NG</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Columnist</h6>
+                @{ RenderTwitterLink("CEOahnhyojin"); }<br>
+                @{ RenderInstagramLink("ceoahnhyojin"); }
+            </div>
+        </section>
+    </div>
+</div>
+
+<section>
+    <p>
+        We are open to help from more trusted LEGGOs.
+        We do need more journalists and programmers.
+        <a asp-controller="Home" asp-action="Contact">Contact Us</a> and tell us how you would like to help. 
+    </p>
 </section>
