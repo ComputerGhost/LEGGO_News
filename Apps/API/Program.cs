@@ -1,5 +1,4 @@
 using API.Setup;
-using API.Utility;
 using Calendar.Setup;
 using Database.Setup;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -29,7 +28,6 @@ builder.Services.AddCors(setup =>
 });
 builder.Services.AddSwaggerGen(options =>
 {
-    options.DocumentFilter<JsonPatchDocumentFilter>();
     options.AddMySecurityDefinition(new Uri(config.JwtSettings.Authority));
     options.AddMySecurityRequirement();
 });
