@@ -33,7 +33,7 @@ export default function()
             format: "editorjs",
             content: JSON.stringify(content.blocks),
         });
-        navigate('./' + response.id);
+        navigate('../' + response.id);
     }
 
     const toolbar =

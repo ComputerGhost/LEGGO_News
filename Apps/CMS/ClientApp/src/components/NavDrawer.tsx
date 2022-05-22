@@ -4,7 +4,6 @@ import { Drawer, IconButton, List, Theme, Toolbar, Typography, useTheme } from '
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faArrowLeft,
-    faHome,
     faQuestionCircle,
     faPenNib,
     faPhotoVideo,
@@ -52,10 +51,6 @@ export default function ({ width, open, allowClose, onDrawerClosed }: IProps) {
                     </IconButton>
                 }
             </Toolbar>
-
-            <List>
-                <DrawerItem text='Dashboard' icon={faHome} href='/' />
-            </List>
 
             <Typography variant='h6' className={classes.header}>Content</Typography>
             <List>

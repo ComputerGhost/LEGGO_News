@@ -133,9 +133,6 @@
     <None Update="ClientApp\src\pages\Help\index.ts">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\pages\Home\index.ts">
-      <SubType>Code</SubType>
-    </None>
     <None Update="ClientApp\src\pages\MediaList\index.ts">
       <SubType>Code</SubType>
     </None>

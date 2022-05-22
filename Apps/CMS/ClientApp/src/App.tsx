@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import ArticleCreate from './pages/ArticleCreate';
 import ArticleEdit from './pages/ArticleEdit';
 import ArticleList from './pages/ArticleList';
@@ -7,7 +7,6 @@ import CharacterCreate from './pages/CharacterCreate';
 import CharacterEdit from './pages/CharacterEdit';
 import CharacterList from './pages/CharacterList';
 import Help from './pages/Help';
-import Home from './pages/Home';
 import TagCreate from './pages/TagCreate';
 import TagEdit from './pages/TagEdit';
 import TagList from './pages/TagList';
@@ -38,7 +37,7 @@ export default function ()
     return (
         <Routes>
 
-            <Route path='/' element={<Home />} />
+            <Route path="/" element={<Navigate replace to="/articles" />} />
 
             <Route path='/articles' element={<ArticleList />} />
             <Route path='/articles/new' element={<ArticleCreate />} />
