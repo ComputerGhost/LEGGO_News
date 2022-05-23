@@ -8,10 +8,6 @@
     ViewData["Title"] = "Schedule";
 }
 
-@section Scripts
-{
-}
-
 @section Styles
 {
     <link rel="stylesheet" href="~/css/calendar.css">
@@ -47,16 +43,14 @@
         <tr>
             <th class="title" colspan="7">
                 <h2>
-                    <a
+                    <a asp-controller="Schedule" asp-action="Index" asp-route-month="@previousMonthStart.ToString("yyyy-MM")"
                         class="month-nav previous"
-                        href="?month=@previousMonthStart.ToString("yyyy-MM")"
                     >
                         <i class="fa-solid fa-circle-left"></i>
                     </a>
                     @monthStart.ToString("MMM yyyy")
-                    <a
+                    <a asp-controller="Schedule" asp-action="Index" asp-route-month="@nextMonthStart.ToString("yyyy-MM")"
                         class="month-nav next"
-                        href="?month=@nextMonthStart.ToString("yyyy-MM")"
                     >
                         <i class="fa-solid fa-circle-right"></i>
                     </a>
