@@ -22,6 +22,7 @@ builder.Services.AddRouting(options =>
 });
 builder.Services.AddRazorPages();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddDependencyInjection();
 
 
 var app = builder.Build();
