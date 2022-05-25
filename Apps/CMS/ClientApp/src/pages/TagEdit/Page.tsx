@@ -1,23 +1,15 @@
 ﻿import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { Container, IconButton, TextField } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { Container, TextField } from '@material-ui/core';
 import { useTag, useUpdateTag } from '../../api/endpoints/tags';
 import { useParams } from 'react-router-dom';
 import Page from '../../components/Page';
-
-const useStyles = makeStyles((theme) => ({
-    grow: {
-        flexGrow: 1,
-    },
-}));
+import UserRoles from '../../constants/UserRoles';
+import { SaveToolbar } from '../../components/Toolbars';
 
 export default function()
 {
     const tagId = parseInt(useParams().id!);
 
-    const classes = useStyles();
     const { data } = useTag(tagId)
     const mutator = useUpdateTag(tagId);
 
@@ -29,7 +21,7 @@ export default function()
         setDescription(data?.description ?? '');
     }, [data]);
 
-    async function handleSaveClicked() {
+    async function handleSaveClick() {
         await mutator.mutate({
             name,
             description,
@@ -40,16 +32,12 @@ export default function()
         }
     }
 
-    const toolbar =
-        <>
-            <div className={classes.grow} />
-            <IconButton color='inherit' onClick={handleSaveClicked}>
-                <FontAwesomeIcon icon={faSave} fixedWidth />
-            </IconButton>
-        </>;
-
     return (
-        <Page title='Edit Tag' toolbar={toolbar}>
+        <Page
+            requiresRole={[UserRoles.Editor, UserRoles.Journalist]}
+            title='Edit Tag'
+            toolbar={<SaveToolbar onSaveClick={handleSaveClick} />}
+        >
             <Container>
                 <TextField
                     fullWidth

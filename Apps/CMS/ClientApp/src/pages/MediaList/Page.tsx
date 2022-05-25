@@ -1,11 +1,10 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
-import { Container, IconButton } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Container } from '@material-ui/core';
 import { useUploadMedia } from '../../api/endpoints/media';
-import SearchToolbar from '../../components/SearchToolbar';
 import Page from '../../components/Page';
-import ImageGrid from '../../components/ImageGrid';
+import SearchAddToolbar from '../../components/Toolbars/SearchAddToolbar';
+import UserRoles from '../../constants/UserRoles';
+import MediaGrid from '../../components/MediaGrid';
 
 
 export default function()
@@ -14,7 +13,7 @@ export default function()
     const mutator = useUploadMedia();
     const [search, setSearch] = useState('');
 
-    function handleAddClicked() {
+    function handleAddClick() {
         fileInput.current!.click();
     }
 
@@ -32,22 +31,27 @@ export default function()
         uploadMedia(files);
     }
 
-    const toolbar =
-        <>
-            <SearchToolbar
-                placeholder='Search Media...'
-                onChange={setSearch}
-            />
-            <IconButton color='inherit' onClick={handleAddClicked }>
-                <FontAwesomeIcon icon={faPlus} fixedWidth />
-            </IconButton>
-            <input ref={fileInput} hidden type='file' multiple onChange={handleFilesSelected} />
-        </>;
-
     return (
-        <Page title='Media' toolbar={toolbar}>
+        <Page
+            title='Media'
+            toolbar={
+                <SearchAddToolbar
+                    onAddClick={handleAddClick}
+                    onSearchChange={setSearch}
+                    placeholder='Search media...'
+                    rolesForAdd={[UserRoles.Editor, UserRoles.Journalist]}
+                />
+            }
+        >
             <Container>
-                <ImageGrid search={search} onFilesDropped={handleFilesDropped} />
+                <input
+                    ref={fileInput}
+                    hidden
+                    type='file'
+                    multiple
+                    onChange={handleFilesSelected}
+                />
+                <MediaGrid search={search} onFilesDropped={handleFilesDropped} />
             </Container>
         </Page>
     );

@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { Container, IconButton, TextField } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { Container, TextField } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import Page from '../../components/Page';
 import { useCalendar, useUpdateCalendar } from '../../api/endpoints/calendars';
-
-const useStyles = makeStyles((theme) => ({
-    grow: {
-        flexGrow: 1,
-    },
-}));
+import UserRoles from '../../constants/UserRoles';
+import { SaveToolbar } from '../../components/Toolbars';
 
 export default function()
 {
     const calendarId = parseInt(useParams().id!);
 
-    const classes = useStyles();
     const { data } = useCalendar(calendarId);
     const mutator = useUpdateCalendar(calendarId);
 
@@ -33,7 +25,7 @@ export default function()
         setTimezoneOffset(data?.timezoneOffset ?? 0);
     }, [data]);
 
-    async function handleSaveClicked() {
+    async function handleSaveClick() {
         await mutator.mutate({
             color,
             googleId,
@@ -46,16 +38,12 @@ export default function()
         }
     }
 
-    const toolbar =
-        <>
-            <div className={classes.grow} />
-            <IconButton color='inherit' onClick={handleSaveClicked}>
-                <FontAwesomeIcon icon={faSave} fixedWidth />
-            </IconButton>
-        </>;
-
     return (
-        <Page title='Edit Calendar' toolbar={toolbar}>
+        <Page
+            requiresRole={UserRoles.Administrator}
+            title='Edit Calendar'
+            toolbar={<SaveToolbar onSaveClick={handleSaveClick} />}
+        >
             <Container>
                 <TextField
                     fullWidth

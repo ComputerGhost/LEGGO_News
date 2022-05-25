@@ -1,5 +1,5 @@
 ﻿import { QueryFunctionContext, useInfiniteQuery, UseInfiniteQueryResult, useMutation, UseMutationResult, useQuery, UseQueryResult } from "react-query";
-import AuthService from "../services/AuthService";
+import AuthService from "../services/AuthenticationService";
 import ApiError from "./ApiError";
 
 

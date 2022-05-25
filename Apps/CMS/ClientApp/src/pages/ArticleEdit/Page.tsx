@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { Box, Container, IconButton, Tab } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { Box, Container, Tab } from '@material-ui/core';
 import { useArticle, useUpdateArticle } from '../../api/endpoints/articles';
 import { TabContext, TabList } from '@material-ui/lab';
 import EditorJS from '@editorjs/editorjs';
@@ -10,18 +7,13 @@ import ContentTab from './ContentTab';
 import MetadataTab from './MetadataTab';
 import { useParams } from 'react-router-dom';
 import Page from '../../components/Page';
-
-const useStyles = makeStyles((theme) => ({
-    grow: {
-        flexGrow: 1,
-    },
-}));
+import { SaveToolbar } from '../../components/Toolbars';
+import UserRoles from '../../constants/UserRoles';
 
 export default function()
 {
     const articleId = parseInt(useParams().id!);
 
-    const classes = useStyles();
     const [tabIndex, setTabIndex] = useState('0');
     const [title, setTitle] = useState<string>('');
     const [topStory, setTopStory] = useState<boolean>(false);
@@ -33,7 +25,7 @@ export default function()
         setTitle(data?.title ?? '');
     }, [data]);
 
-    async function handleSaveClicked() {
+    async function handleSaveClick() {
         const content = await editorApi!.save();
         await mutator.mutateAsync({
             title,
@@ -46,16 +38,12 @@ export default function()
         return <Page title='Edit Article'><p>Loading</p></Page >;
     }
 
-    const toolbar =
-        <>
-            <div className={classes.grow} />
-            <IconButton color='inherit' onClick={handleSaveClicked}>
-                <FontAwesomeIcon icon={faSave} fixedWidth />
-            </IconButton>
-        </>;
-
     return (
-        <Page title='Edit Article' toolbar={toolbar}>
+        <Page
+            requiresRole={UserRoles.Journalist}
+            title='Edit Article'
+            toolbar={<SaveToolbar onSaveClick={handleSaveClick} />}
+        >
             <Container>
                 <TabContext value={tabIndex}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

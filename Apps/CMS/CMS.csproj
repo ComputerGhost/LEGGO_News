@@ -23,6 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\constants\UserRoles.ts" />
+    <None Remove="ClientApp\src\contexts\userContext.ts" />
     <None Remove="ClientApp\src\pages\ArticleCreate\ContentTab.tsx" />
     <None Remove="ClientApp\src\pages\ArticleEdit\ContentTab.tsx" />
     <None Remove="ClientApp\src\pages\ArticleEdit\index.ts" />
@@ -30,7 +32,8 @@
     <None Remove="ClientApp\src\pages\TagCreate\Page.tsx" />
     <None Remove="ClientApp\src\pages\TagList\ListItem.tsx" />
     <None Remove="ClientApp\src\pages\TagList\Page.tsx" />
-    <None Remove="ClientApp\src\services\AuthService.ts" />
+    <None Remove="ClientApp\src\services\AuthenticationService.ts" />
+    <None Remove="ClientApp\src\services\AuthorizationService.ts" />
     <None Remove="ClientApp\tsconfig.json" />
   </ItemGroup>
 
@@ -41,6 +44,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\constants\UserRoles.ts" />
+    <TypeScriptCompile Include="ClientApp\src\contexts\userContext.ts" />
     <TypeScriptCompile Include="ClientApp\src\pages\ArticleCreate\ContentTab.tsx" />
     <TypeScriptCompile Include="ClientApp\src\pages\ArticleEdit\ContentTab.tsx">
       <SubType>Code</SubType>
@@ -54,7 +59,10 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\pages\TagList\ListItem.tsx" />
     <TypeScriptCompile Include="ClientApp\src\pages\TagList\Page.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\services\AuthService.ts" />
+    <TypeScriptCompile Include="ClientApp\src\services\AuthorizationService.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\services\AuthenticationService.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -91,16 +99,28 @@
     <None Update="ClientApp\src\components\Editor\index.ts">
       <SubType>Code</SubType>
     </None>
+    <None Update="ClientApp\src\components\MediaGrid\index.ts">
+      <SubType>Code</SubType>
+    </None>
     <None Update="ClientApp\src\components\TabPanel.tsx">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\InfiniteScroll.tsx">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\components\DropFile.tsx">
+    <None Update="ClientApp\src\components\MediaGrid\DropFile.tsx">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\components\SearchToolbar.tsx">
+    <None Update="ClientApp\src\components\Toolbars\index.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\components\Toolbars\SaveToolbar.tsx">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\components\Toolbars\SearchAddToolbar.tsx">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\components\Toolbars\SearchToolbar.tsx">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\Page.tsx">

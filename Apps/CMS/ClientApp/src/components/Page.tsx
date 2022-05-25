@@ -4,18 +4,23 @@ import { useMediaQuery } from '@material-ui/core';
 import { Toolbar, useTheme } from '@material-ui/core';
 import TopBar from './TopBar';
 import NavDrawer from './NavDrawer';
+import AuthorizationService from '../services/AuthorizationService';
+import { User } from 'oidc-client-ts';
+import userContext from '../contexts/userContext';
 
 const drawerWidth = 240;
 
 interface IProps {
     title: string,
     toolbar?: ReactElement,
+    requiresRole?: string,
     children: ReactElement | ReactElement[],
 }
 
 export default function ({
     title,
     toolbar,
+    requiresRole,
     children
 }: IProps)
 {
@@ -23,6 +28,15 @@ export default function ({
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+    const ensureCanViewPage = (user: User | null) => {
+        if (requiresRole) {
+            const service = new AuthorizationService(user);
+            if (requiresRole && !service.hasRole(requiresRole)) {
+                throw new Error("Insufficient permissions.");
+            }
+        }
+    }
 
     function handleOpenDrawer() {
         setIsDrawerOpen(true);
@@ -33,33 +47,39 @@ export default function ({
     }
 
     return (
-        <>
-            <Helmet>
-                <title>{title} - LEGGO News</title>
-            </Helmet>
+        <userContext.Consumer>
+            {(user) =>
+                <>
+                    {ensureCanViewPage(user)}
 
-            <NavDrawer
-                width={drawerWidth}
-                open={isDrawerOpen || !isMobile}
-                allowClose={isMobile}
-                onDrawerClosed={handleCloseDrawer}
-            />
+                    <Helmet>
+                        <title>{title} - LEGGO News</title>
+                    </Helmet>
 
-            <TopBar
-                drawerWidth={drawerWidth}
-                onDrawerOpen={handleOpenDrawer}
-                isMobile={isMobile}
-                title={title}
-            >
-                {toolbar ? toolbar!! : null}
-            </TopBar>
+                    <NavDrawer
+                        width={drawerWidth}
+                        open={isDrawerOpen || !isMobile}
+                        allowClose={isMobile}
+                        onDrawerClosed={handleCloseDrawer}
+                    />
 
-            {/* Padding for the main content */}
-            <Toolbar />
+                    <TopBar
+                        drawerWidth={drawerWidth}
+                        onDrawerOpen={handleOpenDrawer}
+                        isMobile={isMobile}
+                        title={title}
+                    >
+                        {toolbar ? toolbar!! : null}
+                    </TopBar>
 
-            <main style={{ paddingLeft: isMobile ? 0 : drawerWidth }}>
-                {children}
-            </main>
-        </>
+                    {/* Padding for the main content */}
+                    <Toolbar />
+
+                    <main style={{ paddingLeft: isMobile ? 0 : drawerWidth }}>
+                        {children}
+                    </main>
+                </>
+            }
+        </userContext.Consumer>
     );
 }

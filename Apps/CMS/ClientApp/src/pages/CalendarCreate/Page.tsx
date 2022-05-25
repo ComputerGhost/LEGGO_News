@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { Container, IconButton, TextField } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { Container, TextField } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import Page from '../../components/Page';
 import { useCreateCalendar } from '../../api/endpoints/calendars';
-
-const useStyles = makeStyles((theme) => ({
-    grow: {
-        flexGrow: 1,
-    },
-}));
+import UserRoles from '../../constants/UserRoles';
+import { SaveToolbar } from '../../components/Toolbars';
 
 export default function()
 {
-    const classes = useStyles();
     const navigate = useNavigate();
     const mutator = useCreateCalendar();
 
@@ -24,7 +16,7 @@ export default function()
     const [name, setName] = useState<string>('');
     const [timezoneOffset, setTimezoneOffset] = useState<number>(0);
 
-    async function handleSaveClicked() {
+    async function handleSaveClick() {
         await mutator.mutate({
             color,
             googleId,
@@ -39,16 +31,12 @@ export default function()
         }
     }
 
-    const toolbar =
-        <>
-            <div className={classes.grow} />
-            <IconButton color='inherit' onClick={handleSaveClicked}>
-                <FontAwesomeIcon icon={faSave} fixedWidth />
-            </IconButton>
-        </>;
-
     return (
-        <Page title='Register Calendar' toolbar={toolbar}>
+        <Page
+            requiresRole={UserRoles.Administrator}
+            title='Register Calendar'
+            toolbar={<SaveToolbar onSaveClick={handleSaveClick} />}
+        >
             <Container>
                 <TextField
                     fullWidth

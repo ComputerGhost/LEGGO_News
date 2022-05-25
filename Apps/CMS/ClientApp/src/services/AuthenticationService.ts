@@ -1,4 +1,5 @@
 ﻿import { User, UserManager } from "oidc-client-ts";
+import UserRoles from "../constants/UserRoles";
 
 export default class {
     private userManager: UserManager;
@@ -15,7 +16,8 @@ export default class {
         });
     }
 
-    public getUser(): Promise<User | null> {
+
+    public async getUser(): Promise<User | null> {
         return this.userManager.getUser();
     }
 
@@ -23,11 +25,11 @@ export default class {
         return this.userManager.signinRedirect();
     }
 
-    public renewToken(): Promise<User | null> {
-        return this.userManager.signinSilent();
+    public async logout(): Promise<void> {
+        return this.userManager.signoutRedirect();
     }
 
-    public logout(): Promise<void> {
-        return this.userManager.signoutRedirect();
+    public async renewToken(): Promise<User | null> {
+        return this.userManager.signinSilent();
     }
 }

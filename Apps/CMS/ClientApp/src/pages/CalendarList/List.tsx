@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { List, Paper } from '@material-ui/core';
 import InfiniteScroll from '../../components/InfiniteScroll';
 import { useCalendars } from '../../api/endpoints/calendars';
+import ListItem from './ListItem';
 
 interface IProps {
     search: string,
@@ -23,26 +24,13 @@ export default function ({
             hasMore={hasNextPage ?? false}
             next={fetchNextPage}
         >
-            <TableContainer component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Name</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {data && data.pages.map((page) =>
-                            page.data.map((calendar) =>
-                                <TableRow key={calendar.id}>
-                                    <TableCell>
-                                        {calendar.name}
-                                    </TableCell>
-                                </TableRow>
-                            )
-                        )}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <List component={Paper}>
+                {data && data.pages.map((page) =>
+                    page.data.map((calendar) =>
+                        <ListItem key={calendar.id} calendar={calendar} />
+                    )
+                )}
+            </List>
         </InfiniteScroll>
     );
 }
