@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { List, Paper } from '@material-ui/core';
 import InfiniteScroll from '../../components/InfiniteScroll';
 import { useCharacters } from '../../api/endpoints/characters';
+import ListItem from './ListItem';
 
 interface IProps {
     search: string,
@@ -23,30 +24,13 @@ export default function ({
             hasMore={hasNextPage ?? false}
             next={fetchNextPage}
         >
-            <TableContainer component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Emoji</TableCell>
-                            <TableCell>English Name</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {data && data.pages.map((page) =>
-                            page.data.map((character) =>
-                                <TableRow key={character.id}>
-                                    <TableCell>
-                                        {character.emoji}
-                                    </TableCell>
-                                    <TableCell>
-                                        {character.englishName}
-                                    </TableCell>
-                                </TableRow>
-                            )
-                        )}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <List component={Paper}>
+                {data && data.pages.map((page) =>
+                    page.data.map((character) =>
+                        <ListItem key={character.id} character={character} />
+                    )
+                )}
+            </List>
         </InfiniteScroll>
     );
 }

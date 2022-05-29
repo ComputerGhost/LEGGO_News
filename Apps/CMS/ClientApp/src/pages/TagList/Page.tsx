@@ -1,11 +1,10 @@
 ﻿import React, { useState } from 'react';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Container, IconButton, } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Container } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import List from './List';
 import Page from '../../components/Page';
-import SearchToolbar from '../../components/SearchToolbar';
+import UserRoles from '../../constants/UserRoles';
+import SearchAddToolbar from '../../components/Toolbars/SearchAddToolbar';
 
 
 export default function()
@@ -13,20 +12,22 @@ export default function()
     var [search, setSearch] = useState('');
     var navigate = useNavigate();
 
-    function handleAddClicked() {
+    function handleAddClick() {
         navigate('/tags/new');
     }
 
-    const toolbar =
-        <>
-            <SearchToolbar placeholder='Search tags...' onChange={setSearch} />
-            <IconButton color='inherit' onClick={handleAddClicked}>
-                <FontAwesomeIcon icon={faPlus} fixedWidth />
-            </IconButton>
-        </>;
-
     return (
-        <Page title='Tags' toolbar={toolbar}>
+        <Page
+            title='Tags'
+            toolbar={
+                <SearchAddToolbar
+                    onAddClick={handleAddClick}
+                    onSearchChange={setSearch}
+                    placeholder='Search tags...'
+                    rolesForAdd={UserRoles.Journalist}
+                />
+            }
+        >
             <Container>
                 <List search={search} />
             </Container>

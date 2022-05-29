@@ -10,7 +10,6 @@ export default function ({
     children,
 }: IProps)
 {
-
     function handleDragOver(event: React.DragEvent<HTMLDivElement>) {
         event.preventDefault();
     }

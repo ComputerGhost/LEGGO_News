@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { Container, IconButton, TextField } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { Container, TextField } from '@material-ui/core';
 import { useCharacter, useUpdateCharacter } from '../../api/endpoints/characters';
 import { DatePicker } from '@material-ui/lab';
 import { useParams } from 'react-router-dom';
 import Page from '../../components/Page';
-
-const useStyles = makeStyles((theme) => ({
-    grow: {
-        flexGrow: 1,
-    },
-}));
+import { SaveToolbar } from '../../components/Toolbars';
+import UserRoles from '../../constants/UserRoles';
 
 export default function()
 {
     const characterId = parseInt(useParams().id!);
 
-    const classes = useStyles();
     const { data } = useCharacter(characterId);
     const mutator = useUpdateCharacter(characterId);
 
@@ -36,7 +28,7 @@ export default function()
         setDescription(data?.description ?? '');
     }, [data]);
 
-    async function handleSaveClicked() {
+    async function handleSaveClick() {
         await mutator.mutate({
             birthDate,
             englishName,
@@ -50,16 +42,12 @@ export default function()
         }
     }
 
-    const toolbar =
-        <>
-            <div className={classes.grow} />
-            <IconButton color='inherit' onClick={handleSaveClicked}>
-                <FontAwesomeIcon icon={faSave} fixedWidth />
-            </IconButton>
-        </>;
-
     return (
-        <Page title='Edit Character' toolbar={toolbar}>
+        <Page
+            requiresRole={UserRoles.Administrator}
+            title='Edit Character'
+            toolbar={<SaveToolbar onSaveClick={handleSaveClick} />}
+        >
             <Container>
                 <DatePicker
                     label='Birth Date'

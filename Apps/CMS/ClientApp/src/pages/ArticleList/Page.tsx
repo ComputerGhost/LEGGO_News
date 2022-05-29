@@ -1,32 +1,33 @@
 import React, { useState } from 'react';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Container, IconButton, } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNavigate } from 'react-router-dom';
+import { Container } from '@material-ui/core';
 import List from './List';
-import SearchToolbar from '../../components/SearchToolbar';
 import Page from '../../components/Page';
+import SearchAddToolbar from '../../components/Toolbars/SearchAddToolbar';
+import UserRoles from '../../constants/UserRoles';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function()
 {
-    var [search, setSearch] = useState('');
-    var navigate = useNavigate();
+    const navigate = useNavigate();
+    const [search, setSearch] = useState('');
 
-    function handleAddClicked() {
+    const handleAddClick = () => {
         navigate('/articles/new');
     }
 
-    const toolbar =
-        <>
-            <SearchToolbar placeholder='Search articles...' onChange={setSearch} />
-            <IconButton color='inherit' onClick={handleAddClicked}>
-                <FontAwesomeIcon icon={faPlus} fixedWidth />
-            </IconButton>
-        </>;
-
     return (
-        <Page title='Articles' toolbar={toolbar}>
+        <Page
+            title='Articles'
+            toolbar={
+                <SearchAddToolbar
+                    onAddClick={handleAddClick}
+                    onSearchChange={setSearch}
+                    placeholder='Search articles...'
+                    rolesForAdd={UserRoles.Journalist}
+                />
+            }
+        >
             <Container>
                 <List search={search} />
             </Container>
