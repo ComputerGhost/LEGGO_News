@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { List, Paper } from '@material-ui/core';
+import { List, Paper } from '@mui/material';
 import InfiniteScroll from '../../components/InfiniteScroll';
 import { useCharacters } from '../../api/endpoints/characters';
 import ListItem from './ListItem';

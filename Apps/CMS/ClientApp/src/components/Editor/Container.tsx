@@ -1,5 +1,5 @@
 ﻿import React, { Component, forwardRef, Ref } from 'react';
-import { FormControl, InputLabel, OutlinedInput } from '@material-ui/core';
+import { FormControl, InputLabel, OutlinedInput } from '@mui/material';
 import EditorJS, { OutputData } from '@editorjs/editorjs';
 import Editor, { IEditorProps } from './Editor';
 

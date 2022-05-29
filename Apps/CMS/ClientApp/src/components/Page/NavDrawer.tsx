@@ -1,6 +1,6 @@
 ﻿import React from "react";
-import { makeStyles } from '@material-ui/styles';
-import { Drawer, IconButton, List, Theme, Toolbar, Typography, useTheme } from '@material-ui/core';
+import { Drawer, IconButton, List, Theme, Toolbar, Typography, useTheme } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faArrowLeft,
@@ -46,7 +46,7 @@ export default function ({ width, open, allowClose, onDrawerClosed }: IProps) {
             <Toolbar>
                 <div className={classes.grow} />
                 {allowClose && 
-                    <IconButton onClick={onDrawerClosed}>
+                    <IconButton onClick={onDrawerClosed} size="large">
                         <FontAwesomeIcon icon={faArrowLeft} fixedWidth />
                     </IconButton>
                 }

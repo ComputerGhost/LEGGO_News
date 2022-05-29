@@ -1,6 +1,6 @@
 ﻿import { ChangeEventHandler, FocusEventHandler, Ref, useCallback, useRef } from 'react';
 import { createReactEditorJS } from 'react-editor-js';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@mui/styles';
 import EditorJS, { OutputData } from '@editorjs/editorjs';
 import { EDITOR_JS_TOOLS } from './Tools';
 const Undo = require('editorjs-undo');

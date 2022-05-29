@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
+import { IconButton } from '@mui/material';
 import { CharacterSummary, useDeleteCharacter } from '../../api/endpoints/characters';
 import { useNavigate } from 'react-router-dom';
 import { User } from 'oidc-client-ts';
@@ -44,13 +44,10 @@ export default function ({
                     <IconButton
                         disabled={canDeleteCharacter(user)}
                         onClick={handleDeleteClick}
-                    >
+                        size="large">
                         <FontAwesomeIcon icon={faTrash} fixedWidth />
                     </IconButton>
-                    <IconButton
-                        disabled={canEditCharacter(user)}
-                        onClick={handleEditClick}
-                    >
+                    <IconButton disabled={canEditCharacter(user)} onClick={handleEditClick} size="large">
                         <FontAwesomeIcon icon={faEdit} fixedWidth />
                     </IconButton >
                 </>

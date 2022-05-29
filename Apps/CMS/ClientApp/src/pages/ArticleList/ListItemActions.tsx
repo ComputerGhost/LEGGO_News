@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
+import { IconButton } from '@mui/material';
 import { ArticleSummary, useDeleteArticle } from '../../api/endpoints/articles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -42,12 +42,12 @@ export default function ({
             {(user) =>
                 <>
                     {canDeleteArticle(user) &&
-                        <IconButton onClick={handleDeleteClick}>
+                        <IconButton onClick={handleDeleteClick} size="large">
                             <FontAwesomeIcon icon={faTrash} fixedWidth />
                         </IconButton>
                     }
                     {canEditArticle(user) &&
-                        <IconButton onClick={handleEditClick}>
+                        <IconButton onClick={handleEditClick} size="large">
                             <FontAwesomeIcon icon={faEdit} fixedWidth />
                         </IconButton >
                     }

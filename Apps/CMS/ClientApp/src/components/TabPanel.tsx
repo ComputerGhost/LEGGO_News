@@ -1,5 +1,5 @@
 ﻿import { useEffect, useState } from 'react';
-import { useTabContext } from '@material-ui/lab';
+import { useTabContext } from '@mui/lab';
 
 // This is a modified copy/paste from:
 // https://github.com/mui-org/material-ui/issues/21250

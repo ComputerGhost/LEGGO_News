@@ -1,7 +1,7 @@
 ﻿import React, { ReactElement, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMediaQuery } from '@material-ui/core';
-import { Toolbar, useTheme } from '@material-ui/core';
+import { useMediaQuery } from '@mui/material';
+import { Toolbar, useTheme } from '@mui/material';
 import TopBar from './TopBar';
 import NavDrawer from './NavDrawer';
 import AuthorizationService from '../../services/AuthorizationService';
@@ -25,7 +25,7 @@ export default function ({
 }: IProps)
 {
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 

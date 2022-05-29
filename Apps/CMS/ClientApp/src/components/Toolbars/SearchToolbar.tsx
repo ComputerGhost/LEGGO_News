@@ -1,7 +1,7 @@
 ﻿import React, { ChangeEvent } from 'react';
-import { InputBase, Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import { alpha, useTheme } from '@material-ui/core/styles';
+import { InputBase, Theme } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { alpha, useTheme } from '@mui/material/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 

@@ -1,5 +1,5 @@
 ﻿import React, { ReactElement } from 'react';
-import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 
@@ -20,25 +20,23 @@ export default function ({
     children
 }: IProps)
 {
-    return (
-        <>
-            <AppBar position='fixed' sx={{ paddingLeft: isMobile ? 0 : drawerWidth + 'px' }}>
-                <Toolbar>
+    return <>
+        <AppBar position='fixed' sx={{ paddingLeft: isMobile ? 0 : drawerWidth + 'px' }}>
+            <Toolbar>
 
-                    {isMobile &&
-                        <IconButton onClick={onDrawerOpen}>
-                            <FontAwesomeIcon icon={faBars} fixedWidth />
-                        </IconButton>
-                    }
+                {isMobile &&
+                    <IconButton onClick={onDrawerOpen} size="large">
+                        <FontAwesomeIcon icon={faBars} fixedWidth />
+                    </IconButton>
+                }
 
-                    <Typography variant='h6'>
-                        {title}
-                    </Typography>
+                <Typography variant='h6'>
+                    {title}
+                </Typography>
 
-                    {children}
+                {children}
 
-                </Toolbar>
-            </AppBar>
-        </>
-    );
+            </Toolbar>
+        </AppBar>
+    </>;
 }

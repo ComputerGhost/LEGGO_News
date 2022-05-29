@@ -1,5 +1,5 @@
 ﻿import React, { useEffect, useState } from 'react';
-import { Container, TextField } from '@material-ui/core';
+import { Container, TextField } from '@mui/material';
 import { useTag, useUpdateTag } from '../../api/endpoints/tags';
 import { useParams } from 'react-router-dom';
 import Page from '../../components/Page';

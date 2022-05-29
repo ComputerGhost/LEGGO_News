@@ -1,5 +1,5 @@
 ﻿import React, { useCallback, useState } from 'react';
-import { ImageList, ImageListItem } from '@material-ui/core';
+import { ImageList, ImageListItem } from '@mui/material';
 import InfiniteScroll from '../InfiniteScroll';
 import { useMedia } from '../../api/endpoints/media';
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Container, TextField } from '@material-ui/core';
+import { Container, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useCreateCharacter } from '../../api/endpoints/characters';
-import { DatePicker } from '@material-ui/lab';
+import { DatePicker } from '@mui/lab';
 import Page from '../../components/Page';
 import UserRoles from '../../constants/UserRoles';
 import { SaveToolbar } from '../../components/Toolbars';

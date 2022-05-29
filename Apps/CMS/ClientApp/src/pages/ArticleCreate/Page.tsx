@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Box, Container, Tab } from '@material-ui/core';
+import { Box, Container, Tab } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useCreateArticle } from '../../api/endpoints/articles';
-import { TabContext, TabList } from '@material-ui/lab';
+import { TabContext, TabList } from '@mui/lab';
 import EditorJS from '@editorjs/editorjs';
 import ContentTab from './ContentTab';
 import MetadataTab from './MetadataTab';

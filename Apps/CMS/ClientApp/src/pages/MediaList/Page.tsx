@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
-import { Container } from '@material-ui/core';
+import { Container } from '@mui/material';
 import { useUploadMedia } from '../../api/endpoints/media';
 import Page from '../../components/Page';
 import SearchAddToolbar from '../../components/Toolbars/SearchAddToolbar';

@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { TextField } from '@material-ui/core';
+import { TextField } from '@mui/material';
 import EditorJS, { OutputData } from '@editorjs/editorjs';
 import TabPanel from '../../components/TabPanel';
 import Editor from '../../components/Editor';

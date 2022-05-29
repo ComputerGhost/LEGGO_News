@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
+import { IconButton } from '@mui/material';
 import { CalendarSummary, useDeleteCalendar } from '../../api/endpoints/calendars';
 import { useNavigate } from 'react-router-dom';
 import userContext from '../../contexts/userContext';
@@ -44,13 +44,10 @@ export default function ({
                     <IconButton
                         disabled={canDeleteCalendar(user)}
                         onClick={handleDeleteClick}
-                    >
+                        size="large">
                         <FontAwesomeIcon icon={faTrash} fixedWidth />
                     </IconButton>
-                    <IconButton
-                        disabled={canEditCalendar(user)}
-                        onClick={handleEditClick}
-                    >
+                    <IconButton disabled={canEditCalendar(user)} onClick={handleEditClick} size="large">
                         <FontAwesomeIcon icon={faEdit} fixedWidth />
                     </IconButton >
                 </>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Container, TextField } from '@material-ui/core';
+import { Container, TextField } from '@mui/material';
 import { useCharacter, useUpdateCharacter } from '../../api/endpoints/characters';
-import { DatePicker } from '@material-ui/lab';
+import { DatePicker } from '@mui/lab';
 import { useParams } from 'react-router-dom';
 import Page from '../../components/Page';
 import { SaveToolbar } from '../../components/Toolbars';

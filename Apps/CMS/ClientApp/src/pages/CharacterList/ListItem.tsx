@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItem, ListItemButton, ListItemText } from '@material-ui/core';
+import { ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { CharacterSummary } from '../../api/endpoints/characters';
 import ListItemActions from './ListItemActions';
 

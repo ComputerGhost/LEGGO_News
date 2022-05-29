@@ -1,10 +1,10 @@
-import { StyledEngineProvider } from '@material-ui/core';
-import { LocalizationProvider } from '@material-ui/lab';
+import { StyledEngineProvider } from '@mui/material';
+import { LocalizationProvider } from '@mui/lab';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
-import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 

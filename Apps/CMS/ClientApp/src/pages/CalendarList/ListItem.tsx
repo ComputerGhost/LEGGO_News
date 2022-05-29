@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItem, ListItemButton, ListItemText } from '@material-ui/core';
+import { ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { CalendarSummary, } from '../../api/endpoints/calendars';
 import ListItemActions from './ListItemActions';
 

@@ -1,6 +1,6 @@
 ﻿import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconButton } from "@material-ui/core";
+import { IconButton } from "@mui/material";
 import { User } from "oidc-client-ts";
 import React from "react";
 import SearchToolbar from "../../components/Toolbars/SearchToolbar";
@@ -34,10 +34,7 @@ export default function ({
                         placeholder={placeholder}
                     />
                     {canAddItem(user) &&
-                        <IconButton
-                            color='inherit'
-                            onClick={onAddClick}
-                        >
+                        <IconButton color='inherit' onClick={onAddClick} size="large">
                             <FontAwesomeIcon icon={faPlus} fixedWidth />
                         </IconButton>
                     }

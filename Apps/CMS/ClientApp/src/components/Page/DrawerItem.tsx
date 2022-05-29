@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { ListItemButton, ListItemIcon, ListItemText } from '@material-ui/core';
+import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
