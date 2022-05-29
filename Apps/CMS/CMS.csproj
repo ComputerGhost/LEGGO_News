@@ -75,6 +75,18 @@
     <None Update="ClientApp\src\api\endpoints\calendars.ts">
       <SubType>Code</SubType>
     </None>
+    <None Update="ClientApp\src\api\interfaces\index.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\api\interfaces\IModelSummary.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\api\interfaces\ISearchResults.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\api\interfaces\ISearchParameters.ts">
+      <SubType>Code</SubType>
+    </None>
     <None Update="ClientApp\src\api\RestApi.ts">
       <SubType>Code</SubType>
     </None>
@@ -99,13 +111,22 @@
     <None Update="ClientApp\src\components\Editor\index.ts">
       <SubType>Code</SubType>
     </None>
+    <None Update="ClientApp\src\components\Page\index.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\components\List\List.tsx">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\components\List\index.ts">
+      <SubType>Code</SubType>
+    </None>
     <None Update="ClientApp\src\components\MediaGrid\index.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\TabPanel.tsx">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\components\InfiniteScroll.tsx">
+    <None Update="ClientApp\src\components\List\InfiniteScroll.tsx">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\components\MediaGrid\DropFile.tsx">
@@ -123,7 +144,7 @@
     <None Update="ClientApp\src\components\Toolbars\SearchToolbar.tsx">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\components\Page.tsx">
+    <None Update="ClientApp\src\components\Page\Page.tsx">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\pages\ArticleCreate\index.ts">

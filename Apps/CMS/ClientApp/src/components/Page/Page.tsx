@@ -4,9 +4,9 @@ import { useMediaQuery } from '@material-ui/core';
 import { Toolbar, useTheme } from '@material-ui/core';
 import TopBar from './TopBar';
 import NavDrawer from './NavDrawer';
-import AuthorizationService from '../services/AuthorizationService';
+import AuthorizationService from '../../services/AuthorizationService';
 import { User } from 'oidc-client-ts';
-import userContext from '../contexts/userContext';
+import userContext from '../../contexts/userContext';
 
 const drawerWidth = 240;
 
