@@ -43,6 +43,6 @@ export function useUpdateCalendar(calendarId: number | undefined) {
     return calendars.useUpdateItem(calendarId);
 }
 
-export function useDeleteCharacter(calendarId: number) {
+export function useDeleteCalendar(calendarId: number) {
     return calendars.useDeleteItem(calendarId);
 }

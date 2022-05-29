@@ -36,7 +36,6 @@ export default function ({
                     {canAddItem(user) &&
                         <IconButton
                             color='inherit'
-                            disabled={canAddItem(user)}
                             onClick={onAddClick}
                         >
                             <FontAwesomeIcon icon={faPlus} fixedWidth />

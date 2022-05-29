@@ -13,7 +13,7 @@ const drawerWidth = 240;
 interface IProps {
     title: string,
     toolbar?: ReactElement,
-    requiresRole?: string,
+    requiresRole?: string | string[],
     children: ReactElement | ReactElement[],
 }
 

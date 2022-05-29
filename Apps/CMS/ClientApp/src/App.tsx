@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ArticleCreate from './pages/ArticleCreate';
 import ArticleEdit from './pages/ArticleEdit';
@@ -22,15 +22,17 @@ export default function ()
 {
     const [user, setUser] = useState<User | null>(null);
 
-    var authService = new AuthService();
-    authService.getUser().then(newUser => {
-        if (newUser) {
-            setUser(newUser);
-        }
-        if (!newUser) {
-            authService.login();
-        }
-    });
+    useEffect(() => {
+        var authService = new AuthService();
+        authService.getUser().then(newUser => {
+            if (newUser) {
+                setUser(newUser);
+            }
+            if (!newUser) {
+                authService.login();
+            }
+        });
+    }, []);
 
     if (!user) {
         return <p>Please sign in.</p>

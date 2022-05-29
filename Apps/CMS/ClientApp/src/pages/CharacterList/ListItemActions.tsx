@@ -1,7 +1,6 @@
 import React from 'react';
 import { IconButton } from '@material-ui/core';
-import { CharacterSummary } from '../../api/endpoints/characters';
-import { useDeleteCharacter } from '../../api/endpoints/calendars';
+import { CharacterSummary, useDeleteCharacter } from '../../api/endpoints/characters';
 import { useNavigate } from 'react-router-dom';
 import { User } from 'oidc-client-ts';
 import AuthorizationService from '../../services/AuthorizationService';

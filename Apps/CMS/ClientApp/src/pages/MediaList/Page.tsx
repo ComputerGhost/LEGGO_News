@@ -27,7 +27,7 @@ export default function()
         uploadMedia(Array.from(event.target.files!));
     }
 
-    function handleFilesDropped(files: File[]) {
+    function handleFilesDrop(files: File[]) {
         uploadMedia(files);
     }
 
@@ -51,7 +51,7 @@ export default function()
                     multiple
                     onChange={handleFilesSelected}
                 />
-                <MediaGrid search={search} onFilesDropped={handleFilesDropped} />
+                <MediaGrid search={search} onFilesDrop={handleFilesDrop} />
             </Container>
         </Page>
     );

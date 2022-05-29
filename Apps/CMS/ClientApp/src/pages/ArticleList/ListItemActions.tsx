@@ -41,18 +41,16 @@ export default function ({
         <userContext.Consumer>
             {(user) =>
                 <>
-                    <IconButton
-                        disabled={canDeleteArticle(user)}
-                        onClick={handleDeleteClick}
-                    >
-                        <FontAwesomeIcon icon={faTrash} fixedWidth />
-                    </IconButton>
-                    <IconButton
-                        disabled={canEditArticle(user)}
-                        onClick={handleEditClick}
-                    >
-                        <FontAwesomeIcon icon={faEdit} fixedWidth />
-                    </IconButton >
+                    {canDeleteArticle(user) &&
+                        <IconButton onClick={handleDeleteClick}>
+                            <FontAwesomeIcon icon={faTrash} fixedWidth />
+                        </IconButton>
+                    }
+                    {canEditArticle(user) &&
+                        <IconButton onClick={handleEditClick}>
+                            <FontAwesomeIcon icon={faEdit} fixedWidth />
+                        </IconButton >
+                    }
                 </>
             }
         </userContext.Consumer>

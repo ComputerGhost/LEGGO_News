@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton } from '@material-ui/core';
-import { CalendarSummary } from '../../api/endpoints/calendars';
+import { CalendarSummary, useDeleteCalendar } from '../../api/endpoints/calendars';
 import { useNavigate } from 'react-router-dom';
 import userContext from '../../contexts/userContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
