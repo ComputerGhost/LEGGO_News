@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-new */
 
-import React, { ChangeEventHandler, FocusEventHandler, Ref, useCallback, useRef } from 'react';
+import React, { FocusEventHandler, Ref, useCallback, useRef } from 'react';
 import { createReactEditorJS } from 'react-editor-js';
 import { makeStyles } from '@mui/styles';
 import EditorJS, { OutputData } from '@editorjs/editorjs';
@@ -23,7 +23,6 @@ export interface IEditorProps {
     // MaterialUI InputBaseComponent
     onFocus?: FocusEventHandler<HTMLInputElement>,
     onBlur?: FocusEventHandler<HTMLInputElement>,
-    onChange?: ChangeEventHandler<HTMLInputElement>,
     forwardedRef?: Ref<HTMLDivElement>,
 }
 
@@ -32,7 +31,6 @@ export default function Editor({
     onApiSet,
     onFocus,
     onBlur,
-    onChange,
     forwardedRef,
 }: IEditorProps) {
     const classes = useStyles();

@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-
 import React, { useEffect, useState } from 'react';
 import { Container, TextField } from '@mui/material';
 import { DatePicker } from '@mui/lab';

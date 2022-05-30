@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/tabindex-no-positive */
-
 import React, { useState } from 'react';
 import { Box, Container, Tab } from '@mui/material';
 import { useNavigate } from 'react-router-dom';

@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-
 import React, { useState } from 'react';
 import { Container, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';

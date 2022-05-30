@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/tabindex-no-positive */
-
 import React, { useEffect, useState } from 'react';
 import { Box, Container, Tab } from '@mui/material';
 import { TabContext, TabList } from '@mui/lab';

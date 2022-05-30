@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unstable-nested-components */
-/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-this-in-sfc */
 
 import React, { Component, forwardRef, Ref } from 'react';

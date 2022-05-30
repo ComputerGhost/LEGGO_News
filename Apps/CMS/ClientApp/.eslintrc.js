@@ -25,6 +25,9 @@ module.exports = {
         '@typescript-eslint',
     ],
     rules: {
+        '@typescript-eslint/no-unused-vars': [
+            'error',
+        ],
         'arrow-parens': 'off',
         'class-methods-use-this': 'off',
         'comma-dangle': [
@@ -44,6 +47,7 @@ module.exports = {
             'never',
         ],
         'import/extensions': 'off',
+        'jsx-a11y/tabindex-no-positive': 'off',
         'jsx-quotes': [
             'error',
             'prefer-single',
@@ -78,6 +82,7 @@ module.exports = {
             'error',
             4,
         ],
+        'react/jsx-props-no-spreading': 'off',
         'react/require-default-props': 'off',
     },
     settings: {
