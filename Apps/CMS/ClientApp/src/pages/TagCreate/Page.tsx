@@ -19,7 +19,7 @@ export default function () {
             description,
         });
         if (response) {
-            navigate(`./${response.id}`);
+            navigate(response.id);
         } else {
             console.error('Creation failed.');
             console.log(mutator);

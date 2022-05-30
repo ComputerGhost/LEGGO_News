@@ -21,10 +21,7 @@ export default function ({ tag }: IProps) {
     };
 
     const secondaryAction = (
-        <IconButton
-            onClick={() => handleEditClicked()}
-            size='large'
-        >
+        <IconButton onClick={handleEditClicked}>
             <FontAwesomeIcon icon={faEdit} fixedWidth />
         </IconButton>
     );

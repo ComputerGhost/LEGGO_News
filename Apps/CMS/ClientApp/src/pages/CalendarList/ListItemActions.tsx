@@ -42,14 +42,12 @@ export default function ({ calendar }: IProps) {
                     <IconButton
                         disabled={canDeleteCalendar(user)}
                         onClick={handleDeleteClick}
-                        size='large'
                     >
                         <FontAwesomeIcon icon={faTrash} fixedWidth />
                     </IconButton>
                     <IconButton
                         disabled={canEditCalendar(user)}
                         onClick={handleEditClick}
-                        size='large'
                     >
                         <FontAwesomeIcon icon={faEdit} fixedWidth />
                     </IconButton>

@@ -42,14 +42,12 @@ export default function ({ character }: IProps) {
                     <IconButton
                         disabled={canDeleteCharacter(user)}
                         onClick={handleDeleteClick}
-                        size='large'
                     >
                         <FontAwesomeIcon icon={faTrash} fixedWidth />
                     </IconButton>
                     <IconButton
                         disabled={canEditCharacter(user)}
                         onClick={handleEditClick}
-                        size='large'
                     >
                         <FontAwesomeIcon icon={faEdit} fixedWidth />
                     </IconButton>

@@ -34,7 +34,7 @@ export default function ({
                         placeholder={placeholder}
                     />
                     {canAddItem(user) && (
-                        <IconButton color='inherit' onClick={onAddClick} size='large'>
+                        <IconButton color='inherit' onClick={onAddClick}>
                             <FontAwesomeIcon icon={faPlus} fixedWidth />
                         </IconButton>
                     )}

@@ -28,7 +28,7 @@ export default function ({
             <Toolbar>
 
                 {isMobile && (
-                    <IconButton onClick={onDrawerOpen} size='large'>
+                    <IconButton onClick={onDrawerOpen}>
                         <FontAwesomeIcon icon={faBars} fixedWidth />
                     </IconButton>
                 )}

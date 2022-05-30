@@ -20,7 +20,7 @@ export default function ({ onSaveClick }: IProps) {
     return (
         <>
             <div className={classes.grow} />
-            <IconButton color='inherit' onClick={onSaveClick} size='large'>
+            <IconButton color='inherit' onClick={onSaveClick}>
                 <FontAwesomeIcon icon={faSave} fixedWidth />
             </IconButton>
         </>

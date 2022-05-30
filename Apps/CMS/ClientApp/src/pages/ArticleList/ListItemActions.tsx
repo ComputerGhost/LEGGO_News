@@ -40,12 +40,12 @@ export default function ({ article }: IProps) {
             {(user) => (
                 <>
                     {canDeleteArticle(user) && (
-                        <IconButton onClick={handleDeleteClick} size='large'>
+                        <IconButton onClick={handleDeleteClick}>
                             <FontAwesomeIcon icon={faTrash} fixedWidth />
                         </IconButton>
                     )}
                     {canEditArticle(user) && (
-                        <IconButton onClick={handleEditClick} size='large'>
+                        <IconButton onClick={handleEditClick}>
                             <FontAwesomeIcon icon={faEdit} fixedWidth />
                         </IconButton>
                     )}

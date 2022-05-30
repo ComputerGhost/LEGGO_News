@@ -40,7 +40,7 @@ export default function ({ width, open, allowClose, onDrawerClosed }: IProps) {
             <Toolbar>
                 <div className={classes.grow} />
                 {allowClose && (
-                    <IconButton onClick={onDrawerClosed} size='large'>
+                    <IconButton onClick={onDrawerClosed}>
                         <FontAwesomeIcon icon={faArrowLeft} fixedWidth />
                     </IconButton>
                 )}
