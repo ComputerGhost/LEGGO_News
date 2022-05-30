@@ -39,18 +39,16 @@ export default function ({ character }: IProps) {
         <userContext.Consumer>
             {(user) => (
                 <>
-                    <IconButton
-                        disabled={canDeleteCharacter(user)}
-                        onClick={handleDeleteClick}
-                    >
-                        <FontAwesomeIcon icon={faTrash} fixedWidth />
-                    </IconButton>
-                    <IconButton
-                        disabled={canEditCharacter(user)}
-                        onClick={handleEditClick}
-                    >
-                        <FontAwesomeIcon icon={faEdit} fixedWidth />
-                    </IconButton>
+                    {canDeleteCharacter(user) && (
+                        <IconButton onClick={handleDeleteClick}>
+                            <FontAwesomeIcon icon={faTrash} fixedWidth />
+                        </IconButton>
+                    )}
+                    {canEditCharacter(user) && (
+                        <IconButton onClick={handleEditClick}>
+                            <FontAwesomeIcon icon={faEdit} fixedWidth />
+                        </IconButton>
+                    )}
                 </>
             )}
         </userContext.Consumer>

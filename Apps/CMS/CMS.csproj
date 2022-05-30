@@ -31,6 +31,7 @@
     <None Remove="ClientApp\src\pages\TagEdit\Page.tsx" />
     <None Remove="ClientApp\src\pages\TagCreate\Page.tsx" />
     <None Remove="ClientApp\src\pages\TagList\ListItem.tsx" />
+    <None Remove="ClientApp\src\pages\TagList\ListItemActions.tsx" />
     <None Remove="ClientApp\src\pages\TagList\Page.tsx" />
     <None Remove="ClientApp\src\services\AuthenticationService.ts" />
     <None Remove="ClientApp\src\services\AuthorizationService.ts" />
@@ -55,6 +56,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\pages\TagCreate\Page.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\pages\TagList\ListItemActions.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\pages\TagList\ListItem.tsx" />

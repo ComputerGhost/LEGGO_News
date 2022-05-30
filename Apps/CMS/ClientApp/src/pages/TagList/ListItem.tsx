@@ -1,33 +1,22 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ListItem, ListItemText, ListItemButton, IconButton } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { ListItem, ListItemText, ListItemButton } from '@mui/material';
 import { TagSummary } from '../../api/endpoints/tags';
+import ListItemActions from './ListItemActions';
 
 interface IProps {
     tag: TagSummary,
 }
 
 export default function ({ tag }: IProps) {
-    const navigate = useNavigate();
-
     const handleViewClicked = () => {
         // nop for now.
     };
 
-    const handleEditClicked = () => {
-        navigate(`./${tag.id}`);
-    };
-
-    const secondaryAction = (
-        <IconButton onClick={handleEditClicked}>
-            <FontAwesomeIcon icon={faEdit} fixedWidth />
-        </IconButton>
-    );
-
     return (
-        <ListItem disablePadding secondaryAction={secondaryAction}>
+        <ListItem
+            disablePadding
+            secondaryAction={<ListItemActions tag={tag} />}
+        >
             <ListItemButton action={() => handleViewClicked()}>
                 <ListItemText primary={tag.name} />
             </ListItemButton>

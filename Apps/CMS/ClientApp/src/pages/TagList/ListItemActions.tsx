@@ -1,50 +1,50 @@
 import React from 'react';
-import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { IconButton } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { User } from 'oidc-client-ts';
-import { CalendarSummary, useDeleteCalendar } from '../../api/endpoints/calendars';
-import userContext from '../../contexts/userContext';
+import { TagSummary, useDeleteTag } from '../../api/endpoints/tags';
 import AuthorizationService from '../../services/AuthorizationService';
 import UserRoles from '../../constants/UserRoles';
+import userContext from '../../contexts/userContext';
 
 interface IProps {
-    calendar: CalendarSummary,
+    tag: TagSummary,
 }
 
-export default function ({ calendar }: IProps) {
+export default function ({ tag }: IProps) {
     const navigate = useNavigate();
-    const deleteCalendar = useDeleteCalendar(calendar.id);
+    const deleteTag = useDeleteTag(tag.id);
 
     const handleDeleteClick = () => {
-        deleteCalendar.mutate(undefined);
+        deleteTag.mutate(undefined);
     };
 
     const handleEditClick = () => {
-        navigate(`./${calendar.id}`);
+        navigate(`./${tag.id}`);
     };
 
-    const canDeleteCalendar = (user: User | null) => {
+    const canDeleteTag = (user: User | null) => {
         const service = new AuthorizationService(user);
-        return service.hasRole(UserRoles.Editor);
+        return service.hasRole(UserRoles.Administrator);
     };
 
-    const canEditCalendar = (user: User | null) => {
+    const canEditTag = (user: User | null) => {
         const service = new AuthorizationService(user);
-        return service.hasRole(UserRoles.Journalist);
+        return service.hasRole(UserRoles.Administrator);
     };
 
     return (
         <userContext.Consumer>
             {(user) => (
                 <>
-                    {canDeleteCalendar(user) && (
+                    {canDeleteTag(user) && (
                         <IconButton onClick={handleDeleteClick}>
                             <FontAwesomeIcon icon={faTrash} fixedWidth />
                         </IconButton>
                     )}
-                    {canEditCalendar(user) && (
+                    {canEditTag(user) && (
                         <IconButton onClick={handleEditClick}>
                             <FontAwesomeIcon icon={faEdit} fixedWidth />
                         </IconButton>
