@@ -16,8 +16,13 @@ export default function ({
     return (
         <TabPanel value={tabIndex}>
             <FormControlLabel
-                control={<Checkbox checked={topStory} onChange={(e) => setTopStory(e.target.checked)} />}
-                label="Top story"
+                control={(
+                    <Checkbox
+                        checked={topStory}
+                        onChange={(e) => setTopStory(e.target.checked)}
+                    />
+                )}
+                label='Top story'
             />
         </TabPanel>
     );

@@ -1,14 +1,15 @@
+/* eslint-disable react/jsx-props-no-spreading */
+
 import React, { useState } from 'react';
 import { Container, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useCreateCharacter } from '../../api/endpoints/characters';
 import { DatePicker } from '@mui/lab';
+import { useCreateCharacter } from '../../api/endpoints/characters';
 import Page from '../../components/Page';
 import UserRoles from '../../constants/UserRoles';
 import { SaveToolbar } from '../../components/Toolbars';
 
-export default function()
-{
+export default function () {
     const navigate = useNavigate();
     const mutator = useCreateCharacter();
 
@@ -18,7 +19,7 @@ export default function()
     const [emoji, setEmoji] = useState<string>('');
     const [description, setDescription] = useState<string>('');
 
-    async function handleSaveClick() {
+    const handleSaveClick = async () => {
         await mutator.mutate({
             birthDate,
             englishName,
@@ -26,13 +27,13 @@ export default function()
             emoji,
             description,
         });
-        if (mutator.isSuccess)
-            navigate('../' + mutator.data!.id);
-        else {
+        if (mutator.isSuccess) {
+            navigate(`../${mutator.data!.id}`);
+        } else {
             console.error('Creation failed.');
             console.log(mutator);
         }
-    }
+    };
 
     return (
         <Page
@@ -81,4 +82,3 @@ export default function()
         </Page>
     );
 }
-

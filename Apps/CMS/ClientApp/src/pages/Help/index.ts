@@ -1,2 +1,3 @@
-﻿import Help from './Page';
+import Help from './Page';
+
 export default Help;

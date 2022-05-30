@@ -1,2 +1,3 @@
-﻿import TagList from './Page';
+import TagList from './Page';
+
 export default TagList;

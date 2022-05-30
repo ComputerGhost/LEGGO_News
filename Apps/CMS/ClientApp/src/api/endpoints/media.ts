@@ -1,7 +1,7 @@
-﻿import RestApi from "../RestApi";
-
+import RestApi from '../RestApi';
 
 export interface MediaSummary {
+
     id: number,
     caption: string,
     credit: string,
@@ -12,7 +12,6 @@ export interface MediaSummary {
     mediumSizeUrl: string,
     largeSizeUrl: string,
 }
-
 
 const media = new RestApi<MediaSummary, unknown, unknown>('media');
 

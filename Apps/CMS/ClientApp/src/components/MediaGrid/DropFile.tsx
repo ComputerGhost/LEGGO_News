@@ -1,4 +1,4 @@
-﻿import React, { ReactElement } from "react";
+import React, { ReactElement } from 'react';
 
 interface IProps {
     onDrop: (files: File[]) => void,
@@ -8,8 +8,7 @@ interface IProps {
 export default function ({
     onDrop,
     children,
-}: IProps)
-{
+}: IProps) {
     function handleDragOver(event: React.DragEvent<HTMLDivElement>) {
         event.preventDefault();
     }

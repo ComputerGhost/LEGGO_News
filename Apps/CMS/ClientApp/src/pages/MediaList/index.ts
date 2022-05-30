@@ -1,2 +1,3 @@
-﻿import MediaList from './Page';
+import MediaList from './Page';
+
 export default MediaList;

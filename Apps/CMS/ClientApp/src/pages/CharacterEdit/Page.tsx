@@ -1,15 +1,16 @@
+/* eslint-disable react/jsx-props-no-spreading */
+
 import React, { useEffect, useState } from 'react';
 import { Container, TextField } from '@mui/material';
-import { useCharacter, useUpdateCharacter } from '../../api/endpoints/characters';
 import { DatePicker } from '@mui/lab';
 import { useParams } from 'react-router-dom';
+import { useCharacter, useUpdateCharacter } from '../../api/endpoints/characters';
 import Page from '../../components/Page';
 import { SaveToolbar } from '../../components/Toolbars';
 import UserRoles from '../../constants/UserRoles';
 
-export default function()
-{
-    const characterId = parseInt(useParams().id!);
+export default function () {
+    const characterId = parseInt(useParams().id!, 10);
 
     const { data } = useCharacter(characterId);
     const mutator = useUpdateCharacter(characterId);
@@ -28,7 +29,7 @@ export default function()
         setDescription(data?.description ?? '');
     }, [data]);
 
-    async function handleSaveClick() {
+    const handleSaveClick = async () => {
         await mutator.mutate({
             birthDate,
             englishName,
@@ -40,7 +41,7 @@ export default function()
             console.error('Updating failed.');
             console.log(mutator);
         }
-    }
+    };
 
     return (
         <Page
@@ -89,4 +90,3 @@ export default function()
         </Page>
     );
 }
-

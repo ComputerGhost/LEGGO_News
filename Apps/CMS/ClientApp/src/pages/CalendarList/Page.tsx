@@ -6,26 +6,25 @@ import Page from '../../components/Page';
 import SearchAddToolbar from '../../components/Toolbars/SearchAddToolbar';
 import UserRoles from '../../constants/UserRoles';
 
-export default function()
-{
-    var [search, setSearch] = useState('');
-    var navigate = useNavigate();
+export default function () {
+    const [search, setSearch] = useState('');
+    const navigate = useNavigate();
 
-    function handleAddClick() {
+    const handleAddClick = () => {
         navigate('/calendars/new');
-    }
+    };
 
     return (
         <Page
             title='Calendars'
-            toolbar={
+            toolbar={(
                 <SearchAddToolbar
                     onAddClick={handleAddClick}
                     onSearchChange={setSearch}
                     placeholder='Search calendar...'
                     rolesForAdd={UserRoles.Administrator}
                 />
-            }
+            )}
         >
             <Container>
                 <List search={search} />

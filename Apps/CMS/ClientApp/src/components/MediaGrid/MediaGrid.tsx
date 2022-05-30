@@ -1,9 +1,9 @@
-﻿import React from 'react';
+import React from 'react';
+import { User } from 'oidc-client-ts';
 import DropFile from './DropFile';
 import userContext from '../../contexts/userContext';
 import UserRoles from '../../constants/UserRoles';
 import AuthorizationService from '../../services/AuthorizationService';
-import { User } from 'oidc-client-ts';
 import ImageList from './ImageList';
 
 interface IProps {
@@ -14,23 +14,25 @@ interface IProps {
 export default function ({
     onFilesDrop,
     search,
-}: IProps)
-{
+}: IProps) {
     const canAddMedia = (user: User | null) => {
         const service = new AuthorizationService(user);
         return service.hasAnyRole([UserRoles.Editor, UserRoles.Journalist]);
-    }
+    };
 
     return (
         <userContext.Consumer>
-            {(user) => canAddMedia(user)
-                ?
-                <DropFile onDrop={onFilesDrop}>
-                    <ImageList search={search} />
-                </DropFile>
-                :
-                <ImageList search={search} />
-            }
+            {(user) => (
+                canAddMedia(user)
+                    ? (
+                        <DropFile onDrop={onFilesDrop}>
+                            <ImageList search={search} />
+                        </DropFile>
+                    )
+                    : (
+                        <ImageList search={search} />
+                    )
+            )}
         </userContext.Consumer>
     );
 }

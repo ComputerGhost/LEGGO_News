@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { IconButton } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,16 +14,15 @@ interface IProps {
     onSaveClick: () => void,
 }
 
-export default function ({
-    onSaveClick
-}: IProps) {
+export default function ({ onSaveClick }: IProps) {
     const classes = useStyles();
 
-    return <>
-        <div className={classes.grow} />
-        <IconButton color='inherit' onClick={onSaveClick} size="large">
-            <FontAwesomeIcon icon={faSave} fixedWidth />
-        </IconButton>
-    </>;
+    return (
+        <>
+            <div className={classes.grow} />
+            <IconButton color='inherit' onClick={onSaveClick} size='large'>
+                <FontAwesomeIcon icon={faSave} fixedWidth />
+            </IconButton>
+        </>
+    );
 }
-

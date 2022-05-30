@@ -1,5 +1,4 @@
-﻿import RestApi from "../RestApi";
-
+import RestApi from '../RestApi';
 
 export interface CharacterDetails {
     id: number,
@@ -24,7 +23,6 @@ export interface CharacterSummary {
     englishName: string,
 }
 
-
 const characters = new RestApi<CharacterSummary, CharacterDetails, CharacterSaveData>('characters');
 
 export function useCharacters(search: string) {
@@ -40,8 +38,9 @@ export function useCreateCharacter() {
 }
 
 export function useUpdateCharacter(characterId: number | undefined) {
-    if (!characterId)
+    if (!characterId) {
         throw new Error('characterId must be defined to update.');
+    }
     return characters.useUpdateItem(characterId);
 }
 

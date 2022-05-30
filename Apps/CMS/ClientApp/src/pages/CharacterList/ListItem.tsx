@@ -7,10 +7,7 @@ interface IProps {
     character: CharacterSummary,
 }
 
-export default function ({
-    character
-}: IProps) {
-
+export default function ({ character }: IProps) {
     const title = `${character.emoji} ${character.englishName}`;
 
     return (

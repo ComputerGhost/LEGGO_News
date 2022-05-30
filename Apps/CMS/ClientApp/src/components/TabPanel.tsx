@@ -1,12 +1,13 @@
-﻿import { useEffect, useState } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+
+import React, { useEffect, useState } from 'react';
 import { useTabContext } from '@mui/lab';
 
 // This is a modified copy/paste from:
 // https://github.com/mui-org/material-ui/issues/21250
 // It allows tab switching without unmounts.
 
-export default function (props: any)
-{
+export default function (props: any) {
     const {
         children,
         className,
@@ -29,7 +30,11 @@ export default function (props: any)
     }, [id, tabId]);
 
     return (
-        <div style={{ position: 'relative' }}>
+        <div
+            style={{
+                position: 'relative',
+            }}
+        >
             <div
                 className={className}
                 style={{

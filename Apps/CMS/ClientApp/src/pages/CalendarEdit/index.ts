@@ -1,2 +1,3 @@
-﻿import CalendarEdit from './Page';
+import CalendarEdit from './Page';
+
 export default CalendarEdit;

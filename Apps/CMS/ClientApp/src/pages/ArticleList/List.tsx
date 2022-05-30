@@ -8,9 +8,7 @@ interface IProps {
     search: string,
 }
 
-export default function ({
-    search
-}: IProps) {
+export default function ({ search }: IProps) {
     const articles = useArticles(search);
     const { data, fetchNextPage, hasNextPage } = articles;
     const [count, setCount] = useState(0);
@@ -26,13 +24,12 @@ export default function ({
             next={fetchNextPage}
         >
             <List component={Paper}>
-                {data && data.pages.map((page) =>
-                    page.data.map((article) =>
+                {data && data.pages.map((page) => (
+                    page.data.map((article) => (
                         <ListItem key={article.id} article={article} />
-                    )
-                )}
+                    ))
+                ))}
             </List>
         </InfiniteScroll>
     );
 }
-

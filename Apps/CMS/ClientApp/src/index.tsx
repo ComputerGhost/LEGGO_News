@@ -20,6 +20,7 @@ ReactDOM.render(
             </QueryClientProvider>
         </StyledEngineProvider>
     </LocalizationProvider>,
-    document.getElementById('root'));
+    document.getElementById('root')
+);
 
 registerServiceWorker();

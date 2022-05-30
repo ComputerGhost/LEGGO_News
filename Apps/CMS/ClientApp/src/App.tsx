@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { User } from 'oidc-client-ts';
 import ArticleCreate from './pages/ArticleCreate';
 import ArticleEdit from './pages/ArticleEdit';
 import ArticleList from './pages/ArticleList';
@@ -16,14 +17,12 @@ import CalendarEdit from './pages/CalendarEdit';
 import CalendarList from './pages/CalendarList';
 import AuthService from './services/AuthenticationService';
 import userContext from './contexts/userContext';
-import { User } from 'oidc-client-ts';
 
-export default function ()
-{
+export default function () {
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
-        var authService = new AuthService();
+        const authService = new AuthService();
         authService.getUser().then(newUser => {
             if (newUser) {
                 setUser(newUser);
@@ -35,14 +34,14 @@ export default function ()
     }, []);
 
     if (!user) {
-        return <p>Please sign in.</p>
+        return <p>Please sign in.</p>;
     }
 
     return (
         <userContext.Provider value={user}>
             <Routes>
 
-                <Route path="/" element={<Navigate replace to="/articles" />} />
+                <Route path='/' element={<Navigate replace to='/articles' />} />
 
                 <Route path='/articles' element={<ArticleList />} />
                 <Route path='/articles/new' element={<ArticleCreate />} />
@@ -67,4 +66,4 @@ export default function ()
             </Routes>
         </userContext.Provider>
     );
-};
+}

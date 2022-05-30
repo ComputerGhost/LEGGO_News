@@ -1,2 +1,3 @@
-﻿import ArticleCreate from './Page';
+import ArticleCreate from './Page';
+
 export default ArticleCreate;

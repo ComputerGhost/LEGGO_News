@@ -1,2 +1,3 @@
-﻿import ArticleEdit from './Page';
+import ArticleEdit from './Page';
+
 export default ArticleEdit;

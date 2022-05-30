@@ -1,2 +1,3 @@
-﻿import ArticleList from './Page';
+import ArticleList from './Page';
+
 export default ArticleList;

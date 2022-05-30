@@ -6,9 +6,8 @@ import { useCalendar, useUpdateCalendar } from '../../api/endpoints/calendars';
 import UserRoles from '../../constants/UserRoles';
 import { SaveToolbar } from '../../components/Toolbars';
 
-export default function()
-{
-    const calendarId = parseInt(useParams().id!);
+export default function () {
+    const calendarId = parseInt(useParams().id!, 10);
 
     const { data } = useCalendar(calendarId);
     const mutator = useUpdateCalendar(calendarId);
@@ -25,7 +24,7 @@ export default function()
         setTimezoneOffset(data?.timezoneOffset ?? 0);
     }, [data]);
 
-    async function handleSaveClick() {
+    const handleSaveClick = async () => {
         await mutator.mutate({
             color,
             googleId,
@@ -36,7 +35,7 @@ export default function()
             console.error('Updating failed.');
             console.log(mutator);
         }
-    }
+    };
 
     return (
         <Page
@@ -70,7 +69,7 @@ export default function()
                     fullWidth
                     label='Korean Name'
                     margin='normal'
-                    onChange={(e) => setTimezoneOffset(Number.parseInt(e.target.value))}
+                    onChange={(e) => setTimezoneOffset(parseInt(e.target.value, 10))}
                     type='number'
                     value={timezoneOffset}
                 />
@@ -78,4 +77,3 @@ export default function()
         </Page>
     );
 }
-

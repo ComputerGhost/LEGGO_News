@@ -1,5 +1,4 @@
-﻿import RestApi from "../RestApi";
-
+import RestApi from '../RestApi';
 
 export interface TagDetails {
     id: number,
@@ -17,7 +16,6 @@ export interface TagSummary {
     name: string,
 }
 
-
 const tags = new RestApi<TagSummary, TagDetails, TagSaveData>('tags');
 
 export function useTags(search: string) {
@@ -33,8 +31,9 @@ export function useCreateTag() {
 }
 
 export function useUpdateTag(tagId: number | undefined) {
-    if (!tagId)
+    if (!tagId) {
         throw new Error('tagId must be defined to update.');
+    }
     return tags.useUpdateItem(tagId);
 }
 

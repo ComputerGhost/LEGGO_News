@@ -6,8 +6,7 @@ import { useCreateCalendar } from '../../api/endpoints/calendars';
 import UserRoles from '../../constants/UserRoles';
 import { SaveToolbar } from '../../components/Toolbars';
 
-export default function()
-{
+export default function () {
     const navigate = useNavigate();
     const mutator = useCreateCalendar();
 
@@ -16,20 +15,20 @@ export default function()
     const [name, setName] = useState<string>('');
     const [timezoneOffset, setTimezoneOffset] = useState<number>(0);
 
-    async function handleSaveClick() {
+    const handleSaveClick = async () => {
         await mutator.mutate({
             color,
             googleId,
             name,
             timezoneOffset,
         });
-        if (mutator.isSuccess)
-            navigate('../' + mutator.data!.id);
-        else {
+        if (mutator.isSuccess) {
+            navigate(`../${mutator.data!.id}`);
+        } else {
             console.error('Creation failed.');
             console.log(mutator);
         }
-    }
+    };
 
     return (
         <Page
@@ -63,7 +62,7 @@ export default function()
                     fullWidth
                     label='Korean Name'
                     margin='normal'
-                    onChange={(e) => setTimezoneOffset(Number.parseInt(e.target.value))}
+                    onChange={(e) => setTimezoneOffset(parseInt(e.target.value, 10))}
                     type='number'
                     value={timezoneOffset}
                 />
@@ -71,4 +70,3 @@ export default function()
         </Page>
     );
 }
-

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { TextField } from '@mui/material';
 import EditorJS, { OutputData } from '@editorjs/editorjs';
 import TabPanel from '../../components/TabPanel';
@@ -17,9 +17,8 @@ export default function ({
     title,
     setTitle,
     initialContent,
-    setEditorApi
-}: IProps)
-{
+    setEditorApi,
+}: IProps) {
     return (
         <TabPanel value={tabIndex}>
             <TextField

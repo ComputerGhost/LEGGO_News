@@ -1,15 +1,13 @@
 import React from 'react';
 import { ListItem, ListItemButton, ListItemText } from '@mui/material';
-import { CalendarSummary, } from '../../api/endpoints/calendars';
+import { CalendarSummary } from '../../api/endpoints/calendars';
 import ListItemActions from './ListItemActions';
 
 interface IProps {
     calendar: CalendarSummary,
 }
 
-export default function ({
-    calendar
-}: IProps) {
+export default function ({ calendar }: IProps) {
     return (
         <ListItem
             disablePadding

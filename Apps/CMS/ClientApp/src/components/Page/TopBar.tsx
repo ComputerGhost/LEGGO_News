@@ -1,8 +1,7 @@
-﻿import React, { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-
 
 interface IProps {
     drawerWidth: number,
@@ -17,18 +16,22 @@ export default function ({
     onDrawerOpen,
     isMobile,
     title,
-    children
-}: IProps)
-{
-    return <>
-        <AppBar position='fixed' sx={{ paddingLeft: isMobile ? 0 : drawerWidth + 'px' }}>
+    children,
+}: IProps) {
+    return (
+        <AppBar
+            position='fixed'
+            sx={{
+                paddingLeft: `${isMobile ? 0 : drawerWidth}px`,
+            }}
+        >
             <Toolbar>
 
-                {isMobile &&
-                    <IconButton onClick={onDrawerOpen} size="large">
+                {isMobile && (
+                    <IconButton onClick={onDrawerOpen} size='large'>
                         <FontAwesomeIcon icon={faBars} fixedWidth />
                     </IconButton>
-                }
+                )}
 
                 <Typography variant='h6'>
                     {title}
@@ -38,5 +41,5 @@ export default function ({
 
             </Toolbar>
         </AppBar>
-    </>;
+    );
 }

@@ -1,8 +1,7 @@
 import React from 'react';
 import Page from '../../components/Page';
 
-export default function ()
-{
+export default function () {
     return (
         <Page title='Help and Tips'>
             <div>

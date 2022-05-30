@@ -1,5 +1,4 @@
-﻿import RestApi from "../RestApi";
-
+import RestApi from '../RestApi';
 
 export interface CalendarDetails {
     id: number,
@@ -22,7 +21,6 @@ export interface CalendarSummary {
     name: string,
 }
 
-
 const calendars = new RestApi<CalendarSummary, CalendarDetails, CalendarSaveData>('calendars');
 
 export function useCalendars(search: string) {
@@ -38,8 +36,9 @@ export function useCreateCalendar() {
 }
 
 export function useUpdateCalendar(calendarId: number | undefined) {
-    if (!calendarId)
+    if (!calendarId) {
         throw new Error('calendarId must be defined to update.');
+    }
     return calendars.useUpdateItem(calendarId);
 }
 

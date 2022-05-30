@@ -1,2 +1,3 @@
-﻿import CharacterEdit from './Page';
+import CharacterEdit from './Page';
+
 export default CharacterEdit;

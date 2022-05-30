@@ -1,2 +1,3 @@
-﻿import TagEdit from './Page';
+import TagEdit from './Page';
+
 export default TagEdit;

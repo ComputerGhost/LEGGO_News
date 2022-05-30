@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Container, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useCreateTag } from '../../api/endpoints/tags';
@@ -6,35 +6,37 @@ import Page from '../../components/Page';
 import UserRoles from '../../constants/UserRoles';
 import { SaveToolbar } from '../../components/Toolbars';
 
-export default function()
-{
+export default function () {
     const navigate = useNavigate();
     const mutator = useCreateTag();
 
     const [name, setName] = useState<string>('');
     const [description, setDescription] = useState<string>('');
 
-    async function handleSaveClick() {
+    const handleSaveClick = async () => {
         const response = await mutator.mutateAsync({
             name,
             description,
         });
-        if (response)
-            navigate('./' + response.id);
-        else {
+        if (response) {
+            navigate(`./${response.id}`);
+        } else {
             console.error('Creation failed.');
             console.log(mutator);
         }
-    }
+    };
 
-    function handleNameChanged(newName: string) {
-        newName = newName.replace(/\W/, '');
-        setName(newName);
-    }
+    const handleNameChanged = (newName: string) => {
+        const sanitizedName = newName.replace(/\W/, '');
+        setName(sanitizedName);
+    };
 
     return (
         <Page
-            requiresRole={[ UserRoles.Editor, UserRoles.Journalist ]}
+            requiresRole={[
+                UserRoles.Editor,
+                UserRoles.Journalist,
+            ]}
             title='Create Tag'
             toolbar={<SaveToolbar onSaveClick={handleSaveClick} />}
         >
@@ -59,4 +61,3 @@ export default function()
         </Page>
     );
 }
-

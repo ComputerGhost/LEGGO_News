@@ -1,2 +1,3 @@
-﻿import CharacterCreate from './Page';
+import CharacterCreate from './Page';
+
 export default CharacterCreate;

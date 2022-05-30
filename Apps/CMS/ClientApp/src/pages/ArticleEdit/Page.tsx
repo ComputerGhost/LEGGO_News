@@ -1,18 +1,19 @@
+/* eslint-disable jsx-a11y/tabindex-no-positive */
+
 import React, { useEffect, useState } from 'react';
 import { Box, Container, Tab } from '@mui/material';
-import { useArticle, useUpdateArticle } from '../../api/endpoints/articles';
 import { TabContext, TabList } from '@mui/lab';
 import EditorJS from '@editorjs/editorjs';
+import { useParams } from 'react-router-dom';
+import { useArticle, useUpdateArticle } from '../../api/endpoints/articles';
 import ContentTab from './ContentTab';
 import MetadataTab from './MetadataTab';
-import { useParams } from 'react-router-dom';
 import Page from '../../components/Page';
 import { SaveToolbar } from '../../components/Toolbars';
 import UserRoles from '../../constants/UserRoles';
 
-export default function()
-{
-    const articleId = parseInt(useParams().id!);
+export default function () {
+    const articleId = parseInt(useParams().id!, 10);
 
     const [tabIndex, setTabIndex] = useState('0');
     const [title, setTitle] = useState<string>('');
@@ -25,17 +26,17 @@ export default function()
         setTitle(data?.title ?? '');
     }, [data]);
 
-    async function handleSaveClick() {
+    const handleSaveClick = async () => {
         const content = await editorApi!.save();
         await mutator.mutateAsync({
             title,
-            format: "editorjs",
+            format: 'editorjs',
             content: JSON.stringify(content.blocks),
         });
-    }
+    };
 
     if (!data) {
-        return <Page title='Edit Article'><p>Loading</p></Page >;
+        return <Page title='Edit Article'><p>Loading</p></Page>;
     }
 
     return (
@@ -46,7 +47,12 @@ export default function()
         >
             <Container>
                 <TabContext value={tabIndex}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <Box
+                        sx={{
+                            borderBottom: 1,
+                            borderColor: 'divider',
+                        }}
+                    >
                         <TabList onChange={(event, newValue) => setTabIndex(newValue)}>
                             <Tab label='Article' value='0' />
                             <Tab label='Metadata' value='1' />
@@ -69,4 +75,3 @@ export default function()
         </Page>
     );
 }
-

@@ -1,2 +1,3 @@
-﻿import TagCreate from './Page';
+import TagCreate from './Page';
+
 export default TagCreate;

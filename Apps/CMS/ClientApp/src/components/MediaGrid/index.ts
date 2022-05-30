@@ -1,2 +1,3 @@
-﻿import MediaGrid from './MediaGrid';
+import MediaGrid from './MediaGrid';
+
 export default MediaGrid;

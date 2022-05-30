@@ -1,21 +1,19 @@
 import React from 'react';
 import { ListItem, ListItemText, ListItemButton } from '@mui/material';
-import { ArticleSummary } from '../../api/endpoints/articles';
 import { useNavigate } from 'react-router-dom';
+import { ArticleSummary } from '../../api/endpoints/articles';
 import ListItemActions from './ListItemActions';
 
 interface IProps {
     article: ArticleSummary,
 }
 
-export default function ({
-    article
-}: IProps) {
-    var navigate = useNavigate();
+export default function ({ article }: IProps) {
+    const navigate = useNavigate();
 
-    function handleViewClicked() {
+    const handleViewClicked = () => {
         // nop for now.
-    }
+    };
 
     return (
         <ListItem
@@ -28,4 +26,3 @@ export default function ({
         </ListItem>
     );
 }
-

@@ -6,27 +6,25 @@ import Page from '../../components/Page';
 import SearchAddToolbar from '../../components/Toolbars/SearchAddToolbar';
 import UserRoles from '../../constants/UserRoles';
 
+export default function () {
+    const [search, setSearch] = useState('');
+    const navigate = useNavigate();
 
-export default function()
-{
-    var [search, setSearch] = useState('');
-    var navigate = useNavigate();
-
-    function handleAddClick() {
+    const handleAddClick = () => {
         navigate('/characters/new');
-    }
+    };
 
     return (
         <Page
             title='Characters'
-            toolbar={
+            toolbar={(
                 <SearchAddToolbar
                     onAddClick={handleAddClick}
                     onSearchChange={setSearch}
                     placeholder='Search characters...'
                     rolesForAdd={UserRoles.Administrator}
                 />
-            }
+            )}
         >
             <Container>
                 <List search={search} />

@@ -1,5 +1,4 @@
-﻿import { User, UserManager } from "oidc-client-ts";
-import UserRoles from "../constants/UserRoles";
+import { User, UserManager } from 'oidc-client-ts';
 
 export default class {
     private userManager: UserManager;
@@ -11,11 +10,10 @@ export default class {
             redirect_uri: `${process.env.REACT_APP_CLIENT_ROOT}signin-callback.html`,
             silent_redirect_uri: `${process.env.REACT_APP_CLIENT_ROOT}silent-renew.html`,
             post_logout_redirect_uri: process.env.REACT_APP_CLIENT_ROOT,
-            response_type: "code",
-            scope: "openid profile api"
+            response_type: 'code',
+            scope: 'openid profile api',
         });
     }
-
 
     public async getUser(): Promise<User | null> {
         return this.userManager.getUser();

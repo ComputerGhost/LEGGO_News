@@ -1,15 +1,19 @@
-﻿import { ChangeEventHandler, FocusEventHandler, Ref, useCallback, useRef } from 'react';
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-new */
+
+import React, { ChangeEventHandler, FocusEventHandler, Ref, useCallback, useRef } from 'react';
 import { createReactEditorJS } from 'react-editor-js';
 import { makeStyles } from '@mui/styles';
 import EditorJS, { OutputData } from '@editorjs/editorjs';
-import { EDITOR_JS_TOOLS } from './Tools';
+import EDITOR_JS_TOOLS from './Tools';
+
 const Undo = require('editorjs-undo');
 const DragDrop = require('editorjs-drag-drop');
 
 const useStyles = makeStyles({
     container: {
         width: '100%',
-    }
+    },
 });
 
 export interface IEditorProps {
@@ -31,7 +35,7 @@ export default function Editor({
     onChange,
     forwardedRef,
 }: IEditorProps) {
-    var classes = useStyles();
+    const classes = useStyles();
     const editorCore = useRef<EditorJS|null>(null);
 
     const ReactEditorJS = createReactEditorJS();
@@ -45,12 +49,14 @@ export default function Editor({
         }
     }, []);
 
-    function handleReady() {
+    const handleReady = () => {
         const editor = (editorCore.current as any)?._editorJS;
 
-        new Undo({ editor });
+        new Undo({
+            editor,
+        });
         new DragDrop(editor);
-    }
+    };
 
     return (
         <div

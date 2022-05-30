@@ -6,42 +6,40 @@ import SearchAddToolbar from '../../components/Toolbars/SearchAddToolbar';
 import UserRoles from '../../constants/UserRoles';
 import MediaGrid from '../../components/MediaGrid';
 
-
-export default function()
-{
+export default function () {
     const fileInput = useRef<HTMLInputElement>(null);
     const mutator = useUploadMedia();
     const [search, setSearch] = useState('');
 
-    function handleAddClick() {
+    const handleAddClick = () => {
         fileInput.current!.click();
-    }
+    };
 
-    function uploadMedia(files: File[]) {
+    const uploadMedia = (files: File[]) => {
         files.map(async (file) => {
             await mutator.mutateAsync(file);
         });
-    }
+    };
 
-    function handleFilesSelected(event: ChangeEvent<HTMLInputElement>) {
+    const handleFilesSelected = (event: ChangeEvent<HTMLInputElement>) => {
         uploadMedia(Array.from(event.target.files!));
-    }
+    };
 
-    function handleFilesDrop(files: File[]) {
+    const handleFilesDrop = (files: File[]) => {
         uploadMedia(files);
-    }
+    };
 
     return (
         <Page
             title='Media'
-            toolbar={
+            toolbar={(
                 <SearchAddToolbar
                     onAddClick={handleAddClick}
                     onSearchChange={setSearch}
                     placeholder='Search media...'
                     rolesForAdd={[UserRoles.Editor, UserRoles.Journalist]}
                 />
-            }
+            )}
         >
             <Container>
                 <input
@@ -56,4 +54,3 @@ export default function()
         </Page>
     );
 }
-

@@ -1,11 +1,10 @@
-﻿import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMediaQuery } from '@mui/material';
-import { Toolbar, useTheme } from '@mui/material';
+import { Toolbar, useMediaQuery, useTheme } from '@mui/material';
+import { User } from 'oidc-client-ts';
 import TopBar from './TopBar';
 import NavDrawer from './NavDrawer';
 import AuthorizationService from '../../services/AuthorizationService';
-import { User } from 'oidc-client-ts';
 import userContext from '../../contexts/userContext';
 
 const drawerWidth = 240;
@@ -21,9 +20,8 @@ export default function ({
     title,
     toolbar,
     requiresRole,
-    children
-}: IProps)
-{
+    children,
+}: IProps) {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -33,27 +31,31 @@ export default function ({
         if (requiresRole) {
             const service = new AuthorizationService(user);
             if (requiresRole && !service.hasRole(requiresRole)) {
-                throw new Error("Insufficient permissions.");
+                throw new Error('Insufficient permissions.');
             }
         }
-    }
+    };
 
-    function handleOpenDrawer() {
+    const handleOpenDrawer = () => {
         setIsDrawerOpen(true);
-    }
+    };
 
-    function handleCloseDrawer() {
+    const handleCloseDrawer = () => {
         setIsDrawerOpen(false);
-    }
+    };
 
     return (
         <userContext.Consumer>
-            {(user) =>
+            {(user) => (
                 <>
                     {ensureCanViewPage(user)}
 
                     <Helmet>
-                        <title>{title} - LEGGO News</title>
+                        <title>
+                            {title}
+                            {' '}
+                            - LEGGO News
+                        </title>
                     </Helmet>
 
                     <NavDrawer
@@ -75,11 +77,15 @@ export default function ({
                     {/* Padding for the main content */}
                     <Toolbar />
 
-                    <main style={{ paddingLeft: isMobile ? 0 : drawerWidth }}>
+                    <main
+                        style={{
+                            paddingLeft: `${isMobile ? 0 : drawerWidth}px`,
+                        }}
+                    >
                         {children}
                     </main>
                 </>
-            }
+            )}
         </userContext.Consumer>
     );
 }

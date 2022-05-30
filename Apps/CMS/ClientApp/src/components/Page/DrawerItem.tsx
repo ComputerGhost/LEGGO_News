@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,9 +13,8 @@ interface IProps {
 export default function ({
     text,
     icon,
-    href
-}: IProps)
-{
+    href,
+}: IProps) {
     return (
         <li>
             <ListItemButton component={NavLink} to={href}>

@@ -1,21 +1,13 @@
-﻿import React from "react";
+import React from 'react';
 import { Drawer, IconButton, List, Theme, Toolbar, Typography, useTheme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faArrowLeft,
-    faQuestionCircle,
-    faPenNib,
-    faPhotoVideo,
-    faTag,
-    faTheaterMasks,
-    faCalendar,
-} from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faQuestionCircle, faPenNib, faPhotoVideo, faTag, faTheaterMasks, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import DrawerItem from './DrawerItem';
 
 const useStyles = (theme: Theme, width: number) => makeStyles(() => ({
     drawer: {
-        width: width,
+        width,
     },
     grow: {
         flexGrow: 1,
@@ -39,17 +31,19 @@ export default function ({ width, open, allowClose, onDrawerClosed }: IProps) {
 
     return (
         <Drawer
-            classes={{ paper: classes.drawer }}
+            classes={{
+                paper: classes.drawer,
+            }}
             open={open}
             variant='persistent'
         >
             <Toolbar>
                 <div className={classes.grow} />
-                {allowClose && 
-                    <IconButton onClick={onDrawerClosed} size="large">
+                {allowClose && (
+                    <IconButton onClick={onDrawerClosed} size='large'>
                         <FontAwesomeIcon icon={faArrowLeft} fixedWidth />
                     </IconButton>
-                }
+                )}
             </Toolbar>
 
             <Typography variant='h6' className={classes.header}>Content</Typography>

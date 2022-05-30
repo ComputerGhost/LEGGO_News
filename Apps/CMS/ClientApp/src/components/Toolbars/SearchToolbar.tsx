@@ -1,4 +1,4 @@
-﻿import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
 import { InputBase, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { alpha, useTheme } from '@mui/material/styles';
@@ -34,7 +34,7 @@ const useStyles = (theme: Theme) => makeStyles(() => ({
             // vertical padding + font size from searchIcon
             paddingLeft: `calc(1em + ${theme.spacing(4)})`,
             width: '100%',
-        }
+        },
     },
 }));
 
@@ -46,14 +46,13 @@ interface IProps {
 export default function ({
     placeholder,
     onChange,
-}: IProps)
-{
+}: IProps) {
     const theme = useTheme();
     const classes = useStyles(theme)();
 
-    function handleSearchChanged(event: ChangeEvent<HTMLInputElement>) {
+    const handleSearchChanged = (event: ChangeEvent<HTMLInputElement>) => {
         onChange(event.target.value);
-    }
+    };
 
     return (
         <div className={classes.search}>

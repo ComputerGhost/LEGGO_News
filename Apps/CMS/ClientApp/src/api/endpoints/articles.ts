@@ -1,5 +1,4 @@
-﻿import RestApi from "../RestApi";
-
+import RestApi from '../RestApi';
 
 export interface ArticleDetails {
     id: number,
@@ -18,7 +17,6 @@ export interface ArticleSummary {
     id: number,
     title: string,
 }
-
 
 const articles = new RestApi<ArticleSummary, ArticleDetails, ArticleSaveData>('articles');
 
