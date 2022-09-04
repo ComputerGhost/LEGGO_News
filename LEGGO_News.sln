@@ -3,26 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "Apps\API\API.csproj", "{B9C962EC-D861-4566-9F54-AE978C346BAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{B9C962EC-D861-4566-9F54-AE978C346BAC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{6F7A09E6-2D67-4A28-BBE1-F36A4A22D55C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Apps\Web\Web.csproj", "{9B461D7D-1689-44F1-AB58-000CA134C2E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Public\Public.csproj", "{9B461D7D-1689-44F1-AB58-000CA134C2E9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{79821D70-96B9-4BAD-87F3-402CAD9E33BD} = {79821D70-96B9-4BAD-87F3-402CAD9E33BD}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Lib\Database\Database.csproj", "{79821D70-96B9-4BAD-87F3-402CAD9E33BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS", "Apps\CMS\CMS.csproj", "{2802F0B1-BFAA-429E-8237-D70D529EC759}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS", "Web\CMS\CMS.csproj", "{2802F0B1-BFAA-429E-8237-D70D529EC759}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Media", "Lib\Media\Media.csproj", "{536B0CE0-800D-4AF9-8437-806AE532C5E5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Static", "Apps\Static\Static.csproj", "{A7BE3B73-3601-49B7-A759-2ABEF3F1B78B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Static", "Web\Static\Static.csproj", "{A7BE3B73-3601-49B7-A759-2ABEF3F1B78B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleTranslator", "Lib\ArticleTranslator\ArticleTranslator.csproj", "{B68319C6-6742-43ED-964F-55F3E132D797}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{C8673E9A-D3D8-4789-A2A4-FDFF4DA22A0E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{C8673E9A-D3D8-4789-A2A4-FDFF4DA22A0E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleTranslator.Tests", "Lib\ArticleTranslator.Tests\ArticleTranslator.Tests.csproj", "{0DD65432-4C60-4F10-9EE8-847490CA2A8B}"
 EndProject
