@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using Database.DTOs;
+﻿using APIClient.DTOs;
+using AutoMapper;
 using Public.ViewModels;
 
 namespace Public.Setup
@@ -14,7 +14,7 @@ namespace Public.Setup
 
             // Our libraries don't depend on each other,
             // so do the inter-library mappings here.
-            CreateMap<Database.DTOs.CalendarSummary, Calendar.Models.CalendarInfo>();
+            CreateMap<APIClient.DTOs.CalendarSummary, Calendar.Models.CalendarInfo>();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Database.DTOs;
+﻿using APIClient.DTOs;
 
 namespace Public.ViewModels
 {

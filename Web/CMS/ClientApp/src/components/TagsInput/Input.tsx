@@ -1,7 +1,5 @@
-import React, { Component, forwardRef, Ref } from 'react';
-import { Autocomplete, FormControl, InputLabel, OutlinedInput } from '@mui/material';
-import EditorJS, { OutputData } from '@editorjs/editorjs';
-import Editor, { IEditorProps } from './Editor';
+import React from 'react';
+import { TextField } from '@mui/material';
 
 interface IProps {
     label: string,
@@ -13,7 +11,7 @@ export default function ({
     label,
     placeholder,
     margin,
-}): IProps {
+}: IProps) {
     return (
         <TextField
             label={label}

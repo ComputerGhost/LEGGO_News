@@ -1,5 +1,5 @@
-﻿using Calendar.Matrix;
-using Database.DTOs;
+﻿using APIClient.DTOs;
+using Calendar.Matrix;
 using System.Collections.Generic;
 
 namespace Public.ViewModels

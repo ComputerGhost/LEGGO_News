@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.9" />
     <PackageReference Include="ProxyKit" Version="2.3.4" />
   </ItemGroup>
 
@@ -25,14 +25,11 @@
   <ItemGroup>
     <None Remove="ClientApp\src\constants\UserRoles.ts" />
     <None Remove="ClientApp\src\contexts\userContext.ts" />
-    <None Remove="ClientApp\src\pages\ArticleCreate\ContentTab.tsx" />
-    <None Remove="ClientApp\src\pages\ArticleEdit\ContentTab.tsx" />
-    <None Remove="ClientApp\src\pages\ArticleEdit\index.ts" />
-    <None Remove="ClientApp\src\pages\TagEdit\Page.tsx" />
-    <None Remove="ClientApp\src\pages\TagCreate\Page.tsx" />
-    <None Remove="ClientApp\src\pages\TagList\ListItem.tsx" />
-    <None Remove="ClientApp\src\pages\TagList\ListItemActions.tsx" />
-    <None Remove="ClientApp\src\pages\TagList\Page.tsx" />
+    <None Remove="ClientApp\src\pages\Articles\ContentTab.tsx" />
+    <None Remove="ClientApp\src\pages\Tags\Create.tsx" />
+    <None Remove="ClientApp\src\pages\Tags\Edit.tsx" />
+    <None Remove="ClientApp\src\pages\Tags\Form.tsx" />
+    <None Remove="ClientApp\src\pages\Tags\ListItem.tsx" />
     <None Remove="ClientApp\src\services\AuthenticationService.ts" />
     <None Remove="ClientApp\src\services\AuthorizationService.ts" />
     <None Remove="ClientApp\tsconfig.json" />
@@ -47,22 +44,21 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\constants\UserRoles.ts" />
     <TypeScriptCompile Include="ClientApp\src\contexts\userContext.ts" />
-    <TypeScriptCompile Include="ClientApp\src\pages\ArticleCreate\ContentTab.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\pages\ArticleEdit\ContentTab.tsx">
+    <TypeScriptCompile Include="ClientApp\src\pages\Articles\ContentTab.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="ClientApp\src\pages\ArticleEdit\index.ts" />
-    <TypeScriptCompile Include="ClientApp\src\pages\TagEdit\Page.tsx">
+    <TypeScriptCompile Include="ClientApp\src\pages\Tags\Form.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="ClientApp\src\pages\TagCreate\Page.tsx">
+    <TypeScriptCompile Include="ClientApp\src\pages\Tags\Create.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="ClientApp\src\pages\TagList\ListItemActions.tsx">
+    <TypeScriptCompile Include="ClientApp\src\pages\Tags\Edit.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="ClientApp\src\pages\TagList\ListItem.tsx" />
-    <TypeScriptCompile Include="ClientApp\src\pages\TagList\Page.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\pages\Tags\ListItem.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\services\AuthorizationService.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -151,43 +147,22 @@
     <None Update="ClientApp\src\components\Page\Page.tsx">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\pages\ArticleCreate\index.ts">
+    <None Update="ClientApp\src\pages\Articles\index.ts">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\pages\ArticleList\index.ts">
+    <None Update="ClientApp\src\pages\Calendars\index.ts">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\pages\CalendarCreate\index.ts">
-      <SubType>Code</SubType>
-    </None>
-    <None Update="ClientApp\src\pages\CharacterCreate\index.ts">
-      <SubType>Code</SubType>
-    </None>
-    <None Update="ClientApp\src\pages\CalendarEdit\index.ts">
-      <SubType>Code</SubType>
-    </None>
-    <None Update="ClientApp\src\pages\CharacterEdit\index.ts">
-      <SubType>Code</SubType>
-    </None>
-    <None Update="ClientApp\src\pages\CalendarList\index.ts">
-      <SubType>Code</SubType>
-    </None>
-    <None Update="ClientApp\src\pages\CharacterList\index.ts">
+    <None Update="ClientApp\src\pages\Characters\index.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\pages\Help\index.ts">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\pages\MediaList\index.ts">
+    <None Update="ClientApp\src\pages\Media\index.ts">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\pages\TagEdit\index.ts">
-      <SubType>Code</SubType>
-    </None>
-    <None Update="ClientApp\src\pages\TagCreate\index.ts">
-      <SubType>Code</SubType>
-    </None>
-    <None Update="ClientApp\src\pages\TagList\index.ts">
+    <None Update="ClientApp\src\pages\Tags\index.ts">
       <SubType>Code</SubType>
     </None>
   </ItemGroup>

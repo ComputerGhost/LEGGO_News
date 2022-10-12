@@ -1,10 +1,11 @@
-﻿using Database.DTOs;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using System.Diagnostics;
 using System.Web;
 using Public.Services.Interfaces;
 using Public.ViewModels;
+using APIClient.DTOs;
+using System.Threading.Tasks;
 
 namespace Public.Controllers
 {
@@ -18,22 +19,22 @@ namespace Public.Controllers
             _articleService = articleService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
             var parameters = new SearchParameters();
-            var articles = _articleService.Search(parameters);
+            var articles = await _articleService.SearchAsync(parameters);
             return View(articles);
         }
 
         [HttpGet("{id}/{friendly?}")]
-        public IActionResult Article(long id, string friendly)
+        public async Task<IActionResult> ArticleAsync(long id, string friendly)
         {
-            var article = _articleService.GetArticle(id);
+            var article = await _articleService.GetArticleAsync(id);
 
             if (friendly != article.FriendlyUrlSegment)
             {
                 var encodedFriendly = HttpUtility.UrlEncode(article.FriendlyUrlSegment);
-                Response.Redirect(Url.Action(nameof(Article), new
+                Response.Redirect(Url.Action(nameof(ArticleAsync), new
                 {
                     id,
                     friendly = article.FriendlyUrlSegment,

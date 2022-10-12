@@ -1,12 +1,13 @@
-﻿using Database.DTOs;
+﻿using APIClient.DTOs;
 using Public.ViewModels;
+using System.Threading.Tasks;
 
 namespace Public.Services.Interfaces
 {
     public interface IArticleService
     {
-        ArticleIndexViewModel Search(SearchParameters parameters);
-        ArticleViewModel GetArticle(long id);
+        Task<ArticleIndexViewModel> SearchAsync(SearchParameters parameters);
+        Task<ArticleViewModel> GetArticleAsync(long id);
         void TranslateToHtml(ArticleViewModel source);
     }
 }

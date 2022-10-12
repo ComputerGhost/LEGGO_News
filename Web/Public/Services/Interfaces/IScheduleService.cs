@@ -1,5 +1,5 @@
-﻿using Calendar.Matrix;
-using Database.DTOs;
+﻿using APIClient.DTOs;
+using Calendar.Matrix;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,8 +8,8 @@ namespace Public.Services.Interfaces
 {
     public interface IScheduleService
     {
-        IEnumerable<CalendarSummary> GetCalendars();
+        Task<IEnumerable<CalendarSummary>> GetCalendarsAsync();
 
-        Task<MonthMatrix> GetMonthMatrix(IEnumerable<CalendarSummary> dbCalendars, DateTime? monthKst);
+        Task<MonthMatrix> GetMonthMatrixAsync(IEnumerable<CalendarSummary> dbCalendars, DateTime? monthKst);
     }
 }

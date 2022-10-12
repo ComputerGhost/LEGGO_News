@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { User } from 'oidc-client-ts';
-import ArticleCreate from './pages/ArticleCreate';
-import ArticleEdit from './pages/ArticleEdit';
-import ArticleList from './pages/ArticleList';
-import CharacterCreate from './pages/CharacterCreate';
-import CharacterEdit from './pages/CharacterEdit';
-import CharacterList from './pages/CharacterList';
+import { ArticleCreate, ArticleEdit, ArticleList } from './pages/Articles';
+import { CalendarCreate, CalendarEdit, CalendarList } from './pages/Calendars';
+import { CharacterCreate, CharacterEdit, CharacterList } from './pages/Characters';
 import Help from './pages/Help';
-import TagCreate from './pages/TagCreate';
-import TagEdit from './pages/TagEdit';
-import TagList from './pages/TagList';
-import MediaList from './pages/MediaList';
-import CalendarCreate from './pages/CalendarCreate';
-import CalendarEdit from './pages/CalendarEdit';
-import CalendarList from './pages/CalendarList';
+import MediaList from './pages/Media';
+import { TagCreate, TagEdit, TagList } from './pages/Tags';
 import AuthService from './services/AuthenticationService';
 import userContext from './contexts/userContext';
 

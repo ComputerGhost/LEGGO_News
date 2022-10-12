@@ -1,15 +1,6 @@
-﻿using AutoMapper;
-using Calendar;
-using Calendar.Interfaces;
-using Calendar.Matrix;
-using Calendar.Models;
-using Database.DTOs;
-using Database.Repositories.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Public.Services;
 using Public.Services.Interfaces;
 using Public.ViewModels;
 
@@ -29,9 +20,9 @@ namespace Public.Controllers
         [HttpGet("{month?}")]
         public async Task<IActionResult> Index(DateTime? month)
         {
-            var calendars = _scheduleService.GetCalendars();
+            var calendars = await _scheduleService.GetCalendarsAsync();
 
-            var monthMatrix = await _scheduleService.GetMonthMatrix(calendars, month);
+            var monthMatrix = await _scheduleService.GetMonthMatrixAsync(calendars, month);
 
             return View(new ScheduleViewModel
             {

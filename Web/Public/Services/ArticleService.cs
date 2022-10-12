@@ -1,30 +1,31 @@
 ﻿using ArticleTranslator;
-using AutoMapper;
-using Database.DTOs;
-using Database.Repositories.Interfaces;
 using System.Text.RegularExpressions;
 using Public.Services.Interfaces;
 using Public.ViewModels;
+using APIClient.DTOs;
+using AutoMapper;
+using System.Threading.Tasks;
+using APIClient.Connections;
 
 namespace Public.Services
 {
     public class ArticleService : IArticleService
     {
-        private readonly IArticleRepository _articleRepository;
+        private readonly IArticlesConnection _articlesConnection;
         private readonly IMapper _mapper;
 
         public ArticleService(
-            IArticleRepository articleRepository,
+            IArticlesConnection articlesConnection,
             IMapper mapper)
         {
-            _articleRepository = articleRepository;
+            _articlesConnection = articlesConnection;
             _mapper = mapper;
         }
 
 
-        public ArticleIndexViewModel Search(SearchParameters parameters)
+        public async Task<ArticleIndexViewModel> SearchAsync(SearchParameters parameters)
         {
-            var articles = _articleRepository.Search(parameters);
+            var articles = await _articlesConnection.ListAsync(parameters);
 
             var viewModel = _mapper.Map<ArticleIndexViewModel>(articles);
             foreach (var datum in viewModel.Data)
@@ -35,9 +36,9 @@ namespace Public.Services
             return viewModel;
         }
 
-        public ArticleViewModel GetArticle(long id)
+        public async Task<ArticleViewModel> GetArticleAsync(long id)
         {
-            var article = _articleRepository.Fetch(id);
+            var article = await _articlesConnection.FetchAsync(id);
 
             var viewModel = _mapper.Map<ArticleViewModel>(article);
             viewModel.FriendlyUrlSegment = GetFriendlyUrl(article.Title);

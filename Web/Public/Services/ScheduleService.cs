@@ -1,41 +1,41 @@
-﻿using AutoMapper;
+﻿using APIClient.Connections;
+using APIClient.DTOs;
+using AutoMapper;
 using Calendar;
 using Calendar.Interfaces;
 using Calendar.Matrix;
 using Calendar.Models;
-using Database.DTOs;
-using Database.Repositories.Interfaces;
+using Public.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Public.Services.Interfaces;
 
 namespace Public.Services
 {
     public class ScheduleService : IScheduleService
     {
-        private readonly ICalendarRepository _calendarRepository;
+        private readonly ICalendarsConnection _calendarsConnection;
         private readonly IEventsService _eventsService;
         private readonly IMapper _mapper;
 
         public ScheduleService(
-            ICalendarRepository calendarRepository,
+            ICalendarsConnection calendarsConnection,
             IEventsService eventsService,
             IMapper mapper)
         {
-            _calendarRepository = calendarRepository;
+            _calendarsConnection = calendarsConnection;
             _eventsService = eventsService;
             _mapper = mapper;
         }
 
-        public IEnumerable<CalendarSummary> GetCalendars()
+        public async Task<IEnumerable<CalendarSummary>> GetCalendarsAsync()
         {
-            var results = _calendarRepository.Search(new SearchParameters());
+            var results = await _calendarsConnection.ListAsync(new SearchParameters());
             return results.Data;
         }
 
-        public async Task<MonthMatrix> GetMonthMatrix(IEnumerable<CalendarSummary> dbCalendars, DateTime? monthKst)
+        public async Task<MonthMatrix> GetMonthMatrixAsync(IEnumerable<CalendarSummary> dbCalendars, DateTime? monthKst)
         {
             var libCalendars = dbCalendars.Select(c => _mapper.Map<CalendarInfo>(c));
 
