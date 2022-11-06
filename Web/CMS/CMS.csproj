@@ -66,6 +66,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ClientApp\src\api\ISearchResults.tsx">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\api\ISearchParameters.tsx">
+      <SubType>Code</SubType>
+    </None>
     <None Update="ClientApp\src\api\ApiError.tsx">
       <SubType>Code</SubType>
     </None>
@@ -87,7 +93,13 @@
     <None Update="ClientApp\src\api\interfaces\ISearchParameters.ts">
       <SubType>Code</SubType>
     </None>
-    <None Update="ClientApp\src\api\RestApi.ts">
+    <None Update="ClientApp\src\api\internal\ApiFetch.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\api\internal\HooklessApi.ts">
+      <SubType>Code</SubType>
+    </None>
+    <None Update="ClientApp\src\api\internal\HookedApi.ts">
       <SubType>Code</SubType>
     </None>
     <None Update="ClientApp\src\api\endpoints\tags.ts">

@@ -1,9 +1,16 @@
-﻿namespace APIClient.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace APIClient.DTOs
 {
     public class ArticleSaveData
     {
-        public string Title { get; set; }
-        public string Format { get; set; }
-        public string Content { get; set; }
+        [Required]
+        public string Title { get; set; } = string.Empty;
+
+        [Required]
+        public string Format { get; set; } = string.Empty;
+
+        [Required]
+        public string Content { get; set; } = string.Empty;
     }
 }

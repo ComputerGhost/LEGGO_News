@@ -27,6 +27,6 @@ namespace APIClient.DTOs
         /// <summary>
         /// An enumeration of the returned data.
         /// </summary>
-        public IEnumerable<T> Data { get; set; }
+        public IEnumerable<T> Data { get; set; } = Array.Empty<T>();
     }
 }

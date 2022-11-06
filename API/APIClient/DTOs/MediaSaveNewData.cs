@@ -2,9 +2,12 @@
 {
     public class MediaSaveNewData
     {
-        public string MimeType { get; set; }
-        public string LocalFilename { get; set; }
-        public string OriginalFilename { get; set; }
-        public string LargestResize { get; set; }
+        public string MimeType { get; set; } = string.Empty;
+
+        public string LocalFilename { get; set; } = string.Empty;
+
+        public string OriginalFilename { get; set; } = string.Empty;
+
+        public string LargestResize { get; set; } = string.Empty;
     }
 }

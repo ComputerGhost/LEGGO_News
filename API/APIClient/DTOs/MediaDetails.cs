@@ -10,29 +10,29 @@
         /// <summary>
         /// Short description or title of the image.
         /// </summary>
-        public string Caption { get; set; }
+        public string? Caption { get; set; }
 
         /// <summary>
         /// Name of the photographer or creator.
         /// </summary>
-        public string Credit { get; set; }
+        public string? Credit { get; set; }
 
         /// <summary>
         /// URL whence the image came.
         /// </summary>
-        public string CreditUrl { get; set; }
+        public string? CreditUrl { get; set; }
 
         /// <summary>
         /// URL to the unsized, uncropped original image.
         /// </summary>
-        public string OriginalUrl { get; set; }
+        public string OriginalUrl { get; set; } = string.Empty;
 
-        public string ThumbnailUrl { get; set; }
+        public string ThumbnailUrl { get; set; } = string.Empty;
 
-        public string SmallSizeUrl { get; set; }
+        public string SmallSizeUrl { get; set; } = string.Empty;
 
-        public string MediumSizeUrl { get; set; }
+        public string MediumSizeUrl { get; set; } = string.Empty;
 
-        public string LargeSizeUrl { get; set; }
+        public string LargeSizeUrl { get; set; } = string.Empty;
     }
 }

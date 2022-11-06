@@ -1,4 +1,4 @@
-import RestApi from '../RestApi';
+import RestApi from '../internal/HookedApi';
 
 export interface TagDetails {
     id: number,
