@@ -1,9 +1,8 @@
 ﻿using APIClient.DTOs;
+using APIServer.Attributes;
 using APIServer.Database.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Users.Attributes;
-using Users.Constants;
 
 namespace APIServer.Controllers
 {
@@ -37,7 +36,7 @@ namespace APIServer.Controllers
         }
 
         [HttpPut("{id}")]
-        [AuthorizeRoles(Roles.Administrator)]
+        [AuthorizeRoles()]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult Update(int id, [FromBody] CalendarSaveData calendarSaveData)
         {

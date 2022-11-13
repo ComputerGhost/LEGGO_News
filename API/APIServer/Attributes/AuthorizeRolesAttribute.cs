@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 
-namespace Users.Attributes
+namespace APIServer.Attributes
 {
     public class AuthorizeRolesAttribute : AuthorizeAttribute
     {

@@ -7,14 +7,14 @@ import { CharacterCreate, CharacterEdit, CharacterList } from './pages/Character
 import Help from './pages/Help';
 import MediaList from './pages/Media';
 import { TagCreate, TagEdit, TagList } from './pages/Tags';
-import AuthService from './services/AuthenticationService';
+import AuthenticationService from './services/AuthenticationService';
 import userContext from './contexts/userContext';
 
 export default function () {
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
-        const authService = new AuthService();
+        const authService = new AuthenticationService();
         authService.getUser().then(newUser => {
             if (newUser) {
                 setUser(newUser);

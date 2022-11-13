@@ -1,4 +1,4 @@
-﻿namespace Users.Constants
+﻿namespace APIServer.Constants
 {
     public static class Roles
     {
