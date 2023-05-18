@@ -1,17 +1,14 @@
-using Calendar.Setup;
-using Public.Setup;
-using Public.Utility;
+using CMS.Setup;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = (Config)builder.Configuration.Get(typeof(Config));
 
-builder.Services.AddCalendar(config.Calendar);
-builder.Services.AddRouting(options =>
-{
-    options.ConstraintMap["slugify"] = typeof(SlugifyParameterTransformer);
-});
+builder.Services.AddRouting();
 builder.Services.AddRazorPages();
 builder.Services.AddDependencyInjection(config);
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options => builder.Configuration.Bind("JwtSettings", options));
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
@@ -25,10 +22,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller:slugify}/{action:slugify}/{id?}",
+    pattern: "{controller}/{action}/{id?}",
     defaults: new { controller = "Home", action = "Index" });
 
 

@@ -1,0 +1,39 @@
+﻿@model SearchResults<ArticleSummary>
+
+@section Styles
+{
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css"/>
+}
+
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/jquery@@3.6.3/dist/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#results').DataTable();
+        } );
+    </script>
+}
+
+<div class="container">
+
+    <table id="results" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var summary in Model.Data)
+            {
+                <tr>
+                    <td>@summary.Title</td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
