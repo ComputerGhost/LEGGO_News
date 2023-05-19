@@ -1,14 +1,17 @@
 using CMS.Setup;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.IdentityModel.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
-var config = (Config)builder.Configuration.Get(typeof(Config));
+var config = (Config)builder.Configuration.Get(typeof(Config))!;
+
+IdentityModelEventSource.ShowPII = true;
 
 builder.Services.AddRouting();
 builder.Services.AddRazorPages();
 builder.Services.AddDependencyInjection(config);
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options => builder.Configuration.Bind("JwtSettings", options));
+builder.Services.AddMyAuthentication(config);
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
@@ -24,10 +27,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller}/{action}/{id?}",
-    defaults: new { controller = "Home", action = "Index" });
+app.MapDefaultControllerRoute();
 
 
 await app.RunAsync();

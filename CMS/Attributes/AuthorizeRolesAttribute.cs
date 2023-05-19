@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using System.Linq;
 
-namespace APIServer.Attributes
+namespace CMS.Attributes
 {
     public class AuthorizeRolesAttribute : AuthorizeAttribute
     {

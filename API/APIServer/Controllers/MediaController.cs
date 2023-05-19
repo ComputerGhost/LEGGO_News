@@ -1,8 +1,7 @@
-﻿using APIClient.DTOs;
+﻿using APIClient.Constants;
+using APIClient.DTOs;
 using APIServer.Attributes;
-using APIServer.Constants;
 using APIServer.Database.Repositories.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
