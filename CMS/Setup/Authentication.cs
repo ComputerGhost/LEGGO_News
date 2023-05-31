@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using System.Net;
 
 namespace CMS.Setup
 {
@@ -24,6 +25,17 @@ namespace CMS.Setup
             options.RequireHttpsMetadata = config.OAuth.RequireHttpsMetadata ?? true;
             options.ResponseType = "code";
             options.SaveTokens = true;
+
+            options.Events.OnRedirectToIdentityProvider = context =>
+            {
+                // Ajax should get a 401, not a redirect to login page.
+                if (context.Request.Headers.XRequestedWith == "XMLHttpRequest")
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    context.HandleResponse();
+                }
+                return Task.CompletedTask;
+            };
         }
     }
 }

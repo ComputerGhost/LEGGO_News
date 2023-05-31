@@ -1,39 +1,49 @@
-﻿@model SearchResults<TagSummary>
+﻿<div class="container">
 
-@section Styles
-{
-    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css"/>
-}
+    <div class="form-floating mb-3">
+        <input id="search" type="search" class="form-control" maxlength="50" placeholder="Search by name">
+        <label for="search">Search by name</label>
+    </div>
 
-@section Scripts
-{
-    <script src="https://cdn.jsdelivr.net/npm/jquery@@3.6.3/dist/jquery.min.js"></script>
-    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.js"></script>
-    <script>
-        $(document).ready( function () {
-            $('#results').DataTable();
-        } );
-    </script>
-}
-
-<div class="container">
-
-    <table id="results" class="table table-striped">
+    <table id="results" class="table">
         <thead>
             <tr>
-                <th>Name</th>
+                <th>Tag name</th>
                 <th></th>
             </tr>
         </thead>
-        <tbody>
-            @foreach (var summary in Model.Data)
-            {
-                <tr>
-                    <td>@summary.Name</td>
-                    <td></td>
-                </tr>
-            }
-        </tbody>
     </table>
 
 </div>
+
+<table class="d-none">
+    <tr id="result-row-template">
+        <td class="name"></td>
+        <td class="text-end text-nowrap">
+            <a href="#" class="rename-button px-2" data-bs-toggle="tooltip"><i class="fas fa-pen-to-square"></i></a>
+            <a href="#" class="delete-button text-danger px-2" data-bs-toggle="tooltip"><i class="fas fa-trash"></i></a>
+        </td>
+    </tr>
+</table>
+
+@section Scripts {
+    <script src="~/js/Index.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            var rowTemplate = $('#result-row-template').removeAttr('id');
+            function createRow(rowData){
+                var row = rowTemplate.clone()
+                row.find('.name').text('#' + rowData.name);
+                new bootstrap.Tooltip(row.find('.rename-button'), { title: 'Rename #' + rowData.name });
+                new bootstrap.Tooltip(row.find('.delete-button'), { title: 'Delete #' + rowData.name });
+                return row;
+            };
+            new Index({
+                createRowFunction: createRow,
+                dataUrl: '@Url.Action("IndexData")',
+                searchElement: $('#search'),
+                tableElement: $('#results'),
+            });
+        });
+    </script>
+}

@@ -1,5 +1,6 @@
-﻿using APIClient.Connections;
-using APIClient.Connections.Http;
+﻿using DataAccess;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace CMS.Setup
 {
@@ -7,18 +8,7 @@ namespace CMS.Setup
     {
         public static void AddDependencyInjection(this IServiceCollection services, Config config)
         {
-            services.AddHttpClient<IArticlesConnection, ArticlesConnection>(client =>
-                client.BaseAddress = config.ApiBaseUri
-            );
-            services.AddHttpClient<ICalendarsConnection, CalendarsConnection>(client =>
-                client.BaseAddress = config.ApiBaseUri
-            );
-            services.AddHttpClient<ICharactersConnection, CharactersConnection>(client =>
-                client.BaseAddress = config.ApiBaseUri
-            );
-            services.AddHttpClient<ITagsConnection, TagsConnection>(client =>
-                client.BaseAddress = config.ApiBaseUri
-            );
+            services.AddTransient<IDbConnection>(provider => new SqlConnection(config.ConnectionString));
         }
     }
 }

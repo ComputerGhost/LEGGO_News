@@ -3,11 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         [HttpGet]
-        [Authorize]
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult RefreshSession()
         {
             return View();
         }

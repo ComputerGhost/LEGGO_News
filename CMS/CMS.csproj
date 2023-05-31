@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\API\APIClient\APIClient.csproj" />
+    <ProjectReference Include="..\Lib\DataAccess\DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

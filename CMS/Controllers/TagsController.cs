@@ -1,24 +1,33 @@
-﻿using APIClient.Connections;
-using APIClient.DTOs;
+﻿using DataAccess.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Controllers
 {
+    [Authorize]
     public class TagsController : Controller
     {
-        private ITagsConnection _tagsConnection;
+        private TagsService _tagsService;
 
-        public TagsController(ITagsConnection tagsConnection)
+        public TagsController(TagsService tagsService)
         {
-            _tagsConnection = tagsConnection;
+            _tagsService = tagsService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> IndexAsync()
+        public IActionResult Index()
         {
-            var query = new SearchParameters();
-            var results = await _tagsConnection.ListAsync(query);
-            return View(results);
+            return View();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> IndexDataAsync([FromQuery] string search)
+        {
+            var results = await _tagsService.ListAsync(search, null, 10)
+                .ConfigureAwait(false);
+
+            return Ok(results);
         }
     }
 }

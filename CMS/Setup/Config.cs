@@ -12,6 +12,8 @@
 
         public Uri ApiBaseUri { get; set; } = null!;
 
+        public string ConnectionString { get; set; } = null!;
+
         public OAuthConfig OAuth { get; set; } = null!;
     }
 }

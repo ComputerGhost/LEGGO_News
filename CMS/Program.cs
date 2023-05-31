@@ -1,6 +1,5 @@
 using CMS.Setup;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using DataAccess;
 using Microsoft.IdentityModel.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,9 +9,9 @@ IdentityModelEventSource.ShowPII = true;
 
 builder.Services.AddRouting();
 builder.Services.AddRazorPages();
+builder.Services.AddDataAccess();
 builder.Services.AddDependencyInjection(config);
 builder.Services.AddMyAuthentication(config);
-builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
 var app = builder.Build();
