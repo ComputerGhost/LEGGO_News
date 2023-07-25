@@ -5,44 +5,60 @@
         <label for="search">Search by name</label>
     </div>
 
-    <table id="results" class="table">
+    <table class="table">
         <thead>
             <tr>
                 <th>Tag name</th>
                 <th></th>
             </tr>
         </thead>
+        <tbody id="results"></tbody>
     </table>
 
 </div>
 
-<table class="d-none">
-    <tr id="result-row-template">
-        <td class="name"></td>
-        <td class="text-end text-nowrap">
-            <a href="#" class="rename-button px-2" data-bs-toggle="tooltip"><i class="fas fa-pen-to-square"></i></a>
-            <a href="#" class="delete-button text-danger px-2" data-bs-toggle="tooltip"><i class="fas fa-trash"></i></a>
+<table>
+    <tr>
+        <td></td>
+        <td>
+            <a href="#" class="px-2" data-bs-toggle="tooltip">
+                <i class="fas fa-pen-to-square"></i>
+            </a>
+            <a href="#" class="delete-button text-danger px-2" data-bs-toggle="tooltip">
+                <i class="fas fa-trash"></i>
+            </a>
         </td>
     </tr>
 </table>
 
 @section Scripts {
-    <script src="~/js/Index.js" asp-append-version="true"></script>
+    <script src="~/js/TagIndex.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
-            var rowTemplate = $('#result-row-template').removeAttr('id');
-            function createRow(rowData){
-                var row = rowTemplate.clone()
-                row.find('.name').text('#' + rowData.name);
-                new bootstrap.Tooltip(row.find('.rename-button'), { title: 'Rename #' + rowData.name });
-                new bootstrap.Tooltip(row.find('.delete-button'), { title: 'Delete #' + rowData.name });
-                return row;
-            };
+
+            function appendDataRow(rowData) {
+            }
+
+            function fetchAsync() {
+                return Common.fetchAsync({
+                    url: '@Url.Action("IndexData", "TagsApi")',
+                    data: {
+                        search: $('#search').val().replace(/^#/, ''),
+                    }
+                });
+            }
+
+            columns = [
+                {
+                    member: 'name',
+                },
+            ];
+
             new Index({
-                createRowFunction: createRow,
-                dataUrl: '@Url.Action("IndexData")',
                 searchElement: $('#search'),
-                tableElement: $('#results'),
+                containerElement: $('#results'),
+                columns: columns,
+                fetchAsyncFunction: fetchAsync,
             });
         });
     </script>

@@ -12,6 +12,11 @@
         }
     },
 
+    errorModal: function (exception) {
+        console.log(exception);
+        new bootstrap.Modal('#error-modal').show();
+    },
+
     fetchAsync: function (options) {
         var modal = new bootstrap.Modal('#login-modal');
 

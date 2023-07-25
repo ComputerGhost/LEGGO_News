@@ -1,4 +1,6 @@
-﻿using DataAccess.Services;
+﻿using CMS.Constants;
+using CMS.ViewModels;
+using DataAccess.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,17 +19,11 @@ namespace CMS.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
-        }
-
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> IndexDataAsync([FromQuery] string search)
-        {
-            var results = await _tagsService.ListAsync(search, null, 10)
-                .ConfigureAwait(false);
-
-            return Ok(results);
+            return View(new IndexViewModel
+            {
+                UserCanDelete = User.IsInRole(Roles.Administrator),
+                UserCanEdit = User.IsInRole(Roles.Administrator),
+            });
         }
     }
 }

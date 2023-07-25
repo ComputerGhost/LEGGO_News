@@ -1,7 +1,6 @@
 ﻿using DataAccess.DTOs;
 using DataAccess.Repositories;
 using DataAccess.Utils;
-using System.Text;
 
 namespace DataAccess.Services
 {
@@ -12,11 +11,6 @@ namespace DataAccess.Services
         internal TagsService(ITagsRepository repository)
         {
             _repository = repository;
-        }
-
-        public Task<int> CreateAsync(TagSaveData saveData)
-        {
-            return _repository.CreateAsync(saveData);
         }
 
         public async Task<PagedResults<TagSummary>> ListAsync(

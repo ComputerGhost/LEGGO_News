@@ -2,30 +2,20 @@
 
     // user provided
     #searchElement;
-    #tableElement;
-    #createRowFunction;
-    #dataUrl;
+    #columns;
+    #fetchAsyncFunction;
 
     // calculated
     #containerElement;
     #debouncedFetch;
+    #isLoading = false;
 
-    // config contains:
-    // - tableElement: $(table) containing the index
-    // - createRowFunction: function(rowData) returning a $(tr)
-    // - searchElement: $(input) that on change should query the data
-    // - dataUrl: endpoint for fetching data
     constructor(config) {
-        this.#tableElement = config.tableElement;
-        this.#createRowFunction = config.createRowFunction;
         this.#searchElement = config.searchElement;
-        this.#dataUrl = config.dataUrl;
+        this.#columns = config.columns;
+        this.#fetchAsyncFunction = config.fetchAsyncFunction;
 
-        this.#containerElement = config.tableElement.find("tbody");
-        if (this.#containerElement.length == 0) {
-            this.#containerElement = $("<tbody>");
-            config.tableElement.append(this.#containerElement);
-        }
+        config.containerElement = $("#results");
 
         this.#debouncedFetch = Common.debounce((search) => this.#fetchAndPopulateAsync(search));
 
@@ -40,8 +30,8 @@
     }
 
     #setIsLoading() {
-        if (!this.#tableElement.hasClass('loading')) {
-            this.#tableElement.addClass('loading');
+        if (this.#isLoading === false) {
+            this.#isLoading = true;
             this.#containerElement.html(
                 `<tr><td colspan='${this.#getColumnCount()}' class='text-secondary'>
                     <span class='spinner-border spinner-border-sm me-2' role='status'></span>
@@ -56,39 +46,38 @@
     }
 
     #setIsNotLoading() {
-        this.#tableElement.removeClass('loading');
+        this.#isLoading = false;
     }
 
-    #setIsError() {
-        this.#containerElement.html(
-            `<tr><td colspan='${this.#getColumnCount()}'>
-                <div class='alert alert-danger my-0' role='alert'>
-                    <i class='fas fa-bug fa-fw me-2'></i>
-                    The data failed to load.  Check the console for details.
-                </div>
-            </td></tr>`);
+    #setIsError(exception) {
+        this.#containerElement.empty();
+        Common.errorModal(exception);
     }
 
     #getColumnCount() {
-        var columnCount = 0;
-        this.#tableElement.find("tr:first-child").children().each((_, e) => {
-            columnCount += e.colSpan;
+        return this.#columns.length + 1;
+    }
+
+    #appendDataRow(rowData) {
+        var renameButton = $("<a href='#' class='rename-button px-2' data-bs-toggle='tooltip'><i class='fas fa-pen-to-square'></i></a>");
+
+        var deleteButton = $("<a href='#' class='delete-button text-danger px-2' data-bs-toggle='tooltip'><i class='fas fa-trash'></i></a>");
+
+        var tr = $("<tr>");
+        this.#columns.forEach(c => {
+            tr.append($("<td>").text(rowData[c.member]));
         });
-        return Math.max(columnCount, 1);
+        tr.append($("<td class='text-end'>").append(renameButton).append(deleteButton));
+
+        this.#containerElement.append(tr);
     }
 
     async #fetchAndPopulateAsync(search) {
         try {
-            var results = await Common.fetchAsync({
-                url: this.#dataUrl,
-                data: {
-                    search: search.replace(/^#/, ''),
-                },
-            });
+            var results = await this.#fetchAsyncFunction();
         }
-        catch (ex) {
-            this.#setIsError();
-            console.error(ex);
+        catch (exception) {
+            this.#setIsError(exception);
             return;
         }
 
@@ -100,7 +89,7 @@
         this.#setIsNotLoading();
         this.#containerElement.empty();
         results.data.forEach((item) => {
-            this.#containerElement.append(this.#createRowFunction(item));
+            this.#appendDataRow(item);
         });
 
         if (results.nextCursor != null) {

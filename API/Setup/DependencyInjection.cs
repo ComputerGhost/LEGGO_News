@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
 
-namespace CMS.Setup
+namespace API.Setup
 {
     internal static class DependencyInjection
     {
