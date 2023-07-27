@@ -59,6 +59,7 @@
     <Folder Include="Tables" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tags.sql" />
+    <Build Include="Tables\Tags.sql" />
+    <Build Include="Tables\Articles.sql" />
   </ItemGroup>
 </Project>

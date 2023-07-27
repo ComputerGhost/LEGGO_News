@@ -10,7 +10,7 @@ namespace DataAccess.Repositories
 
         Task<TagDetails> GetAsync(int id);
 
-        Task<IList<TagSummary>> SearchAsync(string? search, string? cursor, int limit);
+        Task<IList<TagSummary>> SearchAsync(string? search, string? start, int limit);
 
         Task UpdateAsync(int id, TagSaveData data);
     }

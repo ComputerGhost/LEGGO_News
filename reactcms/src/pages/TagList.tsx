@@ -31,6 +31,7 @@ export default function TagList() {
     return (
         <div className='container'>
             <SearchForm
+                className='mb-3'
                 defaultValue={search ?? ""}
                 label='Search by name'
             />

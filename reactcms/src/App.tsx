@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './components/Layout';
 import { articleListLoader } from './loaders/articleListLoader';
 import { tagListLoader } from './loaders/tagListLoader';
+import ArticleEdit from './pages/ArticleEdit';
 import ArticleList from './pages/ArticleList';
 import SignIn from './pages/SignIn';
 import TagList from './pages/TagList';
@@ -29,9 +30,13 @@ const router = createBrowserRouter([
                         index: true,
                         Component: ArticleList,
                         loader: articleListLoader,
+                    },
+                    {
+                        path: 'new',
+                        Component: ArticleEdit,
                     }
                 ],
-            }
+            },
         ],
     }
 ]);

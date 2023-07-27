@@ -3,11 +3,13 @@ import { useEffect, useMemo, useState } from "react";
 import { Form, useSubmit } from "react-router-dom";
 
 interface IProps {
+    className?: string | undefined,
     defaultValue: string,
     label: string,
 }
 
 export default function SearchForm({
+    className,
     defaultValue,
     label,
 }: IProps) {
@@ -35,20 +37,22 @@ export default function SearchForm({
     }, [defaultValue]);
 
     return (
-        <Form role='search'>
-            <div className='form-floating mb-3'>
-                <input
-                    className='form-control'
-                    defaultValue={defaultValue ?? ""}
-                    id='search'
-                    maxLength={50}
-                    name='search'
-                    onKeyUp={handleKeyUp}
-                    placeholder={label}
-                    type='search'
-                />
-                <label htmlFor='search'>{label}</label>
-            </div>
-        </Form>
+        <div className={className}>
+            <Form role='search'>
+                <div className='form-floating'>
+                    <input
+                        className='form-control'
+                        defaultValue={defaultValue ?? ""}
+                        id='search'
+                        maxLength={50}
+                        name='search'
+                        onKeyUp={handleKeyUp}
+                        placeholder={label}
+                        type='search'
+                    />
+                    <label htmlFor='search'>{label}</label>
+                </div>
+            </Form>
+        </div>
     );
 }

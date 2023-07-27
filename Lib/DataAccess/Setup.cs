@@ -9,8 +9,10 @@ namespace DataAccess
     {
         public static void AddDataAccess(this IServiceCollection services)
         {
+            services.AddScoped<ArticlesService>(sp => new ArticlesService(sp.GetService<IArticlesRepository>()!));
             services.AddScoped<TagsService>(sp => new TagsService(sp.GetService<ITagsRepository>()!));
 
+            services.AddScoped<IArticlesRepository, ArticlesRepository>();
             services.AddScoped<ITagsRepository, TagsRepository>();
         }
     }

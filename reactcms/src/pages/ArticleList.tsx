@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigation } from "react-router-dom";
+import { Link, useLoaderData, useNavigation } from "react-router-dom";
 import SearchForm from "../components/SearchForm";
 import { ArticleSummary } from "../models/ArticleSummary";
 import { PagedResults } from "../models/PagedResults";
@@ -7,7 +7,7 @@ interface IDataRow { data: ArticleSummary; }
 function DataRow({ data }: IDataRow) {
     return (
         <tr>
-            <td>#{data.name}</td>
+            <td>#{data.title}</td>
             <td className='text-end'>
                 <a href="#" className="px-2">
                     <i className="fas fa-pen-to-square"></i>
@@ -30,10 +30,16 @@ export default function ArticleList() {
 
     return (
         <div className='container'>
-            <SearchForm
-                defaultValue={search ?? ""}
-                label='Search by title'
-            />
+            <div className='d-flex align-items-center mb-3'>
+                <SearchForm
+                    className='flex-grow-1'
+                    defaultValue={search ?? ""}
+                    label='Search by title'
+                />
+                <Link to='/articles/new' className='btn btn-primary p-3 ms-2'>
+                    Create new
+                </Link>
+            </div>
             <table className='table'>
                 <thead>
                     <tr>

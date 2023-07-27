@@ -2,22 +2,28 @@
 using DataAccess.DTOs;
 using DataAccess.Exceptions;
 using Microsoft.Data.SqlClient;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.Dapper
 {
-    internal class TagsRepository : ITagsRepository
+    internal class ArticlesRepository : IArticlesRepository
     {
         private readonly IDbConnection _connection;
 
-        public TagsRepository(IDbConnection connection)
+        public ArticlesRepository(IDbConnection connection)
         {
             _connection = connection;
         }
 
-        public async Task<int> CreateAsync(TagSaveData saveData)
+        public async Task<int> CreateAsync(ArticleSaveData saveData)
         {
-            var sql = "INSERT INTO Tags (Name) OUTPUT INSERTED.Id VALUES (@Name)";
+            var sql = "INSERT INTO Articles (Title) OUTPUT INSERTED.Id VALUES (@Title)";
 
             try
             {
@@ -32,7 +38,7 @@ namespace DataAccess.Repositories.Dapper
 
         public async Task DeleteAsync(int id)
         {
-            var sql = "DELETE FROM Tags WHERE Id = @id";
+            var sql = "DELETE FROM Articles WHERE Id = @id";
             var count = await _connection.ExecuteAsync(sql, new { id })
                 .ConfigureAwait(false);
             if (count == 0)
@@ -41,24 +47,24 @@ namespace DataAccess.Repositories.Dapper
             }
         }
 
-        public async Task<TagDetails> GetAsync(int id)
+        public async Task<ArticleDetails> GetAsync(int id)
         {
-            var sql = "SELECT * FROM Tags WHERE Id = @id";
-            var item = await _connection.QuerySingleOrDefaultAsync<TagDetails?>(sql, id)
+            var sql = "SELECT * FROM Articles WHERE Id = @id";
+            var item = await _connection.QuerySingleOrDefaultAsync<ArticleDetails?>(sql, id)
                 .ConfigureAwait(false);
             return item ?? throw new ItemNotFoundException();
         }
 
-        public async Task<IList<TagSummary>> SearchAsync(
-            string? search,
+        public async Task<IList<ArticleSummary>> SearchAsync(
+            string? search, 
             string? start, 
             int limit)
         {
             var sql = @"
-                SELECT TOP (@limit) Id, Name FROM Tags 
-                WHERE Name >= @start 
-                  AND Name LIKE '%' + @search + '%'
-                ORDER BY Name";
+                SELECT TOP (@limit) Id, Title FROM Articles 
+                WHERE Title >= @start 
+                  AND Title LIKE '%' + @search + '%'
+                ORDER BY Title";
 
             var parameters = new
             {
@@ -67,14 +73,14 @@ namespace DataAccess.Repositories.Dapper
                 limit,
             };
 
-            var results = await _connection.QueryAsync<TagSummary>(sql, parameters)
+            var results = await _connection.QueryAsync<ArticleSummary>(sql, parameters)
                 .ConfigureAwait(false);
             return results.AsList();
         }
 
-        public async Task UpdateAsync(int id, TagSaveData saveData)
+        public async Task UpdateAsync(int id, ArticleSaveData saveData)
         {
-            var sql = "UPDATE Tags SET Name = @Name WHERE Id = @id";
+            var sql = "UPDATE Articles SET Title = @Title WHERE Id = @id";
 
             try
             {
