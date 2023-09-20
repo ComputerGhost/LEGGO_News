@@ -1,45 +1,9 @@
 import { useAuth } from 'react-oidc-context';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Layout from './components/Layout';
-import { articleListLoader } from './loaders/articleListLoader';
-import { tagListLoader } from './loaders/tagListLoader';
-import ArticleEdit from './pages/ArticleEdit';
-import ArticleList from './pages/ArticleList';
 import SignIn from './pages/SignIn';
-import TagList from './pages/TagList';
+import { routes } from './routes';
 
-const router = createBrowserRouter([
-    {
-        path: '/',
-        Component: Layout,
-        children: [
-            {
-                path: 'tags',
-                children: [
-                    {
-                        index: true,
-                        Component: TagList,
-                        loader: tagListLoader,
-                    },
-                ],
-            },
-            {
-                path: 'articles',
-                children: [
-                    {
-                        index: true,
-                        Component: ArticleList,
-                        loader: articleListLoader,
-                    },
-                    {
-                        path: 'new',
-                        Component: ArticleEdit,
-                    }
-                ],
-            },
-        ],
-    }
-]);
+const router = createBrowserRouter(routes);
 
 export default function App() {
     const auth = useAuth();

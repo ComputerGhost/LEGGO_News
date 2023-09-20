@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs } from "react-router-dom";
 import { PagedResults } from "../models/PagedResults";
 import { TagSummary } from "../models/TagSummary";
-import fetch from "./fetch";
+import fetch from "../loaders/fetch";
 
 export async function tagListLoader({ request } : LoaderFunctionArgs) {
     const url = new URL(request.url);
