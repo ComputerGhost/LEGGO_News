@@ -2,10 +2,7 @@
 using System.Text.RegularExpressions;
 using Public.Services.Interfaces;
 using Public.ViewModels;
-using APIClient.DTOs;
 using AutoMapper;
-using System.Threading.Tasks;
-using APIClient.Connections;
 
 namespace Public.Services
 {

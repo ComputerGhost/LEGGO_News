@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
 using System.Diagnostics;
 using System.Web;
 using Public.Services.Interfaces;
 using Public.ViewModels;
-using APIClient.DTOs;
-using System.Threading.Tasks;
 
 namespace Public.Controllers
 {
