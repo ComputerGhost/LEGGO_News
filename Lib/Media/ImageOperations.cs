@@ -12,7 +12,9 @@ namespace Media
     {
         public static async Task<ImageData> Load(Stream stream)
         {
-            (Image image, IImageFormat format) = await Image.LoadWithFormatAsync(stream);
+            var format = Image.DetectFormat(stream);
+            stream.Position = 0;
+            var image = await Image.LoadAsync(stream);
 
             image.Metadata.ExifProfile = null;
 
