@@ -1,5 +1,6 @@
-﻿using DataAccess.DTOs;
-using DataAccess.Services;
+﻿using DataAccess.Models;
+using DataAccess.Repositories;
+using DataAccess.Repositories.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -8,11 +9,11 @@ namespace API.Controllers
     [Route("[controller]")]
     public class ArticlesController : Controller
     {
-        private readonly ArticlesService _articlesService;
+        private readonly ArticlesRepository _articlesRepository;
 
-        public ArticlesController(ArticlesService articlesService)
+        public ArticlesController(ArticlesRepository articlesRepository)
         {
-            _articlesService = articlesService;
+            _articlesRepository = articlesRepository;
         }
 
         [HttpGet]
@@ -22,7 +23,7 @@ namespace API.Controllers
             [FromQuery] string? cursor,
             int limit = 10)
         {
-            var results = await _articlesService.ListAsync(search, cursor, limit)
+            var results = await _articlesRepository.SearchAsync(search, cursor, limit)
                 .ConfigureAwait(false);
             return Ok(results);
         }

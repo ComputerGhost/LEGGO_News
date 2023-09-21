@@ -1,5 +1,6 @@
-﻿using DataAccess.DTOs;
-using DataAccess.Services;
+﻿using DataAccess.Models;
+using DataAccess.Repositories;
+using DataAccess.Repositories.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -8,11 +9,11 @@ namespace API.Controllers
     [Route("[controller]")]
     public class TagsController : Controller
     {
-        private readonly TagsService _tagsService;
+        private readonly TagsRepository _tagsRepository;
 
-        public TagsController(TagsService tagsService)
+        public TagsController(TagsRepository tagsRepository)
         {
-            _tagsService = tagsService;
+            _tagsRepository = tagsRepository;
         }
 
         [HttpGet]
@@ -22,7 +23,7 @@ namespace API.Controllers
             [FromQuery] string? cursor,
             int limit = 10)
         {
-            var results = await _tagsService.ListAsync(search, cursor, limit)
+            var results = await _tagsRepository.SearchAsync(search, cursor, limit)
                 .ConfigureAwait(false);
             return Ok(results);
         }
