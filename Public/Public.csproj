@@ -14,8 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lib\ArticleTranslator\ArticleTranslator.csproj" />
-    <ProjectReference Include="..\Lib\Calendar\Calendar.csproj" />
     <ProjectReference Include="..\Lib\DataAccess\DataAccess.csproj" />
   </ItemGroup>
 

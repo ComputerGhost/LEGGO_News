@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Lib\DataAccess\DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Modules\Tags\Services\" />
+  </ItemGroup>
+
 </Project>
