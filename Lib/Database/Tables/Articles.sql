@@ -1,6 +1,0 @@
-CREATE TABLE [dbo].[Articles]
-(
-	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
-	[Title] NVARCHAR(255) NOT NULL,
-	[ContentJson] NVARCHAR(MAX) NOT NULL
-)
