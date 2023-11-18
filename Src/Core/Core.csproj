@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Modules\ArticleEditor\" />
-    <Folder Include="Modules\ArticleList\Domain\" />
+    <Compile Remove="Modules\ArticleEditor\**" />
+    <Compile Remove="Modules\ArticleList\Domain\**" />
+    <EmbeddedResource Remove="Modules\ArticleEditor\**" />
+    <EmbeddedResource Remove="Modules\ArticleList\Domain\**" />
+    <None Remove="Modules\ArticleEditor\**" />
+    <None Remove="Modules\ArticleList\Domain\**" />
   </ItemGroup>
 
   <ItemGroup>

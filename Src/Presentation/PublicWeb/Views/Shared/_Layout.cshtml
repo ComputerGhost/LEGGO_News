@@ -20,19 +20,19 @@
     <header>
         <nav class="navbar navbar-expand navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" asp-page="/">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                     <img src="~/images/logo_32.png">
                 </a>
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/exid">About EXID</a>
+                            <a class="nav-link text-dark" asp-controller="EXID" asp-action="Index">About EXID</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/index">News</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">News</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/schedule">Schedule</a>
+                            <a class="nav-link text-dark" asp-controller="EXID" asp-action="Schedule">Schedule</a>
                         </li>
                     </ul>
                 </div>
@@ -56,12 +56,12 @@
             <div class="d-flex justify-content-around mb-3">
                 <div>
                     <h6>LEGGO News</h6>
-                    <div><a asp-page="/support-projects">Support Projects</a></div>
-                    <div><a asp-page="/contact-information">Contact Information</a></div>
+                    <div><a asp-controller="AboutUs" asp-action="SupportProjects">Support Projects</a></div>
+                    <div><a asp-controller="AboutUs" asp-action="ContactInformation">Contact Information</a></div>
                 </div>
                 <div>
                     <h6>Legal</h6>
-                    <div><a asp-page="/privacy-policy">Privacy Policy</a></div>
+                    <div><a asp-controller="Legal" asp-action="PrivacyPolicy">Privacy Policy</a></div>
                 </div>
                 <div>
                     <h6>Social Media</h6>
