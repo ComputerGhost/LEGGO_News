@@ -1,5 +1,22 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet } from 'react-router-dom';
+import modules from "../modules";
 import styles from './Layout.module.css';
+import Module from "./module";
+
+function ModuleLink(module: Module) {
+    var index = module.routes.find(m => m.index === true);
+    return (
+        <li className='nav-item w-100'>
+            <Link to={index?.path ?? '#'} className='nav-link link-dark'>
+                <i className={`fas fa-fw me-3 ${module.icon}`}></i>{module.name}
+            </Link>
+        </li>
+    );
+}
+
+function ModuleLinks() {
+    return (<>{modules.map(module => ModuleLink(module))}</>);
+}
 
 export default function Layout() {
     return (
@@ -8,31 +25,7 @@ export default function Layout() {
                 <div>LEGGO News</div>
                 <hr />
                 <ul className='nav nav-pills nav-flush mb-auto'>
-                    <li className='nav-item w-100'>
-                        <Link to="/articles" className='nav-link link-dark'>
-                            <i className='fas fa-pen-nib fa-fw me-3'></i>Articles
-                        </Link>
-                    </li>
-                    <li className='nav-item w-100'>
-                        <Link to="/media" className='nav-link link-dark'>
-                            <i className='fas fa-photo-video fa-fw me-3'></i>Media
-                        </Link>
-                    </li>
-                    <li className='nav-item w-100'>
-                        <Link to="/tags" className='nav-link link-dark'>
-                            <i className='fas fa-tag fa-fw me-3'></i>Tags
-                        </Link>
-                    </li>
-                    <li className='nav-item w-100'>
-                        <Link to="/characters" className='nav-link link-dark'>
-                            <i className='fas fa-masks-theater fa-fw me-3'></i>Characters
-                        </Link>
-                    </li>
-                    <li className='nav-item w-100'>
-                        <Link to="/events" className='nav-link link-dark'>
-                            <i className='fas fa-calendar fa-fw me-3'></i>Events
-                        </Link>
-                    </li>
+                    <ModuleLinks />
                 </ul>
                 <hr />
                 <div className='dropdown'>

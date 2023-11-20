@@ -40,7 +40,6 @@
     "@lexical/selection": "^0.12.2",
     "@types/node": "^16.18.60",
     "@types/react": "^18.2.33",
-    "@types/react-dom": "^18.2.14",
-    "eslint-config-react-app": "^7.0.1"
+    "@types/react-dom": "^18.2.14"
   }
 }

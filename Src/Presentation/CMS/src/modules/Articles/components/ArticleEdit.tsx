@@ -1,4 +1,4 @@
-import TextEditor from "../components/TextEditor";
+import TextEditor from "./TextEditor";
 
 function ContentTabContent() {
     return (
