@@ -1,5 +1,6 @@
 import ArticleEdit from "./components/ArticleEdit";
 import ArticleList from "./components/ArticleList";
+import ArticleListLoader from "./loaders/article-list-loader";
 
 const module = {
     routes: [
@@ -7,6 +8,7 @@ const module = {
             index: true,
             path: '/articles',
             Component: ArticleList,
+            loader: ArticleListLoader,
         },
         {
             path: '/articles/new',

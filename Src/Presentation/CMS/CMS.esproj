@@ -11,4 +11,8 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\build</BuildOutputFolder>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\modules\Articles\loaders\" />
+    <Folder Include="src\modules\Articles\models\" />
+  </ItemGroup>
 </Project>
