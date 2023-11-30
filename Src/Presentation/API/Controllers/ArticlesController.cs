@@ -17,6 +17,7 @@ public class ArticlesController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedArticles))]
     public Task<PagedArticles> Index()
     {
         var query = new GetMostRecentArticlesQuery();
