@@ -1,11 +1,18 @@
 
 .editorContainer {
     position: relative;
+    background: white;
 }
 
 .toolbar {
-    position: fixed;
-    margin-top: 0;
+    position: absolute;
+    width: 100%;
+    top: calc(-1 * var(--bs-border-width));
+
+    background: var(--bs-light);
+    border-width: var(--bs-border-width);
+    border-style: var(--bs-border-style);
+    border-color: var(--bs-border-color);
 }
 
 .contentPlaceholder {
@@ -17,8 +24,10 @@
 }
 
 .content {
+    padding: 3em 1em 1em 1em;
+
     border: 1px solid var(--bs-border-color);
     border-radius: var(--bs-border-radius);
     outline: none;
-    padding: 3em 1em 1em 1em;
+    background: white;
 }

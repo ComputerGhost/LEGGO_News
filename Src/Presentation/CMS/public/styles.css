@@ -1,0 +1,11 @@
+
+body {
+    background-color: rgb(248, 249, 250);
+}
+
+/* Fixes alignment of a.btn in thick headers */
+a.btn {
+    align-items: center;
+    display: flex;
+}
+

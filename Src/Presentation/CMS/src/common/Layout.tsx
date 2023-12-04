@@ -1,13 +1,19 @@
-import { Link, Outlet } from 'react-router-dom';
-import modules from "../modules";
+import { Button } from 'react-bootstrap';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import modules from '../modules';
 import styles from './Layout.module.css';
-import Module from "./module";
+import Module from './module';
 
 function ModuleLink(module: Module) {
     var index = module.routes.find(m => m.index === true);
+
+    var location = useLocation();
+    const isActive = location.pathname.startsWith(index?.path ?? '');
+    const linkStyle = isActive ? "nav-link active" : "nav-link";
+
     return (
-        <li className='nav-item w-100'>
-            <Link to={index?.path ?? '#'} className='nav-link link-dark'>
+        <li key={module.name} className='nav-item w-100'>
+            <Link to={index?.path ?? '#'} className={linkStyle}>
                 <i className={`fas fa-fw me-3 ${module.icon}`}></i>{module.name}
             </Link>
         </li>
@@ -21,33 +27,33 @@ function ModuleLinks() {
 export default function Layout() {
     return (
         <>
-            <nav className={styles.sidebar + ' d-flex flex-column vh-100 p-3'}>
+            <nav className={`${styles.sidebar} d-flex flex-column vh-100 p-3 bg-white`}>
                 <div>LEGGO News</div>
                 <hr />
-                <ul className='nav nav-pills nav-flush mb-auto'>
+                <menu className='nav nav-pills nav-flush mb-auto'>
                     <ModuleLinks />
-                </ul>
+                </menu>
                 <hr />
                 <div className='dropdown'>
-                    <button
+                    <Button
                         aria-expanded='false'
-                        className='btn d-flex align-items-center dropdown-toggle w-100'
+                        className='d-flex align-items-center dropdown-toggle w-100'
                         data-bs-toggle='dropdown'
-                        type='button'
+                        variant="outline-dark"
                     >
                         <div className='rounded-circle me-2' style={{ 'background': '#f0f', 'width': 32, 'height': 32 }}></div>
                         Account
-                    </button>
-                    <ul className='dropdown-menu text-small shadow'>
+                    </Button>
+                    <menu className='dropdown-menu text-small shadow'>
                         <li>
-                            <button className='dropdown-item btn'>
+                            <Button className='dropdown-item'>
                                 Sign out
-                            </button>
+                            </Button>
                         </li>
-                    </ul>
+                    </menu>
                 </div>
             </nav>
-            <main className={styles.main + ' py-2'}>
+            <main className={`${styles.main} py-2`}>
                 <Outlet />
             </main>
         </>

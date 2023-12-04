@@ -1,8 +1,8 @@
-import { Dropdown } from "react-bootstrap";
+import { ButtonGroup, Dropdown } from "react-bootstrap";
 
 export default function BlockToolbar() {
     return (
-        <div className="btn-group me-2 border">
+        <ButtonGroup>
             <Dropdown>
                 <Dropdown.Toggle variant="light">
                     Block Type
@@ -31,6 +31,6 @@ export default function BlockToolbar() {
                     </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
-        </div>
+        </ButtonGroup>
     );
 }

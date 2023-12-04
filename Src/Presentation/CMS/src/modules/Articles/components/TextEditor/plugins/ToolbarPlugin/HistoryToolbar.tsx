@@ -2,7 +2,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { mergeRegister } from "@lexical/utils";
 import { CAN_REDO_COMMAND, CAN_UNDO_COMMAND, COMMAND_PRIORITY_LOW, REDO_COMMAND, UNDO_COMMAND } from 'lexical';
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, ButtonGroup } from "react-bootstrap";
 
 export default function HistoryToolbar() {
     const [editor] = useLexicalComposerContext();
@@ -31,7 +31,7 @@ export default function HistoryToolbar() {
     }, [editor]);
 
     return (
-        <div className='btn-group me-2 border'>
+        <ButtonGroup>
             <Button
                 aria-label="Undo"
                 disabled={!canUndo}
@@ -48,6 +48,6 @@ export default function HistoryToolbar() {
             >
                 <i className='fa-solid fa-fw fa-rotate-right'></i>
             </Button>
-        </div>
+        </ButtonGroup>
     );
 }

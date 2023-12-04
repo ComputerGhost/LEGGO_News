@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PublicWeb", "Src\Presentati
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "CMS", "Src\Presentation\CMS\CMS.esproj", "{8CBDEDB6-5B09-42AA-93AB-C2482A95397D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "Src\Presentation\API\API.csproj", "{51080BD7-29AB-4F73-8D8B-D4CD651AD0C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "Src\Presentation\API\API.csproj", "{51080BD7-29AB-4F73-8D8B-D4CD651AD0C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
