@@ -1,0 +1,27 @@
+﻿
+#profiles {
+}
+    #profiles .nav-tabs {
+        border: none;
+        display: flex;
+        justify-content: space-between;
+    }
+    #profiles .nav-item {
+        border-radius: 100%;
+        width: 128px;
+    }
+    #profiles .nav-link {
+        border: none;
+        color: inherit;
+        padding: 0;
+        opacity: 25%;
+    }
+            #profiles .nav-link.active {
+                opacity: 100%;
+            }
+    #profiles .tab-pane {
+    }
+    #profiles .video-column {
+        font-size: 0;
+    }
+

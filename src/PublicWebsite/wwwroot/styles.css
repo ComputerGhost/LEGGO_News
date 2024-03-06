@@ -1,0 +1,24 @@
+﻿
+/* Overall styling */
+
+#main-nav {
+    background: #f7eccc;
+    box-shadow: #000 0 0 5px;
+}
+    #main-nav .nav-link {
+        color: #e5698e;
+    }
+        #main-nav .nav-link.active {
+            color: #6563ac;
+        }
+
+
+/* Basic content formatting */
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+h2 {
+    border-bottom: 2px solid black;
+}

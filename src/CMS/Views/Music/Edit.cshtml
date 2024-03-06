@@ -1,0 +1,33 @@
+﻿@model AlbumViewModel;
+
+<div class="container">
+    <form method="post">
+
+        <header class="mb-3">
+            <button type="submit" class="btn btn-primary float-end">
+                <i class="fa-solid fa-save fa-fw"></i>
+                <span class="visually-hidden">Save album</span>
+            </button>
+            <h1 class="h3">Edit Album</h1>
+        </header>
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label asp-for="Artist" class="form-label"></label>
+            <input asp-for="Artist" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label asp-for="ReleaseDate" class="form-label"></label>
+            <input asp-for="ReleaseDate" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label asp-for="AlbumArtFile" class="form-label"></label>
+            <img src="@Model.AlbumArtUri" alt="Album art">
+            <input asp-for="AlbumArtFile" class="form-control">
+        </div>
+
+    </form>
+</div>

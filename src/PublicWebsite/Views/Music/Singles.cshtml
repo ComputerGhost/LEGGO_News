@@ -1,0 +1,32 @@
+﻿@model IEnumerable<AlbumDto>
+
+<section class="container">
+    <nav class="nav">
+        <a class="nav-link" href="~/discography/">All</a>
+        <a class="nav-link active" href="~/discography/albums">Albums</a>
+        <a class="nav-link" href="~/discography/singles">Singles</a>
+        <a class="nav-link" href="~/discography/collabs">Collabs</a>
+        <a class="nav-link" href="~/discography/osts">OSTs</a>
+    </nav>
+</section>
+
+<section class="container">
+    <h2>Singles</h2>
+    <div class="d-flex justify-content-between flex-wrap">
+        @foreach (var disc in Model)
+        {
+            <figure class="figure" style="width: 300px">
+                <img src="~/discography/@disc.ImgSrc" class="figure-img img-fluid" alt="@disc.Title album art">
+                <figcaption class="figure-caption text-center">
+                    <div>
+                        <span class="text-nowrap">@disc.Title</span>
+                        <span class="text-nowrap">&ndash; @disc.Artist</span>
+                    </div>
+                    <div>
+                        @disc.ReleaseDate.ToString("yyyy.MM.dd")
+                    </div>
+                </figcaption>
+            </figure>
+        }
+    </div>
+</section>

@@ -1,0 +1,101 @@
+﻿@using Microsoft.AspNetCore.Html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>@ViewData["Title"]</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto&display=swap">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/styles.css">
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+
+    <header id="topbar" class="navbar">
+        <span class="navbar-brand">
+            LEGGO News
+        </span>
+        <button class="navbar-toggler d-md-none" type="button"
+                data-bs-toggle="offcanvas" data-bs-target="#sidebar"
+                aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars fa-fw"></i>
+        </button>
+    </header>
+
+    <div id="sidebar">
+        <nav id="sidebar-content" class="offcanvas-md offcanvas-end" tabindex="-1" aria-labelledby="sidebarLabel">
+
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="sidebarLabel">LEGGO News</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Close"></button>
+            </div>
+
+            <div class="offcanvas-body d-md-flex flex-column p-0 overflow-y-auto">
+                <ul class="nav flex-column">
+                    @NavLink("/", "fa-house", "Dashboard")
+                </ul>
+                <h6 class="sidebar-heading mt-4 mb-1 text-body-secondary text-uppercase">
+                    Content
+                </h6>
+                <ul class="nav flex-column">
+                    @NavLink("#", "fa-newspaper", "Articles")
+                    @NavLink("#", "fa-comments", "Comments")
+                    @NavLink("/music", "fa-music", "Music")
+                </ul>
+                <h6 class="sidebar-heading mt-4 mb-1 text-body-secondary text-uppercase">
+                    Administration
+                </h6>
+                <ul class="nav flex-column">
+                    @NavLink("#", "fa-users", "Users")
+                    @NavLink("#", "fa-robot", "Robots")
+                </ul>
+                <hr class="my-3">
+                <ul class="nav flex-column mb-auto">
+                    @NavLink("#", "fa-user", "Profile")
+                    @NavLink("#", "fa-arrow-right-from-bracket", "Sign out")
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div id="not-sidebar">
+        <main class="p-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="https://kit.fontawesome.com/8e4a4c6700.js" crossorigin="anonymous">
+        // NOTE: Add the integrity check after out of dev
+        // NOTE: Kit set up with my personal email.
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>
+
+@{
+    IHtmlContent NavLink(string href, string icon, string title)
+    {
+        var requestPath = ViewContext.HttpContext.Request.Path!.Value!;
+        var isActive = requestPath.StartsWith(href);
+
+        var aClass = isActive ? "nav-link active" : "nav-link";
+        var ariaCurrent = isActive ? "aria-current='page'" : "";
+
+        return Html.Raw($@"
+            <li class='nav-item'>
+                <a class='{aClass}' {ariaCurrent} href='{href}'>
+                    <i class='fa-solid fa-fw {icon}'></i> {title}
+                </a>
+            </li>
+        ");
+    }
+}
