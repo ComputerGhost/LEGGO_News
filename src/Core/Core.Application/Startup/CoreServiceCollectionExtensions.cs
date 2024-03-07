@@ -1,15 +1,15 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Core.Infrastructure.Startup;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace Core.Application.Startup;
-public class CoreServiceCollectionExtensions
+public static class CoreServiceCollectionExtensions
 {
     public static void AddCore(this IServiceCollection services, Action<CoreOptions> configure)
     {
         services
-            .Configure(configure)
-            .AddLibraries()
-            .AddOurServices();
+            .AddInfrastructure(ConfigureInfrastructure(configure))
+            .AddLibraries();
     }
 
     private static IServiceCollection AddLibraries(this IServiceCollection services)
@@ -21,20 +21,11 @@ public class CoreServiceCollectionExtensions
         return services;
     }
 
-    private static IServiceCollection AddOurServices(this IServiceCollection services)
+    private static Action<InfrastructureOptions> ConfigureInfrastructure(Action<CoreOptions> configure)
     {
-        var assembly = Assembly.GetExecutingAssembly();
-
-        foreach (var type in assembly.GetTypes())
+        return (InfrastructureOptions infrastructureOptions) =>
         {
-            foreach (var attribute in type.GetCustomAttributes<ServiceImplementationAttribute>())
-            {
-                var service = attribute.GetInterface(type);
-                var implementation = type;
-                services.Add(new ServiceDescriptor(service, implementation, attribute.Lifetime));
-            }
-        }
-
-        return services;
+            configure(new CoreOptions(infrastructureOptions));
+        };
     }
 }
