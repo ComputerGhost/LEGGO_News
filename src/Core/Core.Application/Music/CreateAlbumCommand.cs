@@ -1,4 +1,5 @@
-﻿using Core.Domain.FileStorage;
+﻿using Core.Application.Music;
+using Core.Domain.FileStorage;
 using Core.Domain.FileStorage.Ports;
 using Core.Domain.Music;
 using Core.Domain.Ports;
@@ -7,7 +8,7 @@ using MediatR;
 namespace Core.Application;
 public class CreateAlbumCommand : IRequest<int>
 {
-    public AlbumType AlbumType { get; set; }
+    public Music.AlbumType AlbumType { get; set; }
 
     public string Title { get; set; } = null!;
 
@@ -41,7 +42,8 @@ public class CreateAlbumCommand : IRequest<int>
         public async Task<int> Handle(CreateAlbumCommand request, CancellationToken cancellationToken)
         {
             var fileId = await SaveAlbumArt(request.AlbumArtStream, request.AlbumArtFileName);
-            return await SaveAlbumData(request.AlbumType, request.Title, request.Artist, request.ReleaseDate, fileId);
+            var albumType = Enum.Parse<Domain.Music.AlbumType>(request.AlbumType.ToString());
+            return await SaveAlbumData(albumType, request.Title, request.Artist, request.ReleaseDate, fileId);
         }
 
         private Task<int> SaveAlbumArt(Stream stream, string fileName)
@@ -50,7 +52,7 @@ public class CreateAlbumCommand : IRequest<int>
             return fileWriter.CreateImage(stream, fileName);
         }
 
-        private Task<int> SaveAlbumData(AlbumType albumType, string title, string artist, DateOnly releaseDate, int albumArtFileId)
+        private Task<int> SaveAlbumData(Domain.Music.AlbumType albumType, string title, string artist, DateOnly releaseDate, int albumArtFileId)
         {
             var albumWriter = new AlbumWriter(_albumsRepository);
             return albumWriter.CreateAlbum(albumType, albumArtFileId, title, artist, releaseDate);

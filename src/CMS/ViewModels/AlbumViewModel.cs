@@ -11,6 +11,9 @@ public class AlbumViewModel
     [StringLength(50)]
     public string Artist { get; set; } = string.Empty;
 
+    [Required]
+    public string AlbumType { get; set; } = string.Empty;
+
     [DataType(DataType.Date)]
     [Display(Name = "Release Date")]
     [Required]

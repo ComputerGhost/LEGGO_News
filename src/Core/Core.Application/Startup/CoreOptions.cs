@@ -18,12 +18,6 @@ public class CoreOptions
         set => InfrastructureOptions.DatabaseConnectionString = value;
     }
 
-    public int FileStoragePartitionSize
-    {
-        get => InfrastructureOptions.FileStoragePartitionSize;
-        set => InfrastructureOptions.FileStoragePartitionSize = value;
-    }
-
     public string FileStoragePath
     {
         get => InfrastructureOptions.FileStoragePath; 

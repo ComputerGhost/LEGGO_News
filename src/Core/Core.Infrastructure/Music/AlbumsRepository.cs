@@ -5,6 +5,8 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 
 namespace Core.Infrastructure.Music;
+
+[ServiceImplementation]
 internal class AlbumsRepository : IAlbumsRepository
 {
     private readonly string _connectionString = null!;
