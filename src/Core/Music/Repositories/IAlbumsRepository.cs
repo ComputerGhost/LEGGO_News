@@ -1,5 +1,5 @@
-﻿namespace Core.Domain.Ports;
-public interface IAlbumsRepository
+﻿namespace Core.Music.Repositories;
+internal interface IAlbumsRepository
 {
     public Task<int> GetAlbumTypeId(string albumType);
 

@@ -1,15 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace Core.Infrastructure.Startup;
+namespace Core.Startup;
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, Action<InfrastructureOptions> configure)
+    public static IServiceCollection AddCore(this IServiceCollection services, Action<CoreOptions> configure)
     {
-        services
+        return services
             .Configure(configure)
             .AddOurServices();
-        return services;
     }
 
     private static IServiceCollection AddOurServices(this IServiceCollection services)

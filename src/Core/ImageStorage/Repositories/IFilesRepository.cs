@@ -1,4 +1,4 @@
-﻿namespace Core.Domain.FileStorage.Ports;
+﻿namespace Core.ImageStorage.Repositories;
 public interface IFilesRepository
 {
     Task<int> Insert(string fileName);

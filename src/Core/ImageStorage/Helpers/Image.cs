@@ -1,40 +1,39 @@
 ﻿using SkiaSharp;
 
-namespace Core.Domain.FileStorage;
+namespace Core.ImageStorage.Helpers;
+
+// Wraps the image processing library.
 internal class Image : IDisposable
 {
     private readonly SKBitmap _bitmap;
-    private readonly string _fileName;
     private readonly SKEncodedImageFormat _format;
 
-    public Image(Stream stream, string fileName)
+    public Image(Stream stream, string extension)
     {
         _bitmap = SKBitmap.Decode(stream);
-        _fileName = fileName;
-        _format = GetImageFormat(Path.GetExtension(fileName));
+        _format = DeduceFormat(extension);
     }
 
-    private Image(SKBitmap bitmap, string fileName, SKEncodedImageFormat format)
+    private Image(SKBitmap bitmap, SKEncodedImageFormat format)
     {
         _bitmap = bitmap;
-        _fileName = fileName;
         _format = format;
     }
 
     public int Width => _bitmap.Width;
     public int Height => _bitmap.Height;
-    public string FileName => _fileName;
 
     public void Dispose()
     {
         _bitmap?.Dispose();
     }
 
-    public Image Resize(int newWidth)
+    public Image Resize(ImageWidth newWidth)
     {
-        var newHeight = _bitmap.Height * (newWidth / _bitmap.Width);
-        var resized = _bitmap.Resize(new SKSizeI(newWidth, newHeight), SKFilterQuality.High);
-        return new Image(resized, _fileName, _format);
+        var width = newWidth.ToInt();
+        var height = _bitmap.Height * (width / _bitmap.Width);
+        var scaledBitmap = _bitmap.Resize(new SKSizeI(width, height), SKFilterQuality.High);
+        return new Image(scaledBitmap, _format);
     }
 
     public Stream ToStream()
@@ -47,7 +46,7 @@ internal class Image : IDisposable
         return stream;
     }
 
-    private SKEncodedImageFormat GetImageFormat(string extension)
+    private static SKEncodedImageFormat DeduceFormat(string extension)
     {
         return extension switch
         {
@@ -56,6 +55,6 @@ internal class Image : IDisposable
             "png" => SKEncodedImageFormat.Png,
             "webp" => SKEncodedImageFormat.Webp,
             _ => throw new ArgumentException("Image file extension is not supported.")
-        }; ;
+        };
     }
 }

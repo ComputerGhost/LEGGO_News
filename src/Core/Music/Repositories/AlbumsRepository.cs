@@ -1,17 +1,16 @@
-﻿using Core.Domain.Ports;
-using Core.Infrastructure.Startup;
+﻿using Core.Startup;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 
-namespace Core.Infrastructure.Music;
+namespace Core.Music.Repositories;
 
 [ServiceImplementation]
-internal class AlbumsRepository : IAlbumsRepository
+internal class AlbumsRepository
 {
     private readonly string _connectionString = null!;
 
-    public AlbumsRepository(IOptions<InfrastructureOptions> options)
+    public AlbumsRepository(IOptions<CoreOptions> options)
     {
         _connectionString = options.Value.DatabaseConnectionString;
     }

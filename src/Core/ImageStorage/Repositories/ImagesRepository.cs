@@ -1,17 +1,16 @@
-﻿using Core.Domain.FileStorage.Ports;
-using Core.Infrastructure.Startup;
+﻿using Core.Startup;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 
-namespace Core.Infrastructure.FileStorage;
+namespace Core.ImageStorage.Repositories;
 
 [ServiceImplementation]
 internal class ImagesRepository : IImagesRepository
 {
     private readonly string _connectionString = null!;
 
-    public ImagesRepository(IOptions<InfrastructureOptions> options)
+    public ImagesRepository(IOptions<CoreOptions> options)
     {
         _connectionString = options.Value.DatabaseConnectionString;
     }

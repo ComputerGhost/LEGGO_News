@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Core.Infrastructure.Startup;
+namespace Core.Startup;
 internal class ServiceImplementationAttribute : Attribute
 {
     /// <remarks>

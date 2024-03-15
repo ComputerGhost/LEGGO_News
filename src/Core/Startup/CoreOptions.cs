@@ -1,5 +1,5 @@
-﻿namespace Core.Infrastructure.Startup;
-public class InfrastructureOptions
+﻿namespace Core.Startup;
+public class CoreOptions
 {
     public string DatabaseConnectionString { get; set; } = null!;
 

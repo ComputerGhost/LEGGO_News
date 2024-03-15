@@ -1,4 +1,4 @@
-﻿namespace Core.Domain.Music;
+﻿namespace Core.Music;
 public enum AlbumType
 {
     Album,

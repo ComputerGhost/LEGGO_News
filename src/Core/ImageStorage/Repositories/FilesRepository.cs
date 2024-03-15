@@ -1,17 +1,16 @@
-﻿using Core.Domain.FileStorage.Ports;
-using Core.Infrastructure.Startup;
+﻿using Core.Startup;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 
-namespace Core.Infrastructure;
+namespace Core.ImageStorage.Repositories;
 
 [ServiceImplementation]
 internal class FilesRepository : IFilesRepository
 {
     private readonly string _connectionString = null!;
 
-    public FilesRepository(IOptions<InfrastructureOptions> options)
+    public FilesRepository(IOptions<CoreOptions> options)
     {
         _connectionString = options.Value.DatabaseConnectionString;
     }
@@ -26,7 +25,7 @@ internal class FilesRepository : IFilesRepository
         using var connection = new SqlConnection(_connectionString);
         return await connection.QuerySingleAsync<int>(sql, new
         {
-            fileName, 
+            fileName,
         });
     }
 }
