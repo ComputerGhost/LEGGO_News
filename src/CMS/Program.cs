@@ -1,4 +1,4 @@
-using Core.Application.Startup;
+using Core.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
 

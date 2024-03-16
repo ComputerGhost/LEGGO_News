@@ -15,16 +15,17 @@ internal class FilesRepository : IFilesRepository
         _connectionString = options.Value.DatabaseConnectionString;
     }
 
-    public async Task<int> Insert(string fileName)
+    public async Task<int> Insert(string partition, string fileName)
     {
         var sql = """
-            INSERT INTO Files (FileName)
+            INSERT INTO Files (Partition, FileName)
             OUTPUT INSERTED.Id
-            VALUES (@fileName)
+            VALUES (@partition, @fileName)
             """;
         using var connection = new SqlConnection(_connectionString);
         return await connection.QuerySingleAsync<int>(sql, new
         {
+            partition,
             fileName,
         });
     }

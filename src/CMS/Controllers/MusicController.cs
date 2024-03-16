@@ -1,6 +1,5 @@
 ﻿using CMS.ViewModels;
-using Core.Application;
-using Core.Application.Music;
+using Core.Music;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

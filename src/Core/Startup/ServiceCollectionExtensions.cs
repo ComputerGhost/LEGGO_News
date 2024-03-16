@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace Core.Startup;
@@ -8,7 +9,23 @@ public static class ServiceCollectionExtensions
     {
         return services
             .Configure(configure)
+            .AddOurLibraries()
             .AddOurServices();
+    }
+
+    private static IServiceCollection AddOurLibraries(this IServiceCollection services)
+    {
+        var assembly = Assembly.GetExecutingAssembly();
+
+        services.AddMediatR(config =>
+        {
+            config.RegisterServicesFromAssemblies(assembly);
+            config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+        });
+
+        services.AddValidatorsFromAssembly(assembly);
+
+        return services;
     }
 
     private static IServiceCollection AddOurServices(this IServiceCollection services)

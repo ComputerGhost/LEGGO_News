@@ -13,9 +13,9 @@ internal class FileSystem : IFileSystem
         _storagePath = options.Value.FileStoragePath;
     }
 
-    public async Task Create(string fileName, Stream inputStream)
+    public async Task Create(string partition, string fileName, Stream inputStream)
     {
-        var filePath = Path.Combine(_storagePath, fileName);
+        var filePath = Path.Combine(_storagePath, partition, fileName);
         using var fileStream = File.Create(filePath);
         await inputStream.CopyToAsync(fileStream);
     }

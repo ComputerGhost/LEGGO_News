@@ -23,19 +23,14 @@ internal class ImageSaver : IImageSaver
 
     public async Task<int> Create(string fileName, Stream stream)
     {
-        var originalId = await SaveOriginal(fileName, stream);
-
         using var originalImage = new Image(stream, Path.GetExtension(fileName));
+
+        var originalId = await SaveFile(fileName, stream);
         int? largeId = await SaveScaledIfLarger(fileName, originalImage, ImageWidth.Large);
         int? mediumId = await SaveScaledIfLarger(fileName, originalImage, ImageWidth.Medium);
-        int thumbnailId = (await SaveScaledIfLarger(fileName, originalImage, ImageWidth.Thumbnail)).Value;
+        int thumbnailId = await SaveScaled(fileName, originalImage, ImageWidth.Thumbnail);
 
         return await _imagesRepository.Insert(originalId, largeId, mediumId, thumbnailId);
-    }
-
-    private Task<int> SaveOriginal(string fileName, Stream stream)
-    {
-        return SaveFile(fileName, stream);
     }
 
     private async Task<int?> SaveScaledIfLarger(string fileName, Image originalImage, ImageWidth newWidth)
@@ -45,6 +40,11 @@ internal class ImageSaver : IImageSaver
             return null;
         }
 
+        return await SaveScaled(fileName, originalImage, newWidth);
+    }
+
+    private async Task<int> SaveScaled(string fileName, Image originalImage, ImageWidth newWidth)
+    {
         using var scaledImage = originalImage.Resize(newWidth);
         using var stream = scaledImage.ToStream();
         return await SaveFile(fileName, stream);
@@ -52,11 +52,8 @@ internal class ImageSaver : IImageSaver
 
     private async Task<int> SaveFile(string fileName, Stream stream)
     {
-        var fileId = await _filesRepository.Insert(fileName);
-
-        var savePath = $"images/f-{fileId}.dat";
-        await _fileSystem.Create(savePath, stream);
-
+        var fileId = await _filesRepository.Insert("images", fileName);
+        await _fileSystem.Create("images", "f-{fileId}.dat", stream);
         return fileId;
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 namespace Core.Music.Repositories;
 
 [ServiceImplementation]
-internal class AlbumsRepository
+internal class AlbumsRepository : IAlbumsRepository
 {
     private readonly string _connectionString = null!;
 
