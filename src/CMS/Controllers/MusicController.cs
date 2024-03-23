@@ -40,8 +40,8 @@ public class MusicController : Controller
                 Title = viewModel.Title,
                 Artist = viewModel.Artist,
                 ReleaseDate = viewModel.ReleaseDate!.Value,
-                AlbumArtFileName = viewModel.AlbumArtFile!.FileName,
-                AlbumArtStream = viewModel.AlbumArtFile!.OpenReadStream(),
+                AlbumArtFileName = viewModel.AlbumArtUploadedFile!.FileName,
+                AlbumArtStream = viewModel.AlbumArtUploadedFile!.OpenReadStream(),
             });
         }
 

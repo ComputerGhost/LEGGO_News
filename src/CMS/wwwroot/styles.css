@@ -62,6 +62,10 @@ html, body {
     padding-left: 200px;
 }
 
+.img-thumbnail {
+    max-width: 300px;
+}
+
 @media (max-width: 768px) {
     #sidebar-container {
         display: none;

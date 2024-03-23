@@ -38,17 +38,9 @@
             <span asp-validation-for="ReleaseDate" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="AlbumArtFile" class="form-label"></label>
-            @if (Model.AlbumArtUri is null)
-            {
-                <input asp-for="AlbumArtFile" class="form-control" accept="image/*">
-                <span asp-validation-for="AlbumArtFile" class="text-danger"></span>
-            }
-            else
-            {
-                <input asp-for="AlbumArtFile" class="form-control">
-                <img src="@Model.AlbumArtUri" alt="Album art">
-            }
+            <label asp-for="AlbumArtUploadedFile" class="form-label"></label>
+            <input asp-for="AlbumArtUploadedFile" data-existing-image-uri="@Model.AlbumArtExistingImageUri" accept="image/*" class="form-control">
+            <span asp-validation-for="AlbumArtUploadedFile" class="text-danger"></span>
         </div>
 
     </form>

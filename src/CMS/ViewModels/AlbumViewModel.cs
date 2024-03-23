@@ -19,9 +19,8 @@ public class AlbumViewModel
     [Required]
     public DateOnly? ReleaseDate { get; set; }
 
-    [DataType(DataType.Upload)]
     [Display(Name = "Album Art")]
-    public IFormFile? AlbumArtFile { get; set; }
-
-    public string? AlbumArtUri { get; set; }
+    [DataType(DataType.Upload)]
+    public IFormFile? AlbumArtUploadedFile { get; set; }
+    public string? AlbumArtExistingImageUri { get; set; }
 }
