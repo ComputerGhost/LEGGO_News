@@ -12,16 +12,19 @@ internal class ServiceImplementationAttribute : Attribute
 
     internal Type GetInterface(Type implementation)
     {
+        if (Interface is not null)
+        {
+            return Interface;
+        }
+
         var inherits = implementation.GetInterfaces();
         if (inherits.Length == 1)
         {
             return inherits[0];
         }
-        else
-        {
-            var message = "Service interface is not defined and cannot be deduced.";
-            var paramName = nameof(Interface);
-            throw new ArgumentException(message, paramName);
-        }
+
+        var message = "Service interface is not defined and cannot be deduced.";
+        var paramName = nameof(Interface);
+        throw new ArgumentException(message, paramName);
     }
 }

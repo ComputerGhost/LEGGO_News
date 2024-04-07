@@ -1,0 +1,18 @@
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Core.Common.Database;
+
+[Table("Images")]
+internal class ImageEntity
+{
+    public int Id { get; set; }
+    public int OriginalFileId { get; set; }
+    public int? LargeFileId { get; set; }
+    public int? MediumFileId { get; set; }
+    public int ThumbnailFileId { get; set; }
+
+    public FileEntity OriginalFile { get; set; } = null!;
+    public FileEntity? LargeFile { get; set; }
+    public FileEntity? MediumFile { get; set; }
+    public FileEntity ThumbnailFile { get; set; } = null!;
+}

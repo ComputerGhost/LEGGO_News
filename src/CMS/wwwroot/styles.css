@@ -67,7 +67,7 @@ html, body {
 }
 
 @media (max-width: 768px) {
-    #sidebar-container {
+    #sidebar {
         display: none;
     }
     #not-sidebar {

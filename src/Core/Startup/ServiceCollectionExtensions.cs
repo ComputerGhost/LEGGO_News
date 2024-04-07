@@ -1,5 +1,8 @@
-﻿using FluentValidation;
+﻿using Core.Common.Database;
+using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System.Reflection;
 
 namespace Core.Startup;
@@ -7,15 +10,22 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddCore(this IServiceCollection services, Action<CoreOptions> configure)
     {
+        var assembly = Assembly.GetExecutingAssembly();
+
         return services
             .Configure(configure)
-            .AddOurLibraries()
-            .AddOurServices();
+            .AddOurLibraries(assembly)
+            .AddOurServices(assembly);
     }
 
-    private static IServiceCollection AddOurLibraries(this IServiceCollection services)
+    private static IServiceCollection AddOurLibraries(this IServiceCollection services, Assembly assembly)
     {
-        var assembly = Assembly.GetExecutingAssembly();
+        services.AddDbContext<MyDbContext>(config =>
+        {
+            var serviceProvider = services.BuildServiceProvider();
+            var configuration = serviceProvider.GetRequiredService<IOptions<CoreOptions>>().Value;
+            config.UseSqlServer(configuration.DatabaseConnectionString);
+        });
 
         services.AddMediatR(config =>
         {
@@ -23,15 +33,13 @@ public static class ServiceCollectionExtensions
             config.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
 
-        services.AddValidatorsFromAssembly(assembly);
+        services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
 
         return services;
     }
 
-    private static IServiceCollection AddOurServices(this IServiceCollection services)
+    private static IServiceCollection AddOurServices(this IServiceCollection services, Assembly assembly)
     {
-        var assembly = Assembly.GetExecutingAssembly();
-
         foreach (var type in assembly.GetTypes())
         {
             foreach (var attribute in type.GetCustomAttributes<ServiceImplementationAttribute>())

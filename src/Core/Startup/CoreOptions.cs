@@ -5,5 +5,5 @@ public class CoreOptions
 
     public string FileStoragePath { get; set; } = null!;
 
-    public string FileStorageUrl { get; set; } = null!;
+    public Uri FileStorageUri { get; set; } = null!;
 }

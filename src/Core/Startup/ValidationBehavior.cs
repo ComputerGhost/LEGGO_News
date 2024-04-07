@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Core.Startup;
 internal class ValidationBehavior<TRequest, TResult> : IPipelineBehavior<TRequest, TResult>
-    where TRequest : IRequest<TResult>
+    where TRequest : IBaseRequest
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 

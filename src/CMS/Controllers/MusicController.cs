@@ -1,5 +1,6 @@
 ﻿using CMS.ViewModels;
 using Core.Music;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,33 +19,45 @@ public class MusicController : Controller
         return View();
     }
 
-    public IActionResult Edit(int? id = null)
+    [HttpGet]
+    public async Task<IActionResult> Edit(int? id)
     {
-        var viewModel = new AlbumViewModel();
-        return View(viewModel);
+        if (id == null)
+        {
+            return View(new AlbumViewModel());
+        }
+        else
+        {
+            var albumDto = await _mediator.Send(new GetAlbumQuery(id.Value));
+            return View(new AlbumViewModel(albumDto));
+        }
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit([FromForm] AlbumViewModel viewModel, int? id = null)
+    public async Task<IActionResult> Edit([FromForm] AlbumViewModel viewModel, int? id)
     {
         if (!ModelState.IsValid)
         {
             return View(viewModel);
         }
 
-        if (id == null)
+        try
         {
-            id = await _mediator.Send(new CreateAlbumCommand
+            if (id == null)
             {
-                AlbumType = Enum.Parse<AlbumType>(viewModel.AlbumType),
-                Title = viewModel.Title,
-                Artist = viewModel.Artist,
-                ReleaseDate = viewModel.ReleaseDate!.Value,
-                AlbumArtFileName = viewModel.AlbumArtUploadedFile!.FileName,
-                AlbumArtStream = viewModel.AlbumArtUploadedFile!.OpenReadStream(),
-            });
-        }
+                await _mediator.Send(viewModel.ToCreateAlbumCommand());
+            }
+            else
+            {
+                await _mediator.Send(viewModel.ToUpdateAlbumCommand(id.Value));
+            }
 
-        return RedirectToAction("Edit", new { id });
+            return RedirectToAction(nameof(Index));
+        }
+        catch (ValidationException ex)
+        {
+            viewModel.AddValidationErrors(ModelState, ex);
+            return View(viewModel);
+        }
     }
 }

@@ -11,36 +11,38 @@
             <h1 class="h3">Edit Album</h1>
         </header>
 
-        <div class="mb-3">
-            <label asp-for="Title" class="form-label"></label>
-            <input asp-for="Title" class="form-control">
-            <span asp-validation-for="Title" class="text-danger"></span>
-        </div>
-        <div class="mb-3">
-            <label asp-for="Artist" class="form-label"></label>
-            <input asp-for="Artist" class="form-control">
-            <span asp-validation-for="Artist" class="text-danger"></span>
-        </div>
-        <div class="mb-3">
-            <label asp-for="AlbumType" class="form-label"></label>
-            <select asp-for="AlbumType" class="form-control">
-                <option></option>
-                <option>Album</option>
-                <option>Collaboration</option>
-                <option>OST</option>
-                <option>Single</option>
-            </select>
-            <span asp-validation-for="AlbumType" class="text-danger"></span>
-        </div>
-        <div class="mb-3">
-            <label asp-for="ReleaseDate" class="form-label"></label>
-            <input asp-for="ReleaseDate" class="form-control">
-            <span asp-validation-for="ReleaseDate" class="text-danger"></span>
-        </div>
-        <div class="mb-3">
-            <label asp-for="AlbumArtUploadedFile" class="form-label"></label>
-            <input asp-for="AlbumArtUploadedFile" data-existing-image-uri="@Model.AlbumArtExistingImageUri" accept="image/*" class="form-control">
-            <span asp-validation-for="AlbumArtUploadedFile" class="text-danger"></span>
+        <div class="row">
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control">
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-lg-4">
+                <label asp-for="Artist" class="form-label"></label>
+                <input asp-for="Artist" class="form-control">
+                <span asp-validation-for="Artist" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-lg-4">
+                <label asp-for="AlbumType" class="form-label"></label>
+                <select asp-for="AlbumType" class="form-control">
+                    <option></option>
+                    <option>Album</option>
+                    <option>Collaboration</option>
+                    <option>OST</option>
+                    <option>Single</option>
+                </select>
+                <span asp-validation-for="AlbumType" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-md-4 col-sm-6">
+                <label asp-for="ReleaseDate" class="form-label"></label>
+                <input asp-for="ReleaseDate" class="form-control">
+                <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="AlbumArtUploadedFile" class="form-label"></label>
+                <input asp-for="AlbumArtUploadedFile" data-existing-image-uri="@Model.AlbumArtExistingImageUri" accept="image/*" class="form-control">
+                <span asp-validation-for="AlbumArtUploadedFile" class="text-danger"></span>
+            </div>
         </div>
 
     </form>

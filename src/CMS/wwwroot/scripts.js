@@ -8,7 +8,9 @@ $(document).ready(function () {
             class: "img-thumbnail",
             src: $element.data("existing-image-uri") || SMALL_INLINE_GIF,
         });
-        this.$img.insertAfter($element);
+
+        var $validationError = $element.next();
+        this.$img.insertAfter($validationError);
 
         $element.change((event) => {
             if (event.target.files.length > 0) {
