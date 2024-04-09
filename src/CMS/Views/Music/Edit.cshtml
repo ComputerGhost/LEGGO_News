@@ -1,13 +1,22 @@
-﻿@model AlbumViewModel;
+﻿@model MusicEditViewModel;
 
 <div class="container">
     <form method="post" enctype="multipart/form-data" autocomplete="off">
 
         <header class="mb-3">
-            <button type="submit" class="btn btn-primary float-end">
-                <i class="fa-solid fa-save fa-fw"></i>
-                <span class="visually-hidden">Save album</span>
-            </button>
+            <div class="float-end">
+                @if (Model.CanDelete)
+                {
+                    <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#delete-dialog">
+                        <i class="fa-solid fa-trash fa-fw"></i>
+                        <span class="visually-hidden">Delete album</span>
+                    </button>
+                }
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa-solid fa-save fa-fw"></i>
+                    <span class="visually-hidden">Save album</span>
+                </button>
+            </div>
             <h1 class="h3">Edit Album</h1>
         </header>
 
@@ -40,10 +49,45 @@
             </div>
             <div class="mb-3">
                 <label asp-for="AlbumArtUploadedFile" class="form-label"></label>
-                <input asp-for="AlbumArtUploadedFile" data-existing-image-uri="@Model.AlbumArtExistingImageUri" accept="image/*" class="form-control">
+                <input asp-for="AlbumArtUploadedFile" data-existing-image-uri="@Model.AlbumArtExistingImageUrl" accept="image/*" class="form-control">
                 <span asp-validation-for="AlbumArtUploadedFile" class="text-danger"></span>
             </div>
         </div>
 
     </form>
 </div>
+
+<div id="delete-dialog" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="dialog-title fs-5">Confirm deletion</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this album?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button id="confirm-delete-button" type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function() {
+            $("#confirm-delete-button").click(() => {
+                var deleteUrl = "@Url.Action("Delete", new { id = Model.AlbumId })";
+                $.ajax({
+                    url: deleteUrl,
+                    method: "DELETE",
+                })
+
+                var indexUrl = window.location.toString().endsWith("/") ? "../../" : "../";
+                window.location.replace(indexUrl);
+            });
+        });
+    </script>
+}

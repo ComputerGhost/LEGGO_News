@@ -1,5 +1,5 @@
 ﻿namespace Core.ImageStorage;
-internal enum ImageWidth
+public enum ImageWidth
 {
     Original,
     Large,

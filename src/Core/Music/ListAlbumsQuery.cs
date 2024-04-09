@@ -1,5 +1,4 @@
 ﻿using Core.Common.Database;
-using Core.Images.Storage;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using static Core.Music.ListAlbumsQuery;
@@ -11,29 +10,27 @@ public class ListAlbumsQuery : IRequest<IEnumerable<ResponseItemDto>>
 
     public class ResponseItemDto
     {
+        public int Id { get; set; }
         public AlbumType AlbumType { get; set; }
         public string Title { get; set; } = null!;
         public string Artist { get; set; } = null!;
         public DateOnly ReleaseDate { get; set; }
-        public Uri AlbumArtUri { get; set; } = null!;
+        public int AlbumArtImageId { get; set; }
     }
 
     private class CommandHandler : IRequestHandler<ListAlbumsQuery, IEnumerable<ResponseItemDto>>
     {
         private readonly MyDbContext _dbContext;
-        private readonly IImageLocator _imageLocator;
 
-        public CommandHandler(MyDbContext dbContext, IImageLocator imageLocator)
+        public CommandHandler(MyDbContext dbContext)
         {
             _dbContext = dbContext;
-            _imageLocator = imageLocator;
         }
 
         public async Task<IEnumerable<ResponseItemDto>> Handle(ListAlbumsQuery request, CancellationToken cancellationToken)
         {
             IQueryable<AlbumEntity> query = _dbContext.Albums
-                .Include(album => album.AlbumType)
-                .Include(album => album.Image).ThenInclude(image => image.ThumbnailFile);
+                .Include(album => album.AlbumType);
 
             if (request.AlbumType != null)
             {
@@ -48,11 +45,12 @@ public class ListAlbumsQuery : IRequest<IEnumerable<ResponseItemDto>>
         {
             return new ResponseItemDto
             {
+                Id = entity.Id,
                 AlbumType = Enum.Parse<AlbumType>(entity.AlbumType.Name),
                 Title = entity.Title,
                 Artist = entity.Artist,
                 ReleaseDate = entity.ReleaseDate,
-                AlbumArtUri = _imageLocator.GetUri(entity.Image),
+                AlbumArtImageId = entity.ImageId,
             };
         }
 

@@ -1,4 +1,5 @@
 ﻿using CMS.ViewModels;
+using Core.Common;
 using Core.Music;
 using FluentValidation;
 using MediatR;
@@ -14,27 +15,35 @@ public class MusicController : Controller
         _mediator = mediator;
     }
 
-    public IActionResult Index()
+    [HttpGet]
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var albums = await _mediator.Send(new ListAlbumsQuery());
+        return View(new MusicIndexViewModel(albums));
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            await _mediator.Send(new DeleteAlbumCommand(id));
+            return Ok();
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
+        }
     }
 
     [HttpGet]
-    public async Task<IActionResult> Edit(int? id)
+    public IActionResult Create()
     {
-        if (id == null)
-        {
-            return View(new AlbumViewModel());
-        }
-        else
-        {
-            var albumDto = await _mediator.Send(new GetAlbumQuery(id.Value));
-            return View(new AlbumViewModel(albumDto));
-        }
+        return View(new MusicEditViewModel());
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit([FromForm] AlbumViewModel viewModel, int? id)
+    public async Task<IActionResult> Create([FromForm] MusicEditViewModel viewModel)
     {
         if (!ModelState.IsValid)
         {
@@ -43,21 +52,51 @@ public class MusicController : Controller
 
         try
         {
-            if (id == null)
-            {
-                await _mediator.Send(viewModel.ToCreateAlbumCommand());
-            }
-            else
-            {
-                await _mediator.Send(viewModel.ToUpdateAlbumCommand(id.Value));
-            }
-
+            await _mediator.Send(viewModel.ToCreateAlbumCommand());
             return RedirectToAction(nameof(Index));
         }
         catch (ValidationException ex)
         {
             viewModel.AddValidationErrors(ModelState, ex);
             return View(viewModel);
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+        try
+        {
+            var albumDto = await _mediator.Send(new GetAlbumQuery(id));
+            return View(new MusicEditViewModel(Url, albumDto));
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit([FromForm] MusicEditViewModel viewModel, int id)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(viewModel);
+        }
+
+        try
+        {
+            await _mediator.Send(viewModel.ToUpdateAlbumCommand(id));
+            return RedirectToAction(nameof(Index));
+        }
+        catch (ValidationException ex)
+        {
+            viewModel.AddValidationErrors(ModelState, ex);
+            return View(viewModel);
+        }
+        catch (NotFoundException)
+        {
+            return NotFound();
         }
     }
 }

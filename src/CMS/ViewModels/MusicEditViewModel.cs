@@ -1,22 +1,39 @@
-﻿using Core.Images;
+﻿using CMS.Extensions;
+using Core.Images;
 using Core.Music;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel.DataAnnotations;
 using FluentValidationException = FluentValidation.ValidationException;
 
 namespace CMS.ViewModels;
-public class AlbumViewModel
+public class MusicEditViewModel
 {
-    public AlbumViewModel() { }
-
-    public AlbumViewModel(GetAlbumQuery.ResponseDto albumDto)
+    public MusicEditViewModel()
     {
+        // It is a new album.
+        AlbumId = null;
+        CanDelete = false;
+    }
+
+    public MusicEditViewModel(
+        IUrlHelper urlHelper, 
+        GetAlbumQuery.ResponseDto albumDto)
+    {
+        // It is an existing album.
+        AlbumId = albumDto.Id;
+        CanDelete = true;
+
         AlbumType = albumDto.AlbumType.ToString();
         Title = albumDto.Title;
         Artist = albumDto.Artist;
         ReleaseDate = albumDto.ReleaseDate;
-        AlbumArtExistingImageUri = albumDto.AlbumArtUri;
+        AlbumArtExistingImageUrl = urlHelper.GetThumbnailUrl(albumDto.AlbumArtImageId);
     }
+
+    public bool CanDelete { get; init; }
+
+    public int? AlbumId { get; init; }
 
     [Required]
     [StringLength(50)]
@@ -37,7 +54,7 @@ public class AlbumViewModel
     [Display(Name = "Album Art")]
     [DataType(DataType.Upload)]
     public IFormFile? AlbumArtUploadedFile { get; set; }
-    public Uri? AlbumArtExistingImageUri { get; set; }
+    public string? AlbumArtExistingImageUrl { get; set; }
 
     public void AddValidationErrors(ModelStateDictionary modelState, FluentValidationException validationException)
     {

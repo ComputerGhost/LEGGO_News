@@ -1,25 +1,35 @@
-﻿<div class="container">
+﻿@using CMS.Extensions
+@model MusicIndexViewModel;
+
+<div class="container">
 
     <header class="mb-3">
-        <a class="btn btn-primary float-end" asp-controller="Music" asp-action="Edit">
+        <a class="btn btn-primary float-end" asp-controller="Music" asp-action="Create">
             <i class="fa-solid fa-plus fa-fw"></i>
             <span class="visually-hidden">Add album</span>
         </a>
         <h1 class="h3">Albums</h1>
     </header>
 
-    <div class="row border rounded my-3">
-        <div class="col">
-            img
-        </div>
-        <div class="col">
-            <h5>Title of Album</h5>
-            <div>Author</div>
-        </div>
-        <div class="col">
-            <div>Edit</div>
-            <div>Delete</div>
-        </div>
-    </div>
+    @if (!Model.Albums.Any())
+    {
+    }
+
+    @foreach (var album in Model.Albums)
+    {
+        <a asp-action="Edit" asp-route-id="@album.Id" 
+            class="d-inline-block me-2 mb-2">
+            <img 
+                class="rounded" 
+                alt="Album art" 
+                src="@Url.GetThumbnailUrl(album.AlbumArtImageId)"
+                style="width: 150px"
+            >
+            <div>
+                <div>@album.Title</div>
+                <div class="text-muted">by @album.Artist</div>
+            </div>
+        </a>
+    }
 
 </div>

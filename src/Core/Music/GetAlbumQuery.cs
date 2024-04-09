@@ -1,5 +1,6 @@
-﻿using Core.Common.Database;
-using Core.Images.Storage;
+﻿using Azure.Core;
+using Core.Common;
+using Core.Common.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using static Core.Music.GetAlbumQuery;
@@ -16,6 +17,8 @@ public class GetAlbumQuery : IRequest<ResponseDto>
 
     public class ResponseDto
     {
+        public int Id { get; set; }
+
         public AlbumType AlbumType { get; set; }
 
         public string Title { get; set; } = null!;
@@ -24,35 +27,42 @@ public class GetAlbumQuery : IRequest<ResponseDto>
 
         public DateOnly ReleaseDate { get; set; }
 
-        public Uri AlbumArtUri { get; set; } = null!;
+        public int AlbumArtImageId { get; set; }
     }
 
     private class CommandHandler : IRequestHandler<GetAlbumQuery, ResponseDto>
     {
         private readonly MyDbContext _dbContext;
-        private readonly IImageLocator _imageLocator;
 
-        public CommandHandler(MyDbContext dbContext, IImageLocator imageLocator)
+        public CommandHandler(MyDbContext dbContext)
         {
             _dbContext = dbContext;
-            _imageLocator = imageLocator;
         }
 
         public async Task<ResponseDto> Handle(GetAlbumQuery request, CancellationToken cancellationToken)
         {
-            var albumEntity = await _dbContext.Albums
-                .Include(album => album.AlbumType)
-                .Include(album => album.Image).ThenInclude(image => image.ThumbnailFile)
-                .SingleAsync(album => album.Id == request.Id);
+            var albumEntity = await GetAlbum(request.Id);
+            if (albumEntity == null)
+            {
+                throw new NotFoundException();
+            }
 
             return new ResponseDto
             {
+                Id = albumEntity.Id,
                 AlbumType = Enum.Parse<AlbumType>(albumEntity.AlbumType.Name),
                 Title = albumEntity.Title,
                 Artist = albumEntity.Artist,
                 ReleaseDate = albumEntity.ReleaseDate,
-                AlbumArtUri = _imageLocator.GetUri(albumEntity.Image),
+                AlbumArtImageId = albumEntity.ImageId,
             };
+        }
+
+        private Task<AlbumEntity?> GetAlbum(int id)
+        {
+            return _dbContext.Albums
+                .Include(album => album.AlbumType)
+                .SingleOrDefaultAsync(album => album.Id == id);
         }
     }
 }
