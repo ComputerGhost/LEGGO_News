@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CMS.Controllers;
 public class MusicController : Controller
 {
-    private IMediator _mediator;
+    private readonly IMediator _mediator;
 
     public MusicController(IMediator mediator)
     {

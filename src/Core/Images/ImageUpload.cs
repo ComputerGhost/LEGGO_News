@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using Core.Images.Operations;
+using FluentValidation;
+using SkiaSharp;
 using System.Text.RegularExpressions;
 
 namespace Core.Images;
@@ -9,32 +11,61 @@ public class ImageUpload
 
     internal class Validator : AbstractValidator<ImageUpload>
     {
+        private static string[] ReservedFileNames = [
+            "AUX", "CON", "NUL", "PRN",
+            "COM0", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "COM¹", "COM²", "COM³",
+            "LPT0", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9", "LPT¹", "LPT²", "LPT³"
+        ];
+
         public Validator()
         {
             RuleFor(upload => upload.FileName)
-                .NotEmpty()
-                .MaximumLength(255)
-                .Must(IsValidFileName).WithMessage("The filename is not valid.");
+                .Cascade(CascadeMode.Stop)
+                .Length(0, 255)
+                .Must(IsNotReservedFileName).WithMessage("The file name cannot be a reserved a file name.")
+                .Must(IsValidFileName).WithMessage("The file name is not valid.")
+                .Must(IsValidFileExtension).WithMessage("The file extension is not supported.");
 
             RuleFor(upload => upload.Stream)
-                .Must((imageUpload, stream, context) => CanLoadImage(context, imageUpload))
-                .WithMessage("Unable to load image. {Exceptionmessage}");
+                .Must(CanLoadImage).WithMessage("Unable to load image.");
         }
 
-        private bool CanLoadImage(ValidationContext<ImageUpload> context, ImageUpload imageUpload)
+        private bool CanLoadImage(Stream stream)
         {
             try
             {
-                var _ = new Image(imageUpload.Stream, imageUpload.FileName);
+                using var image = SKImage.FromEncodedData(stream);
+                if (image == null)
+                {
+                    throw new Exception();
+                }
+;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+            }
+        }
 
-                // Reset stream because we're throwing away the Image we just created.
-                imageUpload.Stream.Seek(0, SeekOrigin.Begin);
+        private bool IsValidFileExtension(string fileName)
+        {
+            try
+            {
+                var extension = Path.GetExtension(fileName);
+                if (!FormattingSubsystem.SupportedExtensions.Contains(extension))
+                {
+                    throw new Exception();
+                }
 
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
-                context.MessageFormatter.AppendArgument("ExceptionMessage", ex.Message);
                 return false;
             }
         }
@@ -44,6 +75,11 @@ public class ImageUpload
             var invalidChars = new string(Path.GetInvalidFileNameChars());
             var pattern = "[" + Regex.Escape(invalidChars) + "]";
             return !Regex.IsMatch(fileName, pattern);
+        }
+
+        private bool IsNotReservedFileName(string fileName)
+        {
+            return !ReservedFileNames.Contains(fileName.ToUpper());
         }
     }
 }

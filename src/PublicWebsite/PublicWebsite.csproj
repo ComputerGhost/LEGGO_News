@@ -7,7 +7,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Music\Albums.cshtml" />
+    <Content Remove="Views\Music\Collabs.cshtml" />
+    <Content Remove="Views\Music\Index.cshtml" />
+    <Content Remove="Views\Music\OSTs.cshtml" />
+    <Content Remove="Views\Music\Singles.cshtml" />
+    <Content Remove="Views\Music\_ViewImports.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\discography\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Music\Albums.cshtml" />
+    <None Include="Views\Music\Collabs.cshtml" />
+    <None Include="Views\Music\Index.cshtml" />
+    <None Include="Views\Music\OSTs.cshtml" />
+    <None Include="Views\Music\Singles.cshtml" />
+    <None Include="Views\Music\_ViewImports.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
 
 </Project>

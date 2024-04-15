@@ -11,8 +11,8 @@ internal class ImageEntity
     public int? MediumFileId { get; set; }
     public int ThumbnailFileId { get; set; }
 
-    public FileEntity OriginalFile { get; set; } = null!;
-    public FileEntity? LargeFile { get; set; }
-    public FileEntity? MediumFile { get; set; }
-    public FileEntity ThumbnailFile { get; set; } = null!;
+    public virtual FileEntity OriginalFile { get; set; } = null!;
+    public virtual FileEntity? LargeFile { get; set; }
+    public virtual FileEntity? MediumFile { get; set; }
+    public virtual FileEntity ThumbnailFile { get; set; } = null!;
 }

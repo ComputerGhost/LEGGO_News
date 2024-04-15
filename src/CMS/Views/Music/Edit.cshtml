@@ -84,9 +84,10 @@
                     url: deleteUrl,
                     method: "DELETE",
                 })
-
-                var indexUrl = window.location.toString().endsWith("/") ? "../../" : "../";
-                window.location.replace(indexUrl);
+                    .done(() => {
+                        var indexUrl = window.location.toString().endsWith("/") ? "../../" : "../";
+                        window.location.replace(indexUrl);
+                    });
             });
         });
     </script>

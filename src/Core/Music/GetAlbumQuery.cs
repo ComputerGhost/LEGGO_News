@@ -1,6 +1,6 @@
-﻿using Azure.Core;
-using Core.Common;
+﻿using Core.Common;
 using Core.Common.Database;
+using Core.Startup;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using static Core.Music.GetAlbumQuery;
@@ -14,6 +14,29 @@ public class GetAlbumQuery : IRequest<ResponseDto>
     }
 
     public int Id { get; set; }
+
+    internal interface IDatabasePort
+    {
+        Task<AlbumEntity?> FetchAlbum(int id);
+    }
+
+    [ServiceImplementation]
+    private class DatabaseAdapter : IDatabasePort
+    {
+        private readonly MyDbContext _dbContext;
+
+        public DatabaseAdapter(MyDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public Task<AlbumEntity?> FetchAlbum(int id)
+        {
+            return _dbContext.Albums
+                .Include(album => album.AlbumType)
+                .SingleOrDefaultAsync(x => x.Id == id);
+        }
+    }
 
     public class ResponseDto
     {
@@ -30,18 +53,18 @@ public class GetAlbumQuery : IRequest<ResponseDto>
         public int AlbumArtImageId { get; set; }
     }
 
-    private class CommandHandler : IRequestHandler<GetAlbumQuery, ResponseDto>
+    internal class Handler : IRequestHandler<GetAlbumQuery, ResponseDto>
     {
-        private readonly MyDbContext _dbContext;
+        private readonly IDatabasePort _databaseAdapter;
 
-        public CommandHandler(MyDbContext dbContext)
+        public Handler(IDatabasePort databaseAdapter)
         {
-            _dbContext = dbContext;
+            _databaseAdapter = databaseAdapter;
         }
 
         public async Task<ResponseDto> Handle(GetAlbumQuery request, CancellationToken cancellationToken)
         {
-            var albumEntity = await GetAlbum(request.Id);
+            var albumEntity = await _databaseAdapter.FetchAlbum(request.Id);
             if (albumEntity == null)
             {
                 throw new NotFoundException();
@@ -56,13 +79,6 @@ public class GetAlbumQuery : IRequest<ResponseDto>
                 ReleaseDate = albumEntity.ReleaseDate,
                 AlbumArtImageId = albumEntity.ImageId,
             };
-        }
-
-        private Task<AlbumEntity?> GetAlbum(int id)
-        {
-            return _dbContext.Albums
-                .Include(album => album.AlbumType)
-                .SingleOrDefaultAsync(album => album.Id == id);
         }
     }
 }

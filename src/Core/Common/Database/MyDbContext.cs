@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core.Startup;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Core.Common.Database;
 internal class MyDbContext : DbContext
@@ -8,8 +11,21 @@ internal class MyDbContext : DbContext
     {
     }
 
-    public DbSet<AlbumEntity> Albums { get; set; } = null!;
-    public DbSet<AlbumTypeEntity> AlbumTypes { get; set; } = null!;
-    public DbSet<FileEntity> Files { get; set; } = null!;
-    public DbSet<ImageEntity> Images { get; set; } = null!;
+    public virtual DbSet<AlbumEntity> Albums { get; set; } = null!;
+    public virtual DbSet<AlbumTypeEntity> AlbumTypes { get; set; } = null!;
+    public virtual DbSet<FileEntity> Files { get; set; } = null!;
+    public virtual DbSet<ImageEntity> Images { get; set; } = null!;
+}
+
+internal static class MyDbContextExtensions
+{
+    public static IServiceCollection AddMyDatabase(this IServiceCollection services)
+    {
+        return services.AddDbContext<MyDbContext>(config =>
+        {
+            var serviceProvider = services.BuildServiceProvider();
+            var options = serviceProvider.GetRequiredService<IOptions<CoreOptions>>().Value;
+            config.UseSqlServer(options.DatabaseConnectionString);
+        });
+    }
 }

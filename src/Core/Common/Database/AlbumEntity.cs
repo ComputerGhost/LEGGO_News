@@ -12,6 +12,6 @@ internal class AlbumEntity
     public string Artist { get; set; } = null!;
     public DateOnly ReleaseDate { get; set; }
 
-    public AlbumTypeEntity AlbumType { get; set; } = null!;
-    public ImageEntity Image { get; set; } = null!;
+    public virtual AlbumTypeEntity AlbumType { get; set; } = null!;
+    public virtual ImageEntity Image { get; set; } = null!;
 }

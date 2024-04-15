@@ -1,6 +1,8 @@
-﻿using Core.Common.Database;
+﻿using Core.Common;
+using Core.Common.Database;
 using Core.Images;
-using Core.Images.Storage;
+using Core.Images.Operations;
+using Core.Startup;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -20,47 +22,77 @@ public class UpdateAlbumCommand : IRequest
 
     public ImageUpload? AlbumArt { get; set; }
 
-    private class CommandHandler : IRequestHandler<UpdateAlbumCommand>
+    internal interface IDatabasePort
     {
-        private readonly IImageSaver _imageStore;
+        Task<AlbumEntity?> FetchAlbum(int id);
+        Task<AlbumTypeEntity> FetchAlbumType(string name);
+        Task SaveChanges();
+    }
+
+    [ServiceImplementation]
+    private class DatabaseAdapter : IDatabasePort
+    {
         private readonly MyDbContext _dbContext;
 
-        public CommandHandler(MyDbContext dbContext, IImageSaver imageStore)
+        public DatabaseAdapter(MyDbContext dbContext)
         {
             _dbContext = dbContext;
-            _imageStore = imageStore;
+        }
+
+        public Task<AlbumEntity?> FetchAlbum(int id)
+        {
+            return _dbContext.Albums
+                .Include(album => album.AlbumType)
+                .SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        public Task<AlbumTypeEntity> FetchAlbumType(string name)
+        {
+            return _dbContext.AlbumTypes.SingleAsync(x => x.Name == name);
+        }
+
+        public Task SaveChanges()
+        {
+            return _dbContext.SaveChangesAsync();
+        }
+    }
+
+    internal class Handler : IRequestHandler<UpdateAlbumCommand>
+    {
+        private readonly IImagingFacade _imagingFacade;
+        private readonly IDatabasePort _databaseAdapter;
+
+        public Handler(IImagingFacade imagingFacade, IDatabasePort databaseAdapter)
+        {
+            _imagingFacade = imagingFacade;
+            _databaseAdapter = databaseAdapter;
         }
 
         public async Task Handle(UpdateAlbumCommand request, CancellationToken cancellationToken)
         {
-            var existingAlbum = await GetAlbum(request.Id);
-            existingAlbum.AlbumType = await GetAlbumType(request.AlbumType.ToString());
+            var existingAlbum = await _databaseAdapter.FetchAlbum(request.Id);
+            if (existingAlbum == null)
+            {
+                throw new NotFoundException();
+            }
+
+            existingAlbum.AlbumType = await _databaseAdapter.FetchAlbumType(request.AlbumType.ToString());
             existingAlbum.Title = request.Title;
             existingAlbum.Artist = request.Artist;
             existingAlbum.ReleaseDate = request.ReleaseDate;
 
             if (request.AlbumArt != null)
             {
-                existingAlbum.Image = await _imageStore.Create(request.AlbumArt);
+                existingAlbum.Image = await _imagingFacade.SaveToFileSystem(request.AlbumArt);
             }
 
-            await _dbContext.SaveChangesAsync();
-        }
-
-        private Task<AlbumEntity> GetAlbum(int id)
-        {
-            return _dbContext.Albums.SingleAsync(album => album.Id == id);
-        }
-
-        private Task<AlbumTypeEntity> GetAlbumType(string name)
-        {
-            return _dbContext.AlbumTypes.SingleAsync(albumType => albumType.Name == name);
+            await _databaseAdapter.SaveChanges();
         }
     }
 
-    private class CommandValidator : AbstractValidator<UpdateAlbumCommand>
+    internal class Validator : AbstractValidator<UpdateAlbumCommand>
     {
-        public CommandValidator(IValidator<ImageUpload> imageUploadValidator)
+        public Validator(IValidator<ImageUpload> imageUploadValidator)
         {
             RuleFor(command => command.Title)
                 .MaximumLength(50);

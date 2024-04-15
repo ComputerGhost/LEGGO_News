@@ -17,8 +17,6 @@ internal static class ImageWidthExtensions
             ImageWidth.Large => 1024,
             ImageWidth.Medium => 300,
             ImageWidth.Thumbnail => 150,
-
-            // This should never happen, but it's needed to resolve the CS8524 warning.
             _ => throw new Exception("Unexpected image width.")
         }; ;
     }

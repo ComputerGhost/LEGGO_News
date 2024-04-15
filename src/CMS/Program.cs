@@ -6,7 +6,7 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddMvc();
 builder.Services.AddCore(options =>
 {
-    builder.Configuration.GetSection("Core").Bind(options);
+    builder.Configuration.Bind("Core", options);
 });
 
 var app = builder.Build();

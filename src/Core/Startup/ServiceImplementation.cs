@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Core.Startup;
+
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 internal class ServiceImplementationAttribute : Attribute
 {
     /// <remarks>
@@ -8,7 +11,7 @@ internal class ServiceImplementationAttribute : Attribute
     /// </remarks>
     public Type? Interface { get; set; } = null;
 
-    public ServiceLifetime Lifetime { get; set; }
+    public ServiceLifetime Lifetime { get; set; } = ServiceLifetime.Scoped;
 
     internal Type GetInterface(Type implementation)
     {
@@ -26,5 +29,21 @@ internal class ServiceImplementationAttribute : Attribute
         var message = "Service interface is not defined and cannot be deduced.";
         var paramName = nameof(Interface);
         throw new ArgumentException(message, paramName);
+    }
+}
+
+internal static class ServiceImplementationExtensions
+{
+    public static IServiceCollection AddServiceImplementations(this IServiceCollection services, Assembly assembly)
+    {
+        foreach (var type in assembly.GetTypes())
+        {
+            foreach (var attribute in type.GetCustomAttributes<ServiceImplementationAttribute>())
+            {
+                services.Add(new ServiceDescriptor(attribute.GetInterface(type), type, attribute.Lifetime));
+            }
+        }
+
+        return services;
     }
 }

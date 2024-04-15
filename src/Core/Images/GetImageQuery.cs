@@ -1,10 +1,10 @@
 ﻿using Core.Common;
 using Core.Common.Database;
+using Core.Common.Ports;
 using Core.ImageStorage;
 using Core.Startup;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using static Core.Images.GetImageQuery;
 
 namespace Core.Images;
@@ -27,20 +27,53 @@ public class GetImageQuery : IRequest<ResponseDto>
         public Stream Stream { get; set; } = null!;
     }
 
-    private class CommandHandler : IRequestHandler<GetImageQuery, ResponseDto>
+    internal interface IDatabasePort
+    {
+        Task<FileEntity?> FetchFile(int fileId);
+        Task<ImageEntity?> FetchImage(int imageId);
+    }
+
+    [ServiceImplementation]
+    private class DatabaseAdapter : IDatabasePort
     {
         private readonly MyDbContext _dbContext;
-        private readonly string _storagePath = null!;
 
-        public CommandHandler(MyDbContext dbContext, IOptions<CoreOptions> options)
+        public DatabaseAdapter(MyDbContext dbContext)
         {
             _dbContext = dbContext;
-            _storagePath = options.Value.FileStoragePath;
+        }
+
+        public Task<FileEntity?> FetchFile(int fileId)
+        {
+            return _dbContext.Files.SingleOrDefaultAsync(x => x.Id == fileId);
+        }
+
+        public Task<ImageEntity?> FetchImage(int imageId)
+        {
+            return _dbContext.Images.SingleOrDefaultAsync(x => x.Id == imageId);
+        }
+    }
+
+    internal class Handler : IRequestHandler<GetImageQuery, ResponseDto>
+    {
+        private readonly IDatabasePort _databaseAdapter;
+        private readonly IFileSystemPort _fileSystemPort;
+
+        public Handler(IDatabasePort databasePort, IFileSystemPort fileSystemPort)
+        {
+            _databaseAdapter = databasePort;
+            _fileSystemPort = fileSystemPort;
         }
 
         public async Task<ResponseDto> Handle(GetImageQuery request, CancellationToken cancellationToken)
         {
-            var fileEntity = await GetFile(request.Id, request.Width);
+            var imageEntity = await _databaseAdapter.FetchImage(request.Id);
+            if (imageEntity == null)
+            {
+                throw new NotFoundException();
+            }
+
+            var fileEntity = await GetFile(imageEntity, request.Width);
             if (fileEntity == null)
             {
                 throw new NotFoundException();
@@ -50,23 +83,27 @@ public class GetImageQuery : IRequest<ResponseDto>
             {
                 FileName = fileEntity.PublicFileName,
                 MimeType = GetMimeType(fileEntity.PublicFileName),
-                Stream = LoadFile(fileEntity.PrivateFileName),
+                Stream = await _fileSystemPort.LoadFile(fileEntity.PrivateFileName),
             };
         }
 
-        private async Task<FileEntity?> GetFile(int imageId, ImageWidth width)
+        private async Task<FileEntity?> GetFile(ImageEntity imageEntity, ImageWidth width)
         {
-            var fileIdColumn = width switch
+            var fileId = width switch
             {
-                ImageWidth.Thumbnail => "ThumbnailFileId",
-                ImageWidth.Medium => "MediumFileId",
-                ImageWidth.Large => "LargeFileId",
-                ImageWidth.Original => "OriginalFileId",
+                ImageWidth.Thumbnail => imageEntity.ThumbnailFileId,
+                ImageWidth.Medium => imageEntity.MediumFileId,
+                ImageWidth.Large => imageEntity.LargeFileId,
+                ImageWidth.Original => imageEntity.OriginalFileId,
                 _ => throw new NotImplementedException()
             };
 
-            var sql = $"SELECT Files.* FROM Images JOIN Files ON Images.{fileIdColumn} = Files.Id WHERE Images.Id = {{0}}";
-            return await _dbContext.Files.FromSqlRaw(sql, imageId).SingleAsync();
+            if (fileId == null)
+            {
+                return null;
+            }
+
+            return await _databaseAdapter.FetchFile(fileId.Value);
         }
 
         private string GetMimeType(string publicFileName)
@@ -76,13 +113,9 @@ public class GetImageQuery : IRequest<ResponseDto>
                 ".jpeg" => "image/jpeg",
                 ".jpg" => "image/jpeg",
                 ".png" => "image/png",
+                ".webp" => "image/webp",
                 _ => throw new NotImplementedException("Cannot deduce mime type of hosted file."),
             };
-        }
-
-        private Stream LoadFile(string serverFileName)
-        {
-            return File.OpenRead(Path.Combine(_storagePath, serverFileName));
         }
     }
 }

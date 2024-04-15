@@ -1,6 +1,7 @@
 ﻿using Core.Common.Database;
 using Core.Images;
-using Core.Images.Storage;
+using Core.Images.Operations;
+using Core.Startup;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -18,43 +19,62 @@ public class CreateAlbumCommand : IRequest<int>
 
     public ImageUpload AlbumArt { get; set; } = null!;
 
-    private class CommandHandler : IRequestHandler<CreateAlbumCommand, int>
+    internal interface IDatabasePort
     {
-        private readonly IImageSaver _imageSaver;
+        Task<int> Create(AlbumEntity albumEntity);
+        Task<AlbumTypeEntity> FetchAlbumType(string name);
+    }
+
+    [ServiceImplementation]
+    private class DatabaseAdapter : IDatabasePort
+    {
         private readonly MyDbContext _dbContext;
 
-        public CommandHandler(MyDbContext dbContext, IImageSaver imageSaver)
+        public DatabaseAdapter(MyDbContext dbContext)
         {
             _dbContext = dbContext;
-            _imageSaver = imageSaver;
+        }
+
+        public async Task<int> Create(AlbumEntity albumEntity)
+        {
+            _dbContext.Add(albumEntity);
+            await _dbContext.SaveChangesAsync();
+            return albumEntity.Id;
+        }
+
+        public Task<AlbumTypeEntity> FetchAlbumType(string name)
+        {
+            return _dbContext.AlbumTypes.SingleAsync(x => x.Name == name);
+        }
+    }
+
+    internal class Handler : IRequestHandler<CreateAlbumCommand, int>
+    {
+        private readonly IImagingFacade _imagingFacade;
+        private readonly IDatabasePort _databaseAdapter;
+
+        public Handler(IImagingFacade imagingFacade, IDatabasePort databaseAdapter)
+        {
+            _imagingFacade = imagingFacade;
+            _databaseAdapter = databaseAdapter;
         }
 
         public async Task<int> Handle(CreateAlbumCommand request, CancellationToken cancellationToken)
         {
-            var albumEntity = new AlbumEntity
+            return await _databaseAdapter.Create(new AlbumEntity
             {
-                AlbumType = await GetAlbumType(request.AlbumType.ToString()),
+                AlbumType = await _databaseAdapter.FetchAlbumType(request.AlbumType.ToString()),
                 Title = request.Title,
                 Artist = request.Artist,
                 ReleaseDate = request.ReleaseDate,
-                Image = await _imageSaver.Create(request.AlbumArt),
-            };
-
-            _dbContext.Add(albumEntity);
-            await _dbContext.SaveChangesAsync();
-
-            return albumEntity.Id;
-        }
-
-        private Task<AlbumTypeEntity> GetAlbumType(string name)
-        {
-            return _dbContext.AlbumTypes.SingleAsync(albumType => albumType.Name == name);
+                Image = await _imagingFacade.SaveToFileSystem(request.AlbumArt),
+            });
         }
     }
 
-    private class CommandValidator : AbstractValidator<CreateAlbumCommand>
+    internal class Validator : AbstractValidator<CreateAlbumCommand>
     {
-        public CommandValidator(IValidator<ImageUpload> imageUploadValidator)
+        public Validator(IValidator<ImageUpload> imageUploadValidator)
         {
             RuleFor(command => command.Title)
                 .MaximumLength(50);
