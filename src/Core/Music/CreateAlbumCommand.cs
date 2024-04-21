@@ -77,10 +77,10 @@ public class CreateAlbumCommand : IRequest<int>
         public Validator(IValidator<ImageUpload> imageUploadValidator)
         {
             RuleFor(command => command.Title)
-                .MaximumLength(50);
+                .Length(1, 50);
 
             RuleFor(command => command.Artist)
-                .MaximumLength(50);
+                .Length(1, 50);
 
             RuleFor(command => command.AlbumArt)
                 .NotNull()
