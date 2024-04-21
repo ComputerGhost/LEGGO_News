@@ -1,6 +1,7 @@
 ﻿using Core.Common.Database;
 using Core.Common.Ports;
 using FluentValidation;
+using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
