@@ -1,8 +1,7 @@
 ﻿using Core.Common;
 using Core.Common.Database;
-using Core.Common.Ports;
+using Core.Common.Imaging;
 using Core.Images;
-using Core.ImageStorage;
 using Moq;
 
 namespace Core.UnitTests.Images;

@@ -1,4 +1,4 @@
-﻿using Core.Images;
+﻿using Core.Common.Imaging;
 
 namespace Core.UnitTests.Images;
 

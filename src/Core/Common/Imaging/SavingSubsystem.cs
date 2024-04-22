@@ -1,9 +1,7 @@
 ﻿using Core.Common.Database;
-using Core.Common.Ports;
-using Core.ImageStorage;
 using SkiaSharp;
 
-namespace Core.Images.Operations;
+namespace Core.Common.Imaging;
 internal class SavingSubsystem : IDisposable
 {
     private readonly string _fileName;

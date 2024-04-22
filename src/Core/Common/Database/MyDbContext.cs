@@ -15,6 +15,7 @@ internal class MyDbContext : DbContext
     public virtual DbSet<AlbumTypeEntity> AlbumTypes { get; set; } = null!;
     public virtual DbSet<FileEntity> Files { get; set; } = null!;
     public virtual DbSet<ImageEntity> Images { get; set; } = null!;
+    public virtual DbSet<UserEntity> Users { get; set; } = null!;
 }
 
 internal static class MyDbContextExtensions

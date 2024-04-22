@@ -1,9 +1,10 @@
 ﻿using Core.Common.Database;
-using Core.Images;
-using Core.Images.Operations;
+using Core.Common.Imaging;
+using Core.Common.Security;
 using Core.Startup;
 using FluentValidation;
 using MediatR;
+using MediatR.Behaviors.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Music;
@@ -45,6 +46,14 @@ public class CreateAlbumCommand : IRequest<int>
         public Task<AlbumTypeEntity> FetchAlbumType(string name)
         {
             return _dbContext.AlbumTypes.SingleAsync(x => x.Name == name);
+        }
+    }
+
+    internal class Authorizer : AbstractRequestAuthorizer<CreateAlbumCommand>
+    {
+        public override void BuildPolicy(CreateAlbumCommand request)
+        {
+            UseRequirement(new MustHaveRoleRequirement(UserRole.Editor));
         }
     }
 

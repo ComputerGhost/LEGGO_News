@@ -1,8 +1,7 @@
-﻿
-using Core.Startup;
+﻿using Core.Startup;
 using Microsoft.Extensions.Options;
 
-namespace Core.Common.Ports.Adapters;
+namespace Core.Common.Imaging;
 internal class FileSystemAdapter : IFileSystemPort
 {
     private readonly string _storagePath = null!;

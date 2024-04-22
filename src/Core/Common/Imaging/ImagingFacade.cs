@@ -1,9 +1,8 @@
 ﻿using Core.Common.Database;
-using Core.Common.Ports;
 using Core.Startup;
 using SkiaSharp;
 
-namespace Core.Images.Operations;
+namespace Core.Common.Imaging;
 
 [ServiceImplementation]
 internal class ImagingFacade : IImagingFacade

@@ -1,9 +1,9 @@
 ﻿using Core.Common;
 using Core.Common.Database;
-using Core.Common.Ports;
-using Core.ImageStorage;
+using Core.Common.Imaging;
 using Core.Startup;
 using MediatR;
+using MediatR.Behaviors.Authorization;
 using Microsoft.EntityFrameworkCore;
 using static Core.Images.GetImageQuery;
 
@@ -51,6 +51,16 @@ public class GetImageQuery : IRequest<ResponseDto>
         public Task<ImageEntity?> FetchImage(int imageId)
         {
             return _dbContext.Images.SingleOrDefaultAsync(x => x.Id == imageId);
+        }
+    }
+
+    internal class Authorizer : AbstractRequestAuthorizer<GetImageQuery>
+    {
+        public override void BuildPolicy(GetImageQuery request)
+        {
+            // Securing images will be too complex with the current design.
+            // We will allow this to be hacked so images from unpublished content may be discovered.
+            // The cost of the hack is less than the cost of fixing it.
         }
     }
 

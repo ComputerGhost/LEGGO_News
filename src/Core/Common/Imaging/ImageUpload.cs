@@ -1,9 +1,8 @@
-﻿using Core.Images.Operations;
-using FluentValidation;
+﻿using FluentValidation;
 using SkiaSharp;
 using System.Text.RegularExpressions;
 
-namespace Core.Images;
+namespace Core.Common.Imaging;
 public class ImageUpload
 {
     public string FileName { get; set; } = null!;

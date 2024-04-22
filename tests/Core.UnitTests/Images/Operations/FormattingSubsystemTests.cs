@@ -1,4 +1,4 @@
-﻿using Core.Images.Operations;
+﻿using Core.Common.Imaging;
 
 namespace Core.UnitTests.Images.Operations;
 

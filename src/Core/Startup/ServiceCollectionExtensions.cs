@@ -1,6 +1,7 @@
 ﻿using Core.Common.Database;
-using Core.Common.Ports;
+using Core.Common.Imaging;
 using FluentValidation;
+using MediatR.Behaviors.Authorization.Extensions.DependencyInjection;
 using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -24,10 +25,12 @@ public static class ServiceCollectionExtensions
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssemblies(assembly);
-            config.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
 
-        services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
+        services.AddFluentValidation([ assembly ]);
+
+        services.AddMediatorAuthorization(assembly);
+        services.AddAuthorizersFromAssembly(assembly);
 
         return services;
     }

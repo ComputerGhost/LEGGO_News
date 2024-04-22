@@ -1,4 +1,4 @@
-﻿using Core.Images;
+﻿using Core.Common.Imaging;
 using Core.Music;
 
 namespace Core.UnitTests.Music;

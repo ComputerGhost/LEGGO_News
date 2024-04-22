@@ -1,6 +1,6 @@
 ﻿using SkiaSharp;
 
-namespace Core.Images.Operations;
+namespace Core.Common.Imaging;
 internal class FormattingSubsystem
 {
     private readonly string _fileName;

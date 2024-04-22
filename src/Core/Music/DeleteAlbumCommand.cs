@@ -1,8 +1,9 @@
 ﻿using Core.Common;
 using Core.Common.Database;
-using Core.Common.Ports;
+using Core.Common.Security;
 using Core.Startup;
 using MediatR;
+using MediatR.Behaviors.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Music;
@@ -46,6 +47,14 @@ public class DeleteAlbumCommand : IRequest
         public Task<AlbumEntity?> FetchAlbum(int id)
         {
             return _dbContext.Albums.SingleOrDefaultAsync(x => x.Id == id);
+        }
+    }
+
+    internal class Authorizer : AbstractRequestAuthorizer<DeleteAlbumCommand>
+    {
+        public override void BuildPolicy(DeleteAlbumCommand request)
+        {
+            UseRequirement(new MustHaveRoleRequirement(UserRole.Editor));
         }
     }
 

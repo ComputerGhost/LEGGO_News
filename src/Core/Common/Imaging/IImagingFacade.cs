@@ -1,7 +1,7 @@
 ﻿using Core.Common.Database;
 using SkiaSharp;
 
-namespace Core.Images.Operations;
+namespace Core.Common.Imaging;
 internal interface IImagingFacade
 {
     /// <summary>

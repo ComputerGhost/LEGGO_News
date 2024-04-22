@@ -1,7 +1,6 @@
-﻿using Core.Common.Ports.Adapters;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Core.Common.Ports;
+namespace Core.Common.Imaging;
 public interface IFileSystemPort
 {
     public Task<Stream> LoadFile(string fileName);

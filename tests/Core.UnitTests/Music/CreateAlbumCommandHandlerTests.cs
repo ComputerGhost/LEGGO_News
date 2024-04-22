@@ -1,6 +1,5 @@
 ﻿using Core.Common.Database;
-using Core.Images;
-using Core.Images.Operations;
+using Core.Common.Imaging;
 using Core.Music;
 using Moq;
 

@@ -1,10 +1,11 @@
 ﻿using Core.Common;
 using Core.Common.Database;
-using Core.Images;
-using Core.Images.Operations;
+using Core.Common.Imaging;
+using Core.Common.Security;
 using Core.Startup;
 using FluentValidation;
 using MediatR;
+using MediatR.Behaviors.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Music;
@@ -54,6 +55,14 @@ public class UpdateAlbumCommand : IRequest
         public Task SaveChanges()
         {
             return _dbContext.SaveChangesAsync();
+        }
+    }
+
+    internal class Authorizer : AbstractRequestAuthorizer<UpdateAlbumCommand>
+    {
+        public override void BuildPolicy(UpdateAlbumCommand request)
+        {
+            UseRequirement(new MustHaveRoleRequirement(UserRole.Editor));
         }
     }
 

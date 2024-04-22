@@ -1,5 +1,5 @@
 ﻿using CMS.Extensions;
-using Core.Images;
+using Core.Common.Imaging;
 using Core.Music;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
