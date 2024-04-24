@@ -1,6 +1,6 @@
-﻿using Core.Common;
-using Core.Common.Imaging;
-using Core.Images;
+﻿using Core.Application.Common.Exceptions;
+using Core.Application.Images;
+using Core.Domain.Imaging.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;

@@ -1,6 +1,7 @@
 ﻿using CMS.Extensions;
-using Core.Common.Imaging;
-using Core.Music;
+using Core.Application.Common.Models;
+using Core.Application.Music;
+using Core.Domain.Music.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel.DataAnnotations;

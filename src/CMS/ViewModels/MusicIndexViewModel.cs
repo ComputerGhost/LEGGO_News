@@ -1,4 +1,4 @@
-﻿using Core.Music;
+﻿using Core.Application.Music;
 
 namespace CMS.ViewModels;
 

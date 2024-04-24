@@ -1,6 +1,6 @@
 ﻿using CMS.ViewModels;
-using Core.Common;
-using Core.Music;
+using Core.Application.Common.Exceptions;
+using Core.Application.Music;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

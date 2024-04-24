@@ -1,0 +1,68 @@
+﻿using Core.Application.Common.Exceptions;
+using Core.Application.Music;
+using Core.Domain.Common.Entities;
+using Core.Domain.Music.Enums;
+using Core.Domain.Music.Ports;
+using Moq;
+
+namespace Core.Application.UnitTests.Music;
+
+[TestClass]
+public class GetAlbumQueryHandlerTests : HandlerTestsBase
+{
+    private Mock<IMusicDatabasePort> _mockDatabaseAdapter = null!;
+    private GetAlbumQuery.Handler _subject = null!;
+
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        _mockDatabaseAdapter = new();
+        _subject = new GetAlbumQuery.Handler(_mockDatabaseAdapter.Object);
+    }
+
+    [TestMethod]
+    public async Task WhenAlbumDoesNotExist_ThrowsNotFoundException()
+    {
+        // Arrange
+        _mockDatabaseAdapter
+            .Setup(m => m.FetchAlbum(It.IsAny<int>()))
+            .Returns(Task.FromResult<AlbumEntity?>(null));
+
+        // Act
+        var request = new GetAlbumQuery(INCONSEQUENTIAL_ID);
+        var action = () => _subject.Handle(request, CancellationToken.None);
+
+        // Assert
+        await Assert.ThrowsExceptionAsync<NotFoundException>(action);
+    }
+
+    [TestMethod]
+    public async Task WhenAlbumExists_ReturnedDtoIsPopulated()
+    {
+        // Arrange
+        var albumEntity = new AlbumEntity
+        {
+            Id = INCONSEQUENTIAL_ID,
+            AlbumType = new AlbumTypeEntity { Name = AlbumType.Album.ToString() },
+            Title = "title",
+            Artist = "artist",
+            ReleaseDate = INCONSEQUENTIAL_DATE,
+            ImageId = INCONSEQUENTIAL_ID,
+        };
+        _mockDatabaseAdapter
+            .Setup(m => m.FetchAlbum(It.IsAny<int>()))
+            .Returns(Task.FromResult<AlbumEntity?>(albumEntity));
+
+        // Act
+        var request = new GetAlbumQuery(INCONSEQUENTIAL_ID);
+        var result = await _subject.Handle(request, CancellationToken.None);
+
+        // Assert
+        Assert.AreEqual(albumEntity.Id, result.Id);
+        Assert.AreEqual(albumEntity.AlbumType.Name, result.AlbumType.ToString());
+        Assert.AreEqual(albumEntity.Title, result.Title);
+        Assert.AreEqual(albumEntity.Artist, result.Artist);
+        Assert.AreEqual(albumEntity.ReleaseDate, result.ReleaseDate);
+        Assert.AreEqual(albumEntity.ImageId, result.AlbumArtImageId);
+    }
+}

@@ -1,5 +1,5 @@
 ﻿using CMS.Controllers;
-using Core.Common.Imaging;
+using Core.Domain.Imaging.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Extensions;
