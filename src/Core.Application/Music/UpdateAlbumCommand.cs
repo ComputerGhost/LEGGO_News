@@ -2,6 +2,7 @@
 using Core.Application.Common.Models;
 using Core.Application.Common.Requirements;
 using Core.Domain.Imaging;
+using Core.Domain.Imaging.Ports;
 using Core.Domain.Music.Enums;
 using Core.Domain.Music.Ports;
 using Core.Domain.Users.Enums;
@@ -34,13 +35,13 @@ public class UpdateAlbumCommand : IRequest
 
     internal class Handler : IRequestHandler<UpdateAlbumCommand>
     {
-        private readonly IImagingFacade _imagingFacade;
         private readonly IMusicDatabasePort _databaseAdapter;
+        private readonly IFileSystemPort _fileSystemAdapter;
 
-        public Handler(IImagingFacade imagingFacade, IMusicDatabasePort databaseAdapter)
+        public Handler(IMusicDatabasePort databaseAdapter, IFileSystemPort fileSystemAdapter)
         {
-            _imagingFacade = imagingFacade;
             _databaseAdapter = databaseAdapter;
+            _fileSystemAdapter = fileSystemAdapter;
         }
 
         public async Task Handle(UpdateAlbumCommand request, CancellationToken cancellationToken)
@@ -58,7 +59,8 @@ public class UpdateAlbumCommand : IRequest
 
             if (request.AlbumArt != null)
             {
-                existingAlbum.Image = await _imagingFacade.SaveToFileSystem(request.AlbumArt.FileName, request.AlbumArt.Stream);
+                var imageSaver = new ImageSaver(_fileSystemAdapter);
+                existingAlbum.Image = await imageSaver.SaveToFileSystem(request.AlbumArt.FileName, request.AlbumArt.Stream);
             }
 
             await _databaseAdapter.Update(existingAlbum);

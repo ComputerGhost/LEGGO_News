@@ -2,6 +2,7 @@
 using Core.Application.Common.Requirements;
 using Core.Domain.Common.Entities;
 using Core.Domain.Imaging;
+using Core.Domain.Imaging.Ports;
 using Core.Domain.Music.Enums;
 using Core.Domain.Music.Ports;
 using Core.Domain.Users.Enums;
@@ -32,24 +33,26 @@ public class CreateAlbumCommand : IRequest<int>
 
     internal class Handler : IRequestHandler<CreateAlbumCommand, int>
     {
-        private readonly IImagingFacade _imagingFacade;
         private readonly IMusicDatabasePort _databaseAdapter;
+        private readonly IFileSystemPort _fileSystemAdapter;
 
-        public Handler(IImagingFacade imagingFacade, IMusicDatabasePort databaseAdapter)
+        public Handler(IMusicDatabasePort databaseAdapter, IFileSystemPort fileSystemAdapter)
         {
-            _imagingFacade = imagingFacade;
             _databaseAdapter = databaseAdapter;
+            _fileSystemAdapter = fileSystemAdapter;
         }
 
         public async Task<int> Handle(CreateAlbumCommand request, CancellationToken cancellationToken)
         {
+            var imageSaver = new ImageSaver(_fileSystemAdapter);
+
             return await _databaseAdapter.Create(new AlbumEntity
             {
                 AlbumType = await _databaseAdapter.FetchAlbumType(request.AlbumType.ToString()),
                 Title = request.Title,
                 Artist = request.Artist,
                 ReleaseDate = request.ReleaseDate,
-                Image = await _imagingFacade.SaveToFileSystem(request.AlbumArt.FileName, request.AlbumArt.Stream),
+                Image = await imageSaver.SaveToFileSystem(request.AlbumArt.FileName, request.AlbumArt.Stream),
             });
         }
     }

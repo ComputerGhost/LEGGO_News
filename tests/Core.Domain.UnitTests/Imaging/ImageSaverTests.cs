@@ -1,23 +1,35 @@
-﻿using Core.Domain.Imaging.Enums;
+﻿using Core.Domain.Imaging;
+using Core.Domain.Imaging.Enums;
 using Core.Domain.Imaging.Ports;
-using Core.Domain.Imaging.Subsystems;
 using Moq;
 using SkiaSharp;
 
-namespace Core.Domain.UnitTests.Imaging.Subsystems;
+namespace Core.Domain.UnitTests.Imaging;
 
 [TestClass]
-public class SavingSubsystemTests
+public class ImageSaverTests
 {
+    private ImageSaver _subject = null!;
+
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        var mockFileSystemAdapter = new Mock<IFileSystemPort>();
+        mockFileSystemAdapter
+            .Setup(m => m.SaveFile(It.IsAny<string>(), It.IsAny<Stream>()))
+            .Returns(Task.CompletedTask);
+
+        _subject = new(mockFileSystemAdapter.Object);
+    }
+
     [TestMethod]
     public async Task WhenImageIsLarge_AllSizesCreated()
     {
         // Arrange
         using var stream = CreateImageStream(ImageWidth.Large.ToInt(), 100);
-        var subject = CreateSubject(stream);
 
         // Act
-        var result = await subject.Execute();
+        var result = await _subject.SaveToFileSystem("f.jpg", stream);
 
         // Assert
         Assert.IsNotNull(result);
@@ -32,10 +44,9 @@ public class SavingSubsystemTests
     {
         // Arrange
         using var stream = CreateImageStream(ImageWidth.Medium.ToInt(), 100);
-        var subject = CreateSubject(stream);
 
         // Act
-        var result = await subject.Execute();
+        var result = await _subject.SaveToFileSystem("f.jpg", stream);
 
         // Assert
         Assert.IsNotNull(result);
@@ -50,10 +61,9 @@ public class SavingSubsystemTests
     {
         // Arrange
         using var stream = CreateImageStream(ImageWidth.Thumbnail.ToInt(), 100);
-        var subject = CreateSubject(stream);
 
         // Act
-        var result = await subject.Execute();
+        var result = await _subject.SaveToFileSystem("f.jpg", stream);
 
         // Assert
         Assert.IsNotNull(result);
@@ -68,10 +78,9 @@ public class SavingSubsystemTests
     {
         // Arrange
         using var stream = CreateImageStream(ImageWidth.Thumbnail.ToInt() - 1, 100);
-        var subject = CreateSubject(stream);
 
         // Act
-        var result = await subject.Execute();
+        var result = await _subject.SaveToFileSystem("f.jpg", stream);
 
         // Assert
         Assert.IsNotNull(result);
@@ -86,15 +95,5 @@ public class SavingSubsystemTests
         var imageInfo = new SKImageInfo(width, height);
         var image = SKImage.Create(imageInfo);
         return image.Encode(SKEncodedImageFormat.Jpeg, 100).AsStream();
-    }
-
-    private SavingSubsystem CreateSubject(Stream stream)
-    {
-        var mockFileSystemAdapter = new Mock<IFileSystemPort>();
-        mockFileSystemAdapter
-            .Setup(m => m.SaveFile(It.IsAny<string>(), It.IsAny<Stream>()))
-            .Returns(Task.CompletedTask);
-
-        return new SavingSubsystem(mockFileSystemAdapter.Object, "f.jpg", stream, SKEncodedImageFormat.Jpeg);
     }
 }

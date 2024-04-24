@@ -1,19 +1,18 @@
-﻿using Core.Domain.Imaging.Subsystems;
+﻿using Core.Domain.Imaging;
 
-namespace Core.Domain.UnitTests.Imaging.Subsystems;
+namespace Core.Domain.UnitTests.Imaging;
 
 [TestClass]
-public class ValidationSubsystemTests
+public class ImageValidationTests
 {
     [TestMethod]
     public void CanLoadImage_WhenValidImage_ReturnsTrue()
     {
         // Arrange
         using var stream = CreateGoodImageStream();
-        var subject = new ValidationSubsystem();
 
         // Act
-        var result = subject.CanLoadImage(stream);
+        var result = ImageValidation.CanLoadImage(stream);
 
         // Assert
         Assert.IsTrue(result);
@@ -24,10 +23,9 @@ public class ValidationSubsystemTests
     {
         // Arrange
         using var stream = CreateBadImageStream();
-        var subject = new ValidationSubsystem();
 
         // Act
-        var result = subject.CanLoadImage(stream);
+        var result = ImageValidation.CanLoadImage(stream);
 
         // Assert
         Assert.IsFalse(result);
@@ -38,10 +36,9 @@ public class ValidationSubsystemTests
     {
         // Arrange
         using var stream = CreateGoodImageStream();
-        var subject = new ValidationSubsystem();
 
         // Act
-        subject.CanLoadImage(stream);
+        ImageValidation.CanLoadImage(stream);
 
         // Assert
         Assert.AreEqual(0, stream.Position);
@@ -55,10 +52,9 @@ public class ValidationSubsystemTests
     public void IsSupportedFileExtension_WhenSupported_ReturnsTrue(string extension)
     {
         // Arrange
-        var subject = new ValidationSubsystem();
 
         // Act
-        var result = subject.IsSupportedFileExtension(extension);
+        var result = ImageValidation.IsSupportedFileExtension(extension);
 
         // Assert
         Assert.IsTrue(result);
@@ -69,10 +65,9 @@ public class ValidationSubsystemTests
     {
         // Arrange
         const string extension = ".bad";
-        var subject = new ValidationSubsystem();
 
         // Act
-        var result = subject.IsSupportedFileExtension(extension);
+        var result = ImageValidation.IsSupportedFileExtension(extension);
 
         // Assert
         Assert.IsFalse(result);

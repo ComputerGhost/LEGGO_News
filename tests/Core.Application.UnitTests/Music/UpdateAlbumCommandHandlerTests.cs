@@ -1,30 +1,31 @@
 ﻿using Core.Application.Common.Exceptions;
+using Core.Application.Common.Models;
 using Core.Application.Music;
 using Core.Domain.Common.Entities;
-using Core.Domain.Imaging;
+using Core.Domain.Imaging.Ports;
 using Core.Domain.Music.Ports;
 using Moq;
 
 namespace Core.Application.UnitTests.Music;
 
 [TestClass]
-public class UpdateAlbumCommandHandlerTests
+public class UpdateAlbumCommandHandlerTests : HandlerTestsBase
 {
-    private Mock<IImagingFacade> _mockImagingFacade = null!;
     private Mock<IMusicDatabasePort> _mockDatabaseAdapter = null!;
+    private Mock<IFileSystemPort> _mockFileSystemAdapter = null!;
     private UpdateAlbumCommand.Handler _subject = null!;
 
     [TestInitialize]
     public void TestInitialize()
     {
-        _mockImagingFacade = new();
+        _mockFileSystemAdapter = new();
 
         _mockDatabaseAdapter = new();
         _mockDatabaseAdapter
-            .Setup(m => m.FetchAlbumType(It.IsAny<string>()))
-            .Returns(Task.FromResult(new AlbumTypeEntity()));
+            .Setup(m => m.FetchAlbum(It.IsAny<int>()))
+            .Returns(Task.FromResult<AlbumEntity?>(new()));
 
-        _subject = new(_mockImagingFacade.Object, _mockDatabaseAdapter.Object);
+        _subject = new(_mockDatabaseAdapter.Object, _mockFileSystemAdapter.Object);
     }
 
     [TestMethod]
@@ -34,9 +35,9 @@ public class UpdateAlbumCommandHandlerTests
         _mockDatabaseAdapter
             .Setup(m => m.FetchAlbum(It.IsAny<int>()))
             .Returns(Task.FromResult<AlbumEntity?>(null));
+        var request = new UpdateAlbumCommand();
 
         // Act
-        var request = new UpdateAlbumCommand();
         var action = () => _subject.Handle(request, CancellationToken.None);
 
         // Assert
@@ -48,15 +49,15 @@ public class UpdateAlbumCommandHandlerTests
     public async Task WhenFileSystemFails_DoesNotSaveToDatabase()
     {
         // Arrange
-        _mockDatabaseAdapter
-            .Setup(m => m.FetchAlbum(It.IsAny<int>()))
-            .Returns(Task.FromResult<AlbumEntity?>(new()));
-        _mockImagingFacade
-            .Setup(m => m.SaveToFileSystem(It.IsAny<string>(), It.IsAny<Stream>()))
+        _mockFileSystemAdapter
+            .Setup(m => m.SaveFile(It.IsAny<string>(), It.IsAny<Stream>()))
             .Throws<Exception>();
+        var request = new UpdateAlbumCommand
+        {
+            AlbumArt = CreateGoodImageUpload(),
+        };
 
         // Act
-        var request = new UpdateAlbumCommand { AlbumArt = new() };
         var action = () => _subject.Handle(request, CancellationToken.None);
 
         // Assert
@@ -71,19 +72,19 @@ public class UpdateAlbumCommandHandlerTests
     {
         // Arrange
         _mockDatabaseAdapter
-            .Setup(m => m.FetchAlbum(It.IsAny<int>()))
-            .Returns(Task.FromResult<AlbumEntity?>(new()));
-        _mockDatabaseAdapter
             .Setup(m => m.Update(It.IsAny<AlbumEntity>()))
             .Throws<Exception>();
+        var request = new UpdateAlbumCommand
+        {
+            AlbumArt = CreateGoodImageUpload(),
+        };
 
         // Act
-        var request = new UpdateAlbumCommand { AlbumArt = new() };
         var action = () => _subject.Handle(request, CancellationToken.None);
 
         // Assert
         await Assert.ThrowsExceptionAsync<Exception>(action);
-        _mockImagingFacade.Verify(m => m.SaveToFileSystem(It.IsAny<string>(), It.IsAny<Stream>()), Times.Once());
+        _mockFileSystemAdapter.Verify(m => m.SaveFile(It.IsAny<string>(), It.IsAny<Stream>()), Times.AtLeastOnce());
     }
 
     [TestMethod]
@@ -95,17 +96,17 @@ public class UpdateAlbumCommandHandlerTests
         _mockDatabaseAdapter
             .Setup(m => m.FetchAlbum(It.IsAny<int>()))
             .Returns(Task.FromResult<AlbumEntity?>(existingAlbum));
-        _mockImagingFacade
-            .Setup(m => m.SaveToFileSystem(It.IsAny<string>(), It.IsAny<Stream>()))
-            .Returns(Task.FromResult(new ImageEntity()));
+        var request = new UpdateAlbumCommand
+        {
+            AlbumArt = CreateGoodImageUpload(),
+        };
 
         // Act
-        var request = new UpdateAlbumCommand { AlbumArt = new() };
         await _subject.Handle(request, CancellationToken.None);
 
         // Assert
         Assert.AreNotEqual(existingAlbumArt, existingAlbum.Image);
-        _mockImagingFacade.Verify(m => m.SaveToFileSystem(It.IsAny<string>(), It.IsAny<Stream>()), Times.Once());
+        _mockFileSystemAdapter.Verify(m => m.SaveFile(It.IsAny<string>(), It.IsAny<Stream>()), Times.AtLeastOnce());
     }
 
     [TestMethod]
@@ -117,9 +118,6 @@ public class UpdateAlbumCommandHandlerTests
         _mockDatabaseAdapter
             .Setup(m => m.FetchAlbum(It.IsAny<int>()))
             .Returns(Task.FromResult<AlbumEntity?>(existingAlbum));
-        _mockImagingFacade
-            .Setup(m => m.SaveToFileSystem(It.IsAny<string>(), It.IsAny<Stream>()))
-            .Returns(Task.FromResult(new ImageEntity()));
 
         // Act
         var request = new UpdateAlbumCommand { AlbumArt = null };
@@ -127,6 +125,15 @@ public class UpdateAlbumCommandHandlerTests
 
         // Assert
         Assert.AreEqual(existingAlbumArt, existingAlbum.Image);
-        _mockImagingFacade.Verify(m => m.SaveToFileSystem(It.IsAny<string>(), It.IsAny<Stream>()), Times.Never());
+        _mockFileSystemAdapter.Verify(m => m.SaveFile(It.IsAny<string>(), It.IsAny<Stream>()), Times.Never());
+    }
+
+    private ImageUpload CreateGoodImageUpload()
+    {
+        return new ImageUpload
+        {
+            FileName = "good.jpg",
+            Stream = CreateGoodImageStream(),
+        };
     }
 }

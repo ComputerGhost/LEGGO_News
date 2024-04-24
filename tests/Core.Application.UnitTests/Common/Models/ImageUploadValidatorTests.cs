@@ -1,5 +1,4 @@
 ﻿using Core.Application.Common.Models;
-using Core.Domain.Imaging;
 using Core.Domain.Imaging.Ports;
 using Moq;
 
@@ -9,7 +8,6 @@ namespace Core.Application.UnitTests.Common.Models;
 public class ImageUploadValidatorTests : ValidatorTestsBase
 {
     private Mock<IFileSystemPort> _mockFileSystemAdapter = null!;
-    private Mock<IImagingFacade> _mockImagingFacade = null!;
     private ImageUpload.Validator _subject = null!;
 
     [TestInitialize]
@@ -18,11 +16,7 @@ public class ImageUploadValidatorTests : ValidatorTestsBase
         _mockFileSystemAdapter = new();
         _mockFileSystemAdapter.Setup(m => m.IsValidFileName(It.IsAny<string>())).Returns(true);
 
-        _mockImagingFacade = new();
-        _mockImagingFacade.Setup(m => m.CanLoadImage(It.IsAny<Stream>())).Returns(true);
-        _mockImagingFacade.Setup(m => m.IsSupportedFileExtension(It.IsAny<string>())).Returns(true);
-
-        _subject = new(_mockFileSystemAdapter.Object, _mockImagingFacade.Object);
+        _subject = new(_mockFileSystemAdapter.Object);
     }
 
     [TestMethod]
@@ -30,13 +24,7 @@ public class ImageUploadValidatorTests : ValidatorTestsBase
     {
         // Arrange
         _mockFileSystemAdapter.Setup(m => m.IsValidFileName(It.IsAny<string>())).Returns(true);
-        _mockImagingFacade.Setup(m => m.CanLoadImage(It.IsAny<Stream>())).Returns(true);
-        _mockImagingFacade.Setup(m => m.IsSupportedFileExtension(It.IsAny<string>())).Returns(true);
-        var imageUpload = new ImageUpload
-        {
-            FileName = "f.jpg",
-            Stream = CreateGoodImageStream(),
-        };
+        var imageUpload = CreateGoodImageUpload();
 
         // Act
         var result = _subject.Validate(imageUpload);
@@ -50,11 +38,8 @@ public class ImageUploadValidatorTests : ValidatorTestsBase
     public void WhenFileNameIsEmpty_Fails()
     {
         // Arrange
-        var imageUpload = new ImageUpload
-        {
-            FileName = "",
-            Stream = CreateGoodImageStream(),
-        };
+        var imageUpload = CreateGoodImageUpload();
+        imageUpload.FileName = "";
 
         // Act
         var result = _subject.Validate(imageUpload);
@@ -69,11 +54,8 @@ public class ImageUploadValidatorTests : ValidatorTestsBase
     public void WhenFileNameIsTooLong_Fails()
     {
         // Arrange
-        var imageUpload = new ImageUpload
-        {
-            FileName = ".jpg".PadLeft(256),
-            Stream = CreateGoodImageStream(),
-        };
+        var imageUpload = CreateGoodImageUpload();
+        imageUpload.FileName = ".jpg".PadLeft(256);
 
         // Act
         var result = _subject.Validate(imageUpload);
@@ -88,12 +70,8 @@ public class ImageUploadValidatorTests : ValidatorTestsBase
     public void WhenFileNameIsInvalid_Fails()
     {
         // Arrange
-        _mockFileSystemAdapter.Setup(m => m.IsValidFileName(It.IsAny<string>())).Returns(false);
-        var imageUpload = new ImageUpload
-        {
-            FileName = "bad.jpg",
-            Stream = CreateGoodImageStream(),
-        };
+        var imageUpload = CreateGoodImageUpload();
+        imageUpload.FileName = "../bad";
 
         // Act
         var result = _subject.Validate(imageUpload);
@@ -108,19 +86,13 @@ public class ImageUploadValidatorTests : ValidatorTestsBase
     public void WhenFileExtensionIsUnsupported_Fails()
     {
         // Arrange
-        const string BAD_EXTENSION = ".bad";
-        _mockImagingFacade.Setup(m => m.IsSupportedFileExtension(It.IsAny<string>())).Returns(false);
-        var imageUpload = new ImageUpload
-        {
-            FileName = $"f{BAD_EXTENSION}",
-            Stream = CreateGoodImageStream(),
-        };
+        var imageUpload = CreateGoodImageUpload();
+        imageUpload.FileName = $"f.bad";
 
         // Act
         var result = _subject.Validate(imageUpload);
 
         // Assert
-        _mockImagingFacade.Verify(m => m.IsSupportedFileExtension(It.Is<string>(v => v == BAD_EXTENSION)));
         Assert.IsFalse(result.IsValid);
         Assert.AreEqual(1, result.Errors.Count);
         Assert.IsTrue(HasErrorForProperty(result, nameof(ImageUpload.FileName)));
@@ -130,12 +102,9 @@ public class ImageUploadValidatorTests : ValidatorTestsBase
     public void WhenImageCannotLoad_Fails()
     {
         // Arrange
-        _mockImagingFacade.Setup(m => m.CanLoadImage(It.IsAny<Stream>())).Returns(false);
-        var imageUpload = new ImageUpload
-        {
-            FileName = "f.jpg",
-            Stream = new MemoryStream(),
-        };
+        var imageUpload = CreateGoodImageUpload();
+        imageUpload.Stream?.Dispose();
+        imageUpload.Stream = new MemoryStream();
 
         // Act
         var result = _subject.Validate(imageUpload);
@@ -144,5 +113,14 @@ public class ImageUploadValidatorTests : ValidatorTestsBase
         Assert.IsFalse(result.IsValid);
         Assert.AreEqual(1, result.Errors.Count);
         Assert.IsTrue(HasErrorForProperty(result, nameof(ImageUpload.Stream)));
+    }
+
+    private ImageUpload CreateGoodImageUpload()
+    {
+        return new ImageUpload
+        {
+            FileName = "good.jpg",
+            Stream = CreateGoodImageStream(),
+        };
     }
 }

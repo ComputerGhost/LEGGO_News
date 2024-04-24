@@ -11,12 +11,10 @@ public class ImageUpload
     internal class Validator : AbstractValidator<ImageUpload>
     {
         private readonly IFileSystemPort _fileSystemAdapter;
-        private readonly IImagingFacade _imagingFacade;
 
-        public Validator(IFileSystemPort fileSystemAdapter, IImagingFacade imagingFacade)
+        public Validator(IFileSystemPort fileSystemAdapter)
         {
             _fileSystemAdapter = fileSystemAdapter;
-            _imagingFacade = imagingFacade;
 
             RuleFor(upload => upload.FileName)
                 .Cascade(CascadeMode.Stop)
@@ -25,7 +23,7 @@ public class ImageUpload
                 .Must(HasValidFileExtension).WithMessage("The file extension is not supported.");
 
             RuleFor(upload => upload.Stream)
-                .Must(CanLoadImage).WithMessage("The image cannot be loaded.");
+                .Must(ImageValidation.CanLoadImage).WithMessage("The image cannot be loaded.");
         }
 
         private bool IsValidFileName(string fileName)
@@ -36,12 +34,7 @@ public class ImageUpload
         private bool HasValidFileExtension(string fileName)
         {
             var extension = Path.GetExtension(fileName);
-            return _imagingFacade.IsSupportedFileExtension(extension);
-        }
-
-        public bool CanLoadImage(Stream stream)
-        {
-            return _imagingFacade.CanLoadImage(stream);
+            return ImageValidation.IsSupportedFileExtension(extension);
         }
     }
 }

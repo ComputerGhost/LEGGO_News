@@ -12,11 +12,11 @@ public static class ServiceCollectionExtensions
     {
         var assembly = Assembly.GetExecutingAssembly();
         return services
-            .AddCQRS(assembly)
+            .AddMediatR(assembly)
             .AddInfrastructure(configure);
     }
 
-    private static IServiceCollection AddCQRS(this IServiceCollection services, Assembly assembly)
+    private static IServiceCollection AddMediatR(this IServiceCollection services, Assembly assembly)
     {
         services.AddMediatR(config =>
         {
